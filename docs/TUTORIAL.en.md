@@ -1,8 +1,8 @@
 [简体中文](TUTORIAL.zh-CN.md) | [English](TUTORIAL.en.md) · [Back to README](../README.en.md)
 
-# NaNoBO: a practical guide for chemists
+# NanoBO: a practical guide for chemists
 
-This guide describes the **0.2.3** desktop workflow. If an older installer does not have the tutorial Help entries or numbered practice files, update from [Releases](https://github.com/wei-rui499/NaNoBO/releases).
+This guide describes the **0.2.3** desktop workflow. If an older installer does not have the tutorial Help entries or numbered practice files, update from [Releases](https://github.com/wei-rui499/NanoBO/releases).
 
 This guide follows a familiar laboratory loop: **define the experiment → enter measurements → choose the next batch → run the experiment → add the results**. The supplied practice files let you complete that loop without doing a wet experiment.
 
@@ -28,13 +28,13 @@ The current application interface is Chinese. English explanations below include
 
 ## 1. Install and open the application
 
-Download the installer and tutorial data from [GitHub Releases](https://github.com/wei-rui499/NaNoBO/releases). Choose the installer for your operating system, not the developer source archive.
+Download the installer and tutorial data from [GitHub Releases](https://github.com/wei-rui499/NanoBO/releases). Choose the installer for your operating system, not the developer source archive.
 
 ### Apple Silicon Mac
 
 1. Use an M-series Mac with macOS 14 or later. The arm64 installer is not an Intel Mac installer.
-2. Open the downloaded `macOS-arm64.dmg` and drag **NaNoBO.app** into **Applications**.
-3. Open NaNoBO from Applications. The research preview is not Apple-notarized. If macOS blocks the first launch, review the app using [Apple's Privacy & Security instructions](https://support.apple.com/en-us/102445).
+2. Open the downloaded `macOS-arm64.dmg` and drag **NanoBO.app** into **Applications**.
+3. Open NanoBO from Applications. The research preview is not Apple-notarized. If macOS blocks the first launch, review the app using [Apple's Privacy & Security instructions](https://support.apple.com/en-us/102445).
 4. Create a normal document folder for your projects and exported tables; do not store your only copy inside the DMG.
 
 ### Windows
@@ -42,7 +42,7 @@ Download the installer and tutorial data from [GitHub Releases](https://github.c
 Use the Windows Hotfix1 installer or a later corrected release. Hotfix1 fixes the native model startup and logging issues reproduced in the original 0.2.3 test packages. Check the Windows acceptance record accompanying the particular installer; Mac validation does not replace Windows validation.
 
 1. On Windows 10/11 x64, use the `windows-x64-setup-hotfix1-unsigned.exe` installer or a later corrected release.
-2. Run the installer, choose the installation options, then open NaNoBO from the Start menu or its shortcut. You do not need WSL, Python or a terminal to use the installed application.
+2. Run the installer, choose the installation options, then open NanoBO from the Start menu or its shortcut. You do not need WSL, Python or a terminal to use the installed application.
 3. The unsigned preview may trigger Windows reputation checks. Review the source and release information; do not disable Defender or other system protection.
 4. Save experiment projects in your own Documents folder so they remain separate from installation files. Windows ARM64 is not part of the validated target described here.
 
@@ -54,7 +54,7 @@ The same files are in [`examples/tutorial/`](../examples/tutorial/) in the sourc
 
 ## 2. Find your way around
 
-![NaNoBO desktop interface](screenshots/NaNoBO-preview.png)
+![NanoBO desktop interface](screenshots/NaNoBO-preview.png)
 
 | Part of the window | What it is for |
 | --- | --- |
@@ -113,7 +113,7 @@ Exact recommendations and floating-point metrics can differ across platforms or 
 
 1. In the pending tab, click **Export CSV for results** (`导出待回填 CSV`). The exported file includes the variables and an empty `yield_pct` column.
 2. Open `all-simulated-results.csv` in the same exercise folder. Find the rows with **all three variables matching** the exported conditions. Copy their synthetic `yield_pct` values into the exported file. Change only the result column.
-3. Save as UTF-8 CSV. In NaNoBO, use **Completed experiments → Import Excel / CSV** (`已完成实验 → 导入 Excel / CSV`) to import that completed file.
+3. Save as UTF-8 CSV. In NanoBO, use **Completed experiments → Import Excel / CSV** (`已完成实验 → 导入 Excel / CSV`) to import that completed file.
 4. You should now have **8 completed / 0 pending**. The imported rows are appended, and matching pending conditions are removed automatically.
 5. Save the project, then analyze or generate the next batch. Adding measurements invalidates the older analysis, so it must be recomputed.
 
@@ -121,7 +121,7 @@ In your real research, fill the CSV with actual measured values. The lookup tabl
 
 ![Quickstart model predictions after eight synthetic results](screenshots/tutorial-quickstart.png)
 
-*Example output after 8 completed synthetic results: dots show predicted yield and the shaded band shows model uncertainty. The horizontal axis is candidate number, not temperature. The six example charts in this guide were exported from the actual NaNoBO analysis view; they are model-output charts, not full-window screenshots or wet-lab results. Numerical values and recommended conditions can vary between runs and platforms.*
+*Example output after 8 completed synthetic results: dots show predicted yield and the shaded band shows model uncertainty. The horizontal axis is candidate number, not temperature. The six example charts in this guide were exported from the actual NanoBO analysis view; they are model-output charts, not full-window screenshots or wet-lab results. Numerical values and recommended conditions can vary between runs and platforms.*
 
 ### E. A guaranteed refill-only exercise
 
@@ -452,7 +452,7 @@ During computation, **Cancel calculation** (`取消计算`) stops the current wo
 
 ### Find licenses and citation information
 
-Use **About / licenses** (`关于 / 许可`) or **Help → About NaNoBO** (`帮助 → 关于 NaNoBO`). The dialog includes an **Open bundled licenses folder** (`打开随附许可证文件夹`) button. Cite the scientific methods you actually used, together with NaNoBO: [citation guide](HOW_TO_CITE.md), [acknowledgments](../ACKNOWLEDGMENTS.md), [BibTeX references](../REFERENCES.bib).
+Use **About / licenses** (`关于 / 许可`) or **Help → About NanoBO** (`帮助 → 关于 NanoBO`). The dialog includes an **Open bundled licenses folder** (`打开随附许可证文件夹`) button. Cite the scientific methods you actually used, together with NanoBO: [citation guide](HOW_TO_CITE.md), [acknowledgments](../ACKNOWLEDGMENTS.md), [BibTeX references](../REFERENCES.bib).
 
 ## 12. Troubleshooting and limits
 
@@ -461,7 +461,7 @@ Use **About / licenses** (`关于 / 许可`) or **Help → About NaNoBO** (`帮�
 | An import reports incorrect column names | Start from an exported template. Match every variable and target name exactly; remove extra comment/unit columns. |
 | The seed exercise has 12 rows instead of 6 | The seed table was imported twice. Reopen `empty-project.chembo.json` and import one format once, or deliberately remove accidental duplicates in a working copy. |
 | Excel asks for a worksheet | Choose `Results` for the supplied workbooks. |
-| A formula cell is missing on import | Save a values-only copy or ensure Excel has calculated and saved cached values. NaNoBO does not evaluate spreadsheet formulas. |
+| A formula cell is missing on import | Save a values-only copy or ensure Excel has calculated and saved cached values. NanoBO does not evaluate spreadsheet formulas. |
 | A category or class is rejected | Match the declared spelling and label; spaces inside a name, Chinese versus English words and different labels are not interchangeable. |
 | A value is outside a step or recipe rule | Check lower bound, step origin, units, total-volume coefficients and positive ratio denominator. |
 | No feasible candidates / too few candidates | Check conflicting limits and whether measured/pending points exhaust the table. Reduce batch size or revise a scientifically justified domain. |

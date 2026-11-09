@@ -1,8 +1,8 @@
-# NaNoBO 使用教程：跟着模拟实验学会规划下一批
+# NanoBO 使用教程：跟着模拟实验学会规划下一批
 
 **简体中文** | [English](TUTORIAL.en.md) | [返回项目首页](../README.md)
 
-本教程对应 **NaNoBO 0.2.3 及更新版本**。旧版用户请先更新，才能看到新增的离线教程和练习导出入口。
+本教程对应 **NanoBO 0.2.3 及更新版本**。旧版用户请先更新，才能看到新增的离线教程和练习导出入口。
 
 这份教程面向会设计实验、会用 Excel，但没有编程经验的化学研究者。你不必先学习贝叶斯优化公式：把已有实验放进软件，让软件建议下一批条件；做完实验，再把结果填回来。
 
@@ -25,11 +25,11 @@
 
 ## 1. 安装与第一次打开
 
-从 [GitHub Releases](https://github.com/wei-rui499/NaNoBO/releases) 下载与你的电脑匹配的安装包。应用已包括计算引擎，日常使用不需要安装 Python、WSL、Docker 或申请 API 账户。科学计算在本机进行；打开在线 GitHub 链接才需要联网。
+从 [GitHub Releases](https://github.com/wei-rui499/NanoBO/releases) 下载与你的电脑匹配的安装包。应用已包括计算引擎，日常使用不需要安装 Python、WSL、Docker 或申请 API 账户。科学计算在本机进行；打开在线 GitHub 链接才需要联网。
 
 | 电脑 | 安装方法 | 当前状态 |
 | --- | --- | --- |
-| Apple Silicon Mac（M 系列，macOS 14+） | 打开 `.dmg`，把 NaNoBO.app 拖入 Applications，再从 Applications 启动 | 科研测试包尚未 Apple 公证。若系统提示无法确认开发者，可在系统“隐私与安全”中检查应用来源并选择允许打开；无需修改系统级安全设置。 |
+| Apple Silicon Mac（M 系列，macOS 14+） | 打开 `.dmg`，把 NanoBO.app 拖入 Applications，再从 Applications 启动 | 科研测试包尚未 Apple 公证。若系统提示无法确认开发者，可在系统“隐私与安全”中检查应用来源并选择允许打开；无需修改系统级安全设置。 |
 | Windows x64 | 使用 Windows Hotfix1 或后续修复版安装器，运行后从开始菜单启动 | Hotfix1 修复了原 0.2.3 测试包的模型启动与日志问题；以该安装包随附的 Windows 验收记录为准。 |
 | Intel Mac | 暂不使用 arm64 的 Mac 包 | 当前没有经过验证的 Intel Mac 完整安装包。 |
 

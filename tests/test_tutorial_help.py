@@ -47,7 +47,7 @@ def test_export_tutorial_preserves_existing_user_copy(window, tmp_path, monkeypa
     (source / "project.chembo.json").write_text('{"synthetic":true}')
     destination = tmp_path / "user"
     destination.mkdir()
-    original = destination / f"NaNoBO-tutorial-{__version__}"
+    original = destination / f"NanoBO-tutorial-{__version__}"
     original.mkdir()
     (original / "my-results.csv").write_text("precious measured results")
     monkeypatch.setattr(module, "resources", lambda: resources)
@@ -55,7 +55,7 @@ def test_export_tutorial_preserves_existing_user_copy(window, tmp_path, monkeypa
     monkeypatch.setattr(QDesktopServices, "openUrl", lambda *args: True)
     window.export_tutorial_data()
     assert (original / "my-results.csv").read_text() == "precious measured results"
-    assert (destination / f"NaNoBO-tutorial-{__version__} (2)/01_quickstart/project.chembo.json").read_text() == '{"synthetic":true}'
+    assert (destination / f"NanoBO-tutorial-{__version__} (2)/01_quickstart/project.chembo.json").read_text() == '{"synthetic":true}'
 
 
 def test_render_guides_keeps_offline_links_tables_and_code(tmp_path):

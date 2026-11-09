@@ -1,26 +1,27 @@
 [简体中文](README.md) | [English](README.en.md)
 
-# NaNoBO
+# NanoBO
+
+原名 NaNoBO，自 0.2.4 起统一使用 **NanoBO**。旧项目文件可继续打开，科研模型及其引用归属保留。
 
 **把已有实验结果变成下一批值得做的实验。**
 
-NaNoBO 是给化学研究者使用的桌面实验规划工具。你告诉它“哪些条件可以改变、哪些结果希望更好”，录入已经做过的实验，它会推荐下一批条件。做完后回填结果，再继续下一轮。
+NanoBO 是给化学研究者使用的桌面实验规划工具。你告诉它“哪些条件可以改变、哪些结果希望更好”，录入已经做过的实验，它会推荐下一批条件。做完后回填结果，再继续下一轮。
 
 例如：温度和添加剂怎样搭配，产率可能更高？固定加液总量后，下一批该试哪些配比？产率和成本不能同时最好时，有哪些折衷方案？如果结果是“团聚／球形／棒状”，下一批怎样帮助分清形貌边界？
 
 **安装版在本机计算，无需配置 Python、WSL、Docker 或模型 API 账户。** 当前软件界面为中文；教程和本页均可选择中文或英文。
 
-[下载安装包](https://github.com/wei-rui499/NaNoBO/releases) · [从配套数据开始学习](docs/TUTORIAL.zh-CN.md) · [English tutorial](docs/TUTORIAL.en.md)
+[下载安装包](https://github.com/wei-rui499/NanoBO/releases) · [从配套数据开始学习](docs/TUTORIAL.zh-CN.md) · [English tutorial](docs/TUTORIAL.en.md)
 
-**Windows 用户：[直接下载安装器](https://github.com/wei-rui499/NaNoBO/releases/download/v0.2.3-windows-hotfix1/NaNoBO-0.2.3-windows-x64-setup-hotfix1-unsigned.exe) · [Windows Hotfix1 发布与验收资料](https://github.com/wei-rui499/NaNoBO/releases/tag/v0.2.3-windows-hotfix1)。** 已在 Windows 11 x64 实测：便携版与安装后各 48/48 项，界面及文件检查 13/13 项。程序自带计算依赖、离线教程和练习数据；原 v0.2.3 Windows 旧包存在模型故障，请使用 Hotfix1。
 
-![NaNoBO 桌面界面：实验条件、已完成实验、下一批实验与模型分析](docs/screenshots/NaNoBO-preview.png)
+![NanoBO 桌面界面：实验条件、已完成实验、下一批实验与模型分析](docs/screenshots/NaNoBO-preview.png)
 
 ## 先花十分钟跑通一轮
 
 不必先理解算法。使用随附的**合成教学数据**，先学会这五步：
 
-1. 在 [Releases](https://github.com/wei-rui499/NaNoBO/releases) 下载适合电脑的安装包，以及本次版本的教程数据包。0.2.3 及更新安装版的“帮助”菜单也提供教程和练习数据入口。
+1. 在 [Releases](https://github.com/wei-rui499/NanoBO/releases) 下载适合电脑的安装包，以及本次版本的教程数据包。0.2.3 及更新安装版的“帮助”菜单也提供教程和练习数据入口。
 2. 打开练习目录 `01_quickstart/project.chembo.json`。项目已经设置好温度、循环次数和添加剂，并带有 **6 条模拟实验结果**。
 3. 点击“**生成下一批实验 →**”，在“下一批 / 待实验”中查看 **2 个待做条件**。
 4. 点击“导出待回填 CSV”。在 `all-simulated-results.csv` 中找到这两组完全相同的条件，将对应的模拟产率填入导出表，再从“已完成实验 → 导入 Excel / CSV”导入。
@@ -34,8 +35,8 @@ NaNoBO 是给化学研究者使用的桌面实验规划工具。你告诉它“�
 
 | 电脑 | 使用方法与发布状态 |
 | --- | --- |
-| M 系列 Mac，macOS 14+ | 从 Releases 下载 `macOS-arm64.dmg`，打开后将 NaNoBO 拖入“应用程序”。已有经过模拟验收的安装版。 |
-| Windows x64 | 使用 [Windows Hotfix1 安装器](https://github.com/wei-rui499/NaNoBO/releases/download/v0.2.3-windows-hotfix1/NaNoBO-0.2.3-windows-x64-setup-hotfix1-unsigned.exe) 或 [便携版](https://github.com/wei-rui499/NaNoBO/releases/download/v0.2.3-windows-hotfix1/NaNoBO-0.2.3-windows-x64-portable-hotfix1-unsigned.zip)。仅在 Windows 11 x64 实测，Windows 10 未实测。见 [Windows 验收说明](docs/WINDOWS_ACCEPTANCE.md) 与 [安装说明](docs/WINDOWS_BUILD.md)。 |
+| M 系列 Mac，macOS 14+ | 从 Releases 下载 `macOS-arm64.dmg`，打开后将 NanoBO 拖入“应用程序”。已有经过模拟验收的安装版。 |
+| Windows x64 | 从 [0.2.4 发布页](https://github.com/wei-rui499/NanoBO/releases/tag/v0.2.4) 下载 `NanoBO-0.2.4-windows-x64-setup-unsigned.exe` 或便携 ZIP。已包含 Hotfix1 修复；0.2.4 改名包仅构建，运行待使用者确认。此前 Hotfix1 的 Windows 11 验收记录保留在[验收说明](docs/WINDOWS_ACCEPTANCE.md)。 |
 | Intel Mac / Windows ARM64 | 当前没有经过验证的对应安装版。 |
 
 Mac 测试版尚未完成 Apple 公证；首次打开如被系统拦截，可按 [Apple 官方说明](https://support.apple.com/en-us/102445) 在“隐私与安全”中确认。Windows 未签名测试安装器也可能出现系统信誉提示；不要关闭系统安全保护。详细步骤见[完整教程](docs/TUTORIAL.zh-CN.md#1-安装与第一次打开)。
@@ -44,7 +45,7 @@ Mac 测试版尚未完成 Apple 公证；首次打开如被系统拦截，可按
 
 ## 我的实验能用哪些功能？
 
-| 你想解决的问题 | 在 NaNoBO 中怎么做 | 配套练习 |
+| 你想解决的问题 | 在 NanoBO 中怎么做 | 配套练习 |
 | --- | --- | --- |
 | 想提高产率、选择性、信号强度，或降低粒径误差 | 设置一个数值目标，选择最大化或最小化，逐批回填实测结果 | [01：温度、添加剂与产率](examples/tutorial/01_quickstart/) |
 | 移液器只能按固定档位加液，或总量必须固定 | 填写步长，设置总量、线性与配比规则，或导入允许执行的候选配方表 | [02：固定总量配方](examples/tutorial/02_recipe/) |
@@ -78,8 +79,8 @@ Gryffin 和 Atlas 的原生推荐不会附上另一个模型冒充的预测或�
 
 ## 科研模型致谢、许可与引用
 
-NaNoBO 提供桌面界面、实验记录与回填、配方空间、分析图表和安装包。**Gryffin、Phoenics、Chimera、Atlas、Olympus、BoTorch、GPyTorch、scikit-learn 及相关科研方法归各自原作者和团队所有**；保留的 BO-MCP 兼容代码也保留原有归属。NaNoBO 是独立项目。
+NanoBO 提供桌面界面、实验记录与回填、配方空间、分析图表和安装包。**Gryffin、Phoenics、Chimera、Atlas、Olympus、BoTorch、GPyTorch、scikit-learn 及相关科研方法归各自原作者和团队所有**；保留的 BO-MCP 兼容代码也保留原有归属。NanoBO 是独立项目。
 
-使用本软件发表科研结果时，请同时引用 NaNoBO 和**实际使用的方法**：[公开致谢](ACKNOWLEDGMENTS.md) · [引用指南](docs/HOW_TO_CITE.md) · [14 条参考文献与软件引用](REFERENCES.bib) · [CITATION.cff](CITATION.cff)。
+使用本软件发表科研结果时，请同时引用 NanoBO 和**实际使用的方法**：[公开致谢](ACKNOWLEDGMENTS.md) · [引用指南](docs/HOW_TO_CITE.md) · [14 条参考文献与软件引用](REFERENCES.bib) · [CITATION.cff](CITATION.cff)。
 
-NaNoBO 自有代码采用 [Apache-2.0](LICENSE)；上游代码、Qt 等依赖保留各自许可证。完整声明、对应源码和修改记录见 [第三方说明](THIRD_PARTY_NOTICES.md)、[分发说明](docs/THIRD_PARTY.md)及[上游修改记录](docs/UPSTREAM_MODIFICATIONS.md)。
+NanoBO 自有代码采用 [Apache-2.0](LICENSE)；上游代码、Qt 等依赖保留各自许可证。完整声明、对应源码和修改记录见 [第三方说明](THIRD_PARTY_NOTICES.md)、[分发说明](docs/THIRD_PARTY.md)及[上游修改记录](docs/UPSTREAM_MODIFICATIONS.md)。

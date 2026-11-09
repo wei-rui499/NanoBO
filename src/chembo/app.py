@@ -97,7 +97,7 @@ class Window(QMainWindow):
         outer = QVBoxLayout(root)
         outer.setContentsMargins(24, 20, 24, 18)
         heading = QHBoxLayout()
-        title = QLabel("NaNoBO")
+        title = QLabel("NanoBO")
         title.setObjectName("title")
         subtitle = QLabel("化学实验规划  /  本地计算")
         subtitle.setObjectName("muted")
@@ -237,7 +237,7 @@ class Window(QMainWindow):
             action.triggered.connect(callback)
             help_menu.addAction(action)
         help_menu.addSeparator()
-        about_action = QAction("关于 NaNoBO", self)
+        about_action = QAction("关于 NanoBO", self)
         about_action.setMenuRole(QAction.AboutRole)
         about_action.triggered.connect(self.about)
         help_menu.addAction(about_action)
@@ -342,7 +342,7 @@ class Window(QMainWindow):
         self.message.setText("已清除联合约束和候选表；变量步长仍在变量表中，可单独修改。")
 
     def update_title(self):
-        self.setWindowTitle(f"{'● ' if self.dirty else ''}{self.name.text()} — NaNoBO {__version__}")
+        self.setWindowTitle(f"{'● ' if self.dirty else ''}{self.name.text()} — NanoBO {__version__}")
 
     def text(self, table, row, col):
         item = table.item(row, col)
@@ -708,7 +708,7 @@ class Window(QMainWindow):
     def open_tutorial(self, language="zh-CN"):
         path = resources() / "docs" / "html" / f"TUTORIAL.{language}.html"
         if not path.is_file():
-            self.error("未找到随附教程，请重新安装包含教程的完整 NaNoBO 安装包。")
+            self.error("未找到随附教程，请重新安装包含教程的完整 NanoBO 安装包。")
             return
         if not QDesktopServices.openUrl(QUrl.fromLocalFile(str(path))):
             self.error("系统未能打开教程。可从 GitHub 项目的中英文 README 进入使用指南。")
@@ -716,16 +716,16 @@ class Window(QMainWindow):
     def export_tutorial_data(self):
         source = resources() / "examples" / "tutorial"
         if not source.is_dir():
-            self.error("未找到教程练习数据，请重新安装完整 NaNoBO 安装包。")
+            self.error("未找到教程练习数据，请重新安装完整 NanoBO 安装包。")
             return
         parent = QFileDialog.getExistingDirectory(self, "选择练习数据的保存位置")
         if not parent:
             return
         try:
-            destination = Path(parent) / f"NaNoBO-tutorial-{__version__}"
+            destination = Path(parent) / f"NanoBO-tutorial-{__version__}"
             number = 2
             while destination.exists():
-                destination = Path(parent) / f"NaNoBO-tutorial-{__version__} ({number})"
+                destination = Path(parent) / f"NanoBO-tutorial-{__version__} ({number})"
                 number += 1
             shutil.copytree(source, destination)
             self.message.setText(f"练习数据已导出到 {destination}。点击“打开”选择练习文件夹中的 project.chembo.json；数据均为模拟数据。")
@@ -735,12 +735,12 @@ class Window(QMainWindow):
 
     def about(self):
         dialog = QDialog(self)
-        dialog.setWindowTitle("关于 NaNoBO")
+        dialog.setWindowTitle("关于 NanoBO")
         dialog.resize(640, 440)
         layout = QVBoxLayout(dialog)
         text = QPlainTextEdit()
         text.setReadOnly(True)
-        text.setPlainText(f"NaNoBO {__version__}\n\n独立开发的本地实验规划界面，并非上游团队官方桌面产品。\n\nGryffin — Apache-2.0，Copyright (C) 2020 Harvard University\nAtlas — MIT，Copyright (c) 2022 rileyhickman\nBO-MCP — MIT，Copyright (c) 2026 Willi Gottstein\nChimera / Olympus / Golem — 见随附上游许可证\nQt / PySide6 — LGPLv3，动态链接；可重建、替换相容库。\n\n初始点属于实验设计；有足够实测数据后才由模型指导推荐。\n推荐值不是已验证的实验结果，也不保证最优。\n\n源代码、依赖锁定、重建说明及完整第三方声明随项目提供。\n发表科研结果时请引用实际使用的算法论文。")
+        text.setPlainText(f"NanoBO {__version__}\n\n独立开发的本地实验规划界面，并非上游团队官方桌面产品。\n\nGryffin — Apache-2.0，Copyright (C) 2020 Harvard University\nAtlas — MIT，Copyright (c) 2022 rileyhickman\nBO-MCP — MIT，Copyright (c) 2026 Willi Gottstein\nChimera / Olympus / Golem — 见随附上游许可证\nQt / PySide6 — LGPLv3，动态链接；可重建、替换相容库。\n\n初始点属于实验设计；有足够实测数据后才由模型指导推荐。\n推荐值不是已验证的实验结果，也不保证最优。\n\n源代码、依赖锁定、重建说明及完整第三方声明随项目提供。\n发表科研结果时请引用实际使用的算法论文。")
         layout.addWidget(text)
         licenses = QPushButton("打开随附许可证文件夹")
         licenses.clicked.connect(lambda: QDesktopServices.openUrl(QUrl.fromLocalFile(str(resources() / "licenses"))))
@@ -759,8 +759,8 @@ class Window(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-    app.setApplicationName("NaNoBO")
-    app.setOrganizationName("NaNoBO")
+    app.setApplicationName("NanoBO")
+    app.setOrganizationName("NaNoBO")  # Preserve the existing settings namespace.
     app.setFont(QFont("PingFang SC" if sys.platform == "darwin" else "Segoe UI", 11))
     app.setStyleSheet("""
         QMainWindow, QWidget { background: #fcfdfb; color: #233d34; }

@@ -64,7 +64,7 @@ def main():
     consistency={}
     bundle=Path(data['bundle'])
     for python,exe,names in [
-        (ROOT/'.venv/bin/python',bundle/'Contents/MacOS/NaNoBO',['app','engine','space','analysis_view','recipe_dialog','table_io','verification','examples']),
+        (ROOT/'.venv/bin/python',bundle/'Contents/MacOS/NanoBO',['app','engine','space','analysis_view','recipe_dialog','table_io','verification','examples']),
         (ROOT/'.venv-modern/bin/python',bundle/'Contents/Resources/engines/modern/chembo-modern-worker',['engine','space','modeling']),
     ]:
         result=subprocess.check_output([str(python),str(ROOT/'scripts/verify_frozen_sources.py'),str(exe),*names],text=True)
@@ -81,7 +81,7 @@ def main():
               'fixed_defects':['New imported observations now invalidate persisted analysis.','Withdrawing pending conditions now invalidates persisted analysis.','After computation, task-specific disabled controls stay disabled.','Frozen PDF export previously missed its runtime module; PDF/SVG backends are now explicitly bundled and tested.'],
               'scope':NOTICE+' macOS arm64 only; no Windows, Intel Mac, Apple notarization or wet-lab performance validation.'}
     save_project(ROOT/'docs/VALIDATION_V0.2.1.json',evidence)
-    additions=f'''\n\n## 本次完整验收\n\n- 经典运行时全部真实后端回归：{regression['tests']} 项通过，无跳过。\n- 现代运行时与冻结二进制：17 项通过，无跳过。\n- 9 个闭环工作流、41 轮、82 条合成实验、{len(data['checks'])} 项闭环断言通过。\n- 另外 {len(edges['checks'])} 项边界测试通过：候选耗尽／批量不足、30 条留出上限、单类／未见类以及最大批量。\n- 独立重新生成并核对全部 {checked} 条原始合成观测；应用／引擎冻结代码与源码逐项一致。\n- 所有导出图均附 SYNTHETIC 模拟数据声明。\n\n修复并回归验证了四处问题：导入结果后过期分析仍可能保存、撤回待实验后分析仍可能保存、计算结束时错误启用非分类任务的标签框，以及冻结安装包未收集 PDF 导出模块。\n\n[功能覆盖矩阵](FEATURE_MATRIX.md)列出每项功能的证据。可复运行命令：\n\n```sh\nQT_QPA_PLATFORM=offscreen .venv/bin/python scripts/run_simulated_lab.py --output validation/repeated-run --bundle /path/to/NaNoBO.app\nPYTHONPATH=src .venv-modern/bin/python scripts/validate_model_edges.py\n```\n\n开发目录的 Qt 插件如果被云同步标为 hidden，应使用干净复制的插件目录或最终安装包；运行安装包不依赖该开发环境。\n'''
+    additions=f'''\n\n## 本次完整验收\n\n- 经典运行时全部真实后端回归：{regression['tests']} 项通过，无跳过。\n- 现代运行时与冻结二进制：17 项通过，无跳过。\n- 9 个闭环工作流、41 轮、82 条合成实验、{len(data['checks'])} 项闭环断言通过。\n- 另外 {len(edges['checks'])} 项边界测试通过：候选耗尽／批量不足、30 条留出上限、单类／未见类以及最大批量。\n- 独立重新生成并核对全部 {checked} 条原始合成观测；应用／引擎冻结代码与源码逐项一致。\n- 所有导出图均附 SYNTHETIC 模拟数据声明。\n\n修复并回归验证了四处问题：导入结果后过期分析仍可能保存、撤回待实验后分析仍可能保存、计算结束时错误启用非分类任务的标签框，以及冻结安装包未收集 PDF 导出模块。\n\n[功能覆盖矩阵](FEATURE_MATRIX.md)列出每项功能的证据。可复运行命令：\n\n```sh\nQT_QPA_PLATFORM=offscreen .venv/bin/python scripts/run_simulated_lab.py --output validation/repeated-run --bundle /path/to/NanoBO.app\nPYTHONPATH=src .venv-modern/bin/python scripts/validate_model_edges.py\n```\n\n开发目录的 Qt 插件如果被云同步标为 hidden，应使用干净复制的插件目录或最终安装包；运行安装包不依赖该开发环境。\n'''
     titles={'gryffin-single':'Gryffin 单目标','atlas-single':'Atlas 单目标','bo-mcp-single':'BoTorch 单目标','gryffin-chimera':'Gryffin 优先级多目标','recipe-candidates':'步长／总量／配比／候选表','continuous-equality':'连续总量约束','pareto-3d':'三目标 Pareto','classification-2':'成功／失败二分类','classification-3':'形貌三分类'}
     p=FOLDER/'REPORT.md';s=p.read_text();marker='\n\n## 本次完整验收';s=s.split(marker)[0]
     table=[]

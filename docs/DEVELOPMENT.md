@@ -35,21 +35,21 @@ PYTHONPATH=src .venv-modern/bin/python -m unittest discover -s tests -p 'test_mo
 .venv/bin/python scripts/build.py --bundle-only
 ```
 
-现代 worker 必须在主程序构建完成后整体复制，保留自己的 `_internal` 和库搜索路径。构建脚本处理这一点。`dist/NaNoBO.app` 是待最终封装的本地应用目录；这里只承诺构建目录流程，不将历史测试报告冒认为新机器的验证结果。
+现代 worker 必须在主程序构建完成后整体复制，保留自己的 `_internal` 和库搜索路径。构建脚本处理这一点。`dist/NanoBO.app` 是待最终封装的本地应用目录；这里只承诺构建目录流程，不将历史测试报告冒认为新机器的验证结果。
 
 ## 模拟实验与 DMG 发布
 
 `scripts/run_simulated_lab.py` 支持在指定输出目录生成可复现的模拟实验、图表和项目：
 
 ```sh
-QT_QPA_PLATFORM=offscreen .venv/bin/python scripts/run_simulated_lab.py --output validation/repeated-run --bundle dist/NaNoBO.app
+QT_QPA_PLATFORM=offscreen .venv/bin/python scripts/run_simulated_lab.py --output validation/repeated-run --bundle dist/NanoBO.app
 ```
 
 `scripts/package_macos.py` 从 `chembo.__version__` 读取当前版本（本次为 0.2.3），作为发布者封装脚本，会再次签名并验证原生模型、界面和导图。它需要当前机器重新生成的验收资料，按本次目录约定包括：
 
 - `validation/regression-0.2.3.xml`：JUnit 回归结果，不能含失败。
 - `docs/VALIDATION_V0.2.3.json`：本次运行生成的证据。仓库内保留的是经脱敏的历史参考，重发布前应重新生成。
-- `release/NaNoBO-0.2.3-tutorial-examples.zip`：配套合成教学文件。
+- `release/NanoBO-0.2.4-tutorial-examples.zip`：配套合成教学文件。
 - `release/library-sources/`：与实际二进制一致的 LGPL 等对应库源码和校验表；可用 `scripts/fetch_library_sources.py` 准备。
 
 新的克隆不会自动具有这些发布资料。先执行 `--bundle-only`、完成当前版本验证并准备这些附件，再调用封装脚本。修改版本号时同步更新 pyproject、chembo.__version__、构建/封装和源归档版本；旧版本证据保留为历史记录。

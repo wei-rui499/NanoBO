@@ -132,7 +132,7 @@ class Lab:
         root=self.bundle/'Contents'
         if self.window.project['engine']=='bo-mcp':
             return str(root/'Resources/engines/modern/chembo-modern-worker'),[str(request),str(result)]
-        return str(root/'MacOS/NaNoBO'),['--worker',str(request),str(result)]
+        return str(root/'MacOS/NanoBO'),['--worker',str(request),str(result)]
 
     def check(self, name, condition, detail=''):
         record=dict(name=name,status='passed' if condition else 'failed',detail=detail)
@@ -320,12 +320,12 @@ class Lab:
         for case in self.cases:
             metrics=case['analysis'].get('diagnostics',{}).get('metrics',{})
             rows.append(f"| {case['name']} | {case['engine']} | {len(case['rounds'])} | {case['observations']} | {json.dumps(metrics,ensure_ascii=False)} |")
-        text=f'''# NaNoBO 模拟真实实验功能验收\n\n{NOTICE}\n\n状态：{data['status']}。随机种子：{SEED}。通过 {len(self.checks)} 项断言，{len(self.cases)} 个完整工作流。\n\n本次使用真实 Qt 界面数据路径、真实模型计算和合成观测值。模拟的产率曲面包含温度、时间、催化剂效应和固定种子的观测噪声；分类使用预设的类别边界。它验证软件行为，不代表真实反应的预测能力或算法优劣。\n\n| 工作流 | 引擎 | 迭代轮数 | 模拟实测数 | 留一验证指标 |\n| --- | --- | --- | --- | --- |\n'''+ '\n'.join(rows)
+        text=f'''# NanoBO 模拟真实实验功能验收\n\n{NOTICE}\n\n状态：{data['status']}。随机种子：{SEED}。通过 {len(self.checks)} 项断言，{len(self.cases)} 个完整工作流。\n\n本次使用真实 Qt 界面数据路径、真实模型计算和合成观测值。模拟的产率曲面包含温度、时间、催化剂效应和固定种子的观测噪声；分类使用预设的类别边界。它验证软件行为，不代表真实反应的预测能力或算法优劣。\n\n| 工作流 | 引擎 | 迭代轮数 | 模拟实测数 | 留一验证指标 |\n| --- | --- | --- | --- | --- |\n'''+ '\n'.join(rows)
         text+='\n\n## 文件\n\n每个 cases 子目录保留初始项目、每轮请求／引擎结果、待实验 CSV、模拟回填 CSV/XLSX、最终可打开的项目、完整预测和 PNG/PDF/SVG 图。原始数据及判定记录见 RESULTS.json。\n\n## 验证边界\n\n本机 macOS arm64。Windows、Intel Mac、Apple 公证及真实化学湿实验未做。Gryffin/Atlas 诊断接口未开放，已按当前产品范围验收其推荐；增强约束、Pareto、分类和同模型诊断使用 BoTorch。有限域/连续域的候选采样上限仍适用。\n'
         (self.folder/'REPORT.md').write_text(text)
         cards=''.join('<section><h2>'+html.escape(c['name'])+'</h2><p>'+str(c['observations'])+' 个合成观测；'+str(len(c['rounds']))+' 轮闭环</p>'+''.join('<a href="'+html.escape(i)+'"><img src="'+html.escape(i)+'"></a>' for i in c['images'])+'</section>' for c in self.cases)
         checks=''.join('<tr><td>'+html.escape(c['name'])+'</td><td>'+c['status']+'</td></tr>' for c in self.checks)
-        (self.folder/'REPORT.html').write_text('<!doctype html><html lang="zh"><meta charset="utf-8"><title>NaNoBO 模拟实验验收</title><style>body{max-width:1100px;margin:40px auto;padding:0 24px;font:16px -apple-system,BlinkMacSystemFont,sans-serif;color:#233d34;background:#fcfdfb}header{padding:26px;background:#eaf3ee;border-radius:12px}img{width:47%;vertical-align:top;margin:1%;border:1px solid #e0e8e2}table{border-collapse:collapse;width:100%}td{padding:7px;border-bottom:1px solid #ddd}section{margin:40px 0}h2{border-bottom:2px solid #a9cbbb;padding-bottom:10px}</style><header><h1>NaNoBO 模拟真实实验验收</h1><p>'+html.escape(NOTICE)+'</p><p>'+str(len(self.cases))+' 个闭环工作流 · '+str(len(self.checks))+' 项断言通过 · seed '+str(SEED)+'</p><a href="REPORT.md">完整文字报告</a> · <a href="RESULTS.json">原始判定与数据</a></header>'+cards+'<details><summary>逐项检查</summary><table>'+checks+'</table></details></html>')
+        (self.folder/'REPORT.html').write_text('<!doctype html><html lang="zh"><meta charset="utf-8"><title>NanoBO 模拟实验验收</title><style>body{max-width:1100px;margin:40px auto;padding:0 24px;font:16px -apple-system,BlinkMacSystemFont,sans-serif;color:#233d34;background:#fcfdfb}header{padding:26px;background:#eaf3ee;border-radius:12px}img{width:47%;vertical-align:top;margin:1%;border:1px solid #e0e8e2}table{border-collapse:collapse;width:100%}td{padding:7px;border-bottom:1px solid #ddd}section{margin:40px 0}h2{border-bottom:2px solid #a9cbbb;padding-bottom:10px}</style><header><h1>NanoBO 模拟真实实验验收</h1><p>'+html.escape(NOTICE)+'</p><p>'+str(len(self.cases))+' 个闭环工作流 · '+str(len(self.checks))+' 项断言通过 · seed '+str(SEED)+'</p><a href="REPORT.md">完整文字报告</a> · <a href="RESULTS.json">原始判定与数据</a></header>'+cards+'<details><summary>逐项检查</summary><table>'+checks+'</table></details></html>')
         self.window.dirty=False;self.window.close();self.app.processEvents()
         print(f'PASS {len(self.cases)} cases / {len(self.checks)} checks in {data["elapsed_seconds"]}s',flush=True)
 

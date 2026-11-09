@@ -531,7 +531,7 @@ class AnalysisView(QWidget):
         write_csv(path, self._columns, self._rows)
 
     def _choose_figure(self):
-        path, _ = QFileDialog.getSaveFileName(self, "导出当前分析图", "NaNoBO-analysis.png", "PNG (*.png);;PDF (*.pdf);;SVG (*.svg)")
+        path, _ = QFileDialog.getSaveFileName(self, "导出当前分析图", "NanoBO-analysis.png", "PNG (*.png);;PDF (*.pdf);;SVG (*.svg)")
         if path:
             try:
                 self.export_figure(path)
@@ -539,7 +539,7 @@ class AnalysisView(QWidget):
                 QMessageBox.warning(self, "导图失败", str(exc))
 
     def _choose_predictions(self):
-        path, _ = QFileDialog.getSaveFileName(self, "导出候选预测表", "NaNoBO-predictions.csv", "CSV (*.csv)")
+        path, _ = QFileDialog.getSaveFileName(self, "导出候选预测表", "NanoBO-predictions.csv", "CSV (*.csv)")
         if path:
             try:
                 self.export_predictions(path)

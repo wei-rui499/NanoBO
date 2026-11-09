@@ -1,0 +1,30 @@
+{
+  "product": "NanoBO",
+  "version": "0.2.4",
+  "date": "2026-11-09",
+  "change": "Rename NaNoBO to NanoBO in repository, interface, documentation, citations and native installers. Existing Hotfix1 source fixes retained.",
+  "data_status": "SYNTHETIC",
+  "source_regressions": {
+    "tests": 146,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
+  },
+  "name_and_packaging_subset": {
+    "tests": 38,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
+  },
+  "compatibility": {
+    "project_file_format": "unchanged",
+    "mac_bundle_identifier": "org.nanobo.studio",
+    "windows_app_id": "B04C2468-D93F-4641-8D6F-CB7A78600EB1",
+    "historical_release_assets": "original names retained"
+  },
+  "windows": {
+    "runtime_validation_performed": false,
+    "status": "Build and file-integrity checks only for 0.2.4; Hotfix1 historical evidence is separate"
+  },
+  "mac_frozen_validation": "Recorded by package_macos.py in the final release asset; performed before DMG creation."
+}

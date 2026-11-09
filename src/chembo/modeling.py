@@ -1,4 +1,4 @@
-"""Fixed modern planners, posterior predictions and honest validation for NaNoBO.
+"""Fixed modern planners, posterior predictions and honest validation for NanoBO.
 
 Candidates are feasible original-unit recipes. The model ranks that domain;
 recommendations are never rounded or normalized after acquisition optimization.

@@ -22,11 +22,11 @@ def main():
     subprocess.run([sys.executable, str(ROOT / "scripts" / "render_guides.py")], check=True)
     subprocess.run([sys.executable, str(ROOT / "scripts" / "make_icon.py")], check=True)
     subprocess.run([sys.executable, str(ROOT / "scripts" / "collect_licenses.py"), "classic"], check=True)
-    arguments = [sys.executable, "-m", "PyInstaller", "--clean", "--noconfirm", "--windowed", "--onedir", "--name", "NaNoBO", "--paths", str(ROOT / "src"), "--distpath", str(ROOT / "dist"), "--workpath", str(ROOT / "build" / "pyinstaller"), "--specpath", str(ROOT / "build"), "--add-data", f"{ROOT / 'licenses'}{os.pathsep}licenses", "--add-data", f"{modern_folder}{os.pathsep}engines/modern", "--collect-all", "gryffin", "--collect-all", "atlas", "--collect-all", "olympus", "--collect-all", "golem", "--collect-all", "chimera", "--hidden-import", "PySide6.QtSvg", "--hidden-import", "pymoo.algorithms.soo.nonconvex.ga", "--hidden-import", "pymoo.operators.sampling.rnd", "--hidden-import", "pymoo.operators.crossover.sbx", "--hidden-import", "pymoo.operators.mutation.pm", "--hidden-import", "pymoo.termination.default", "--exclude-module", "tkinter", "--exclude-module", "pytest", "--exclude-module", "IPython", "--exclude-module", "jupyterlab", "--exclude-module", "PySide6.QtWebEngineCore", "--exclude-module", "PySide6.QtWebEngineWidgets", "--exclude-module", "PySide6.QtWebEngineQuick", "--exclude-module", "tensorflow", "--exclude-module", "tensorflow_probability"]
+    arguments = [sys.executable, "-m", "PyInstaller", "--clean", "--noconfirm", "--windowed", "--onedir", "--name", "NanoBO", "--paths", str(ROOT / "src"), "--distpath", str(ROOT / "dist"), "--workpath", str(ROOT / "build" / "pyinstaller"), "--specpath", str(ROOT / "build"), "--add-data", f"{ROOT / 'licenses'}{os.pathsep}licenses", "--add-data", f"{modern_folder}{os.pathsep}engines/modern", "--collect-all", "gryffin", "--collect-all", "atlas", "--collect-all", "olympus", "--collect-all", "golem", "--collect-all", "chimera", "--hidden-import", "PySide6.QtSvg", "--hidden-import", "pymoo.algorithms.soo.nonconvex.ga", "--hidden-import", "pymoo.operators.sampling.rnd", "--hidden-import", "pymoo.operators.crossover.sbx", "--hidden-import", "pymoo.operators.mutation.pm", "--hidden-import", "pymoo.termination.default", "--exclude-module", "tkinter", "--exclude-module", "pytest", "--exclude-module", "IPython", "--exclude-module", "jupyterlab", "--exclude-module", "PySide6.QtWebEngineCore", "--exclude-module", "PySide6.QtWebEngineWidgets", "--exclude-module", "PySide6.QtWebEngineQuick", "--exclude-module", "tensorflow", "--exclude-module", "tensorflow_probability"]
     if sys.platform == "darwin":
-        arguments += ["--osx-bundle-identifier", "org.nanobo.studio", "--icon", str(ROOT / "assets" / "NaNoBO.icns")]
+        arguments += ["--osx-bundle-identifier", "org.nanobo.studio", "--icon", str(ROOT / "assets" / "NanoBO.icns")]
     elif sys.platform == "win32":
-        arguments += ["--icon", str(ROOT / "assets" / "NaNoBO.ico")]
+        arguments += ["--icon", str(ROOT / "assets" / "NanoBO.ico")]
     # Olympus has optional legacy planners that intentionally exit on import.
     for index in range(len(arguments) - 2, -1, -1):
         if arguments[index:index + 2] == ["--collect-all", "olympus"]:
@@ -62,12 +62,12 @@ def main():
     release = ROOT / "release"
     release.mkdir(exist_ok=True)
     if sys.platform == "darwin":
-        app = ROOT / "dist" / "NaNoBO.app"
+        app = ROOT / "dist" / "NanoBO.app"
         plist_path = app / "Contents" / "Info.plist"
         with plist_path.open("rb") as stream:
             info = plistlib.load(stream)
         version = app_version(ROOT)
-        info.update(CFBundleName="NaNoBO", CFBundleDisplayName="NaNoBO", CFBundleShortVersionString=version, CFBundleVersion=version, LSMinimumSystemVersion="14.0", NSHighResolutionCapable=True)
+        info.update(CFBundleName="NanoBO", CFBundleDisplayName="NanoBO", CFBundleShortVersionString=version, CFBundleVersion=version, LSMinimumSystemVersion="14.0", NSHighResolutionCapable=True)
         with plist_path.open("wb") as stream:
             plistlib.dump(info, stream)
         destination = app / "Contents" / "Resources" / "engines" / "modern"
@@ -79,9 +79,9 @@ def main():
             return
         subprocess.run([sys.executable, str(ROOT / "scripts" / "package_macos.py")], check=True)
     else:
-        destination = ROOT / "dist" / "NaNoBO" / "_internal" / "engines" / "modern"
+        destination = ROOT / "dist" / "NanoBO" / "_internal" / "engines" / "modern"
         shutil.copytree(modern_folder, destination, symlinks=True, dirs_exist_ok=True)
-        print("Native folder ready: dist/NaNoBO. Build scripts/build_installer.iss with Inno Setup.")
+        print("Native folder ready: dist/NanoBO. Build scripts/build_installer.iss with Inno Setup.")
 
 
 if __name__ == "__main__":

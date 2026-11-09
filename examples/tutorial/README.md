@@ -1,4 +1,4 @@
-# NaNoBO 教程练习数据 / Tutorial exercises
+# NanoBO 教程练习数据 / Tutorial exercises
 
 **全部为 SYNTHETIC 模拟数据，不是真实化学实验，也不是合成建议。**
 
@@ -21,7 +21,7 @@
 
 ## English
 
-All data are **SYNTHETIC**, generated for learning software workflows. Open **Help → English tutorial** in NaNoBO for the full guide.
+All data are **SYNTHETIC**, generated for learning software workflows. Open **Help → English tutorial** in NanoBO for the full guide.
 
 - Open `project.chembo.json` to begin with six measured rows and no pending experiments.
 - Open `empty-project.chembo.json` to practise importing ONE seed file; CSV, XLSX and XLS contain the same rows. Choose the **Results** worksheet.

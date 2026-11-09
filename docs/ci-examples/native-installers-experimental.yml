@@ -69,7 +69,7 @@ jobs:
           $PSNativeCommandUseErrorActionPreference = $true
           .venv\Scripts\python.exe -m pytest tests/test_engine.py tests/test_app.py -q
           .venv\Scripts\python.exe scripts\build.py
-          .venv\Scripts\python.exe scripts\smoke_frozen.py --bundle "dist/NaNoBO"
+          .venv\Scripts\python.exe scripts\smoke_frozen.py --bundle "dist/NanoBO"
       - name: Make the per-user Windows installer
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
@@ -78,7 +78,7 @@ jobs:
             choco install innosetup -y --no-progress
             if ($LASTEXITCODE -ne 0) { throw 'Inno Setup installation failed' }
           }
-          $dist = (Resolve-Path 'dist/NaNoBO').Path
+          $dist = (Resolve-Path 'dist/NanoBO').Path
           & $compiler "/DDistDir=$dist" scripts/build_installer.iss
           if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed' }
       - name: Install without requesting elevation and exercise installed engines
@@ -108,11 +108,11 @@ jobs:
           $PSNativeCommandUseErrorActionPreference = $true
           .venv\Scripts\python.exe scripts/fetch_library_sources.py
           .venv\Scripts\python.exe scripts/source_archive.py
-          Copy-Item release/NaNoBO-0.1.0-source.zip installers/
-          Compress-Archive -Path release/library-sources -DestinationPath installers/NaNoBO-library-sources.zip
+          Copy-Item release/NanoBO-0.1.0-source.zip installers/
+          Compress-Archive -Path release/library-sources -DestinationPath installers/NanoBO-library-sources.zip
       - uses: actions/upload-artifact@v7
         with:
-          name: NaNoBO-windows-x64-unsigned
+          name: NanoBO-windows-x64-unsigned
           path: installers/*
           if-no-files-found: error
           compression-level: 0
@@ -156,20 +156,20 @@ jobs:
         run: |
           .venv/bin/python -m pytest tests/test_engine.py tests/test_app.py -q
           .venv/bin/python scripts/build.py
-          .venv/bin/python scripts/smoke_frozen.py --bundle "dist/NaNoBO.app"
+          .venv/bin/python scripts/smoke_frozen.py --bundle "dist/NanoBO.app"
       - name: Archive the unsigned app with executable permissions
         run: |
           mkdir -p installers
-          ditto -c -k --sequesterRsrc --keepParent "dist/NaNoBO.app" installers/NaNoBO-macos-arm64-unsigned.zip
+          ditto -c -k --sequesterRsrc --keepParent "dist/NanoBO.app" installers/NanoBO-macos-arm64-unsigned.zip
           .venv/bin/python -m pip freeze > installers/macos-arm64-classic-resolved.txt
           .venv-modern/bin/python -m pip freeze > installers/macos-arm64-modern-resolved.txt
           .venv/bin/python scripts/fetch_library_sources.py
           .venv/bin/python scripts/source_archive.py
-          cp release/NaNoBO-0.1.0-source.zip installers/
-          ditto -c -k --keepParent release/library-sources installers/NaNoBO-library-sources.zip
+          cp release/NanoBO-0.1.0-source.zip installers/
+          ditto -c -k --keepParent release/library-sources installers/NanoBO-library-sources.zip
       - uses: actions/upload-artifact@v7
         with:
-          name: NaNoBO-macos-arm64-unsigned
+          name: NanoBO-macos-arm64-unsigned
           path: installers/*
           if-no-files-found: error
           compression-level: 0

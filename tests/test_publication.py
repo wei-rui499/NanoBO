@@ -26,7 +26,7 @@ def test_source_archive_keeps_citations_and_excludes_private_metadata(tmp_path,m
     target=script.main()
     with zipfile.ZipFile(target) as archive:
         names=set(archive.namelist())
-        assert {'NaNoBO/CITATION.cff','NaNoBO/REFERENCES.bib','NaNoBO/ACKNOWLEDGMENTS.md'}<=names
+        assert {'NanoBO/CITATION.cff','NanoBO/REFERENCES.bib','NanoBO/ACKNOWLEDGMENTS.md'}<=names
         assert not any('project-inventory' in name or name.endswith(('.DS_Store','._app.py','link.py','.pyxbldc')) for name in names)
 
 

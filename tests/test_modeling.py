@@ -19,7 +19,7 @@ from chembo.space import feasible
 
 def project():
     return {
-        "name": "NaNoBO native models", "engine": "bo-mcp", "seed": 42, "batch_size": 2,
+        "name": "NanoBO native models", "engine": "bo-mcp", "seed": 42, "batch_size": 2,
         "parameters": [{"name": "x", "type": "continuous", "low": 0, "high": 1, "step": 0.05}],
         "objectives": [{"name": "loss", "goal": "min", "tolerance": 0.2}],
         "observations": [], "pending": [], "_modeling_v2": True,

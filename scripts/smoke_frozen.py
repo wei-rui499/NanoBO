@@ -1,8 +1,8 @@
 """Exercise bundled engines without using the developer environment.
 
 Run with any Python after native packaging, or against a silent-installed app:
-    python scripts/smoke_frozen.py --bundle "dist/NaNoBO"
-    python scripts/smoke_frozen.py --bundle "dist/NaNoBO.app"
+    python scripts/smoke_frozen.py --bundle "dist/NanoBO"
+    python scripts/smoke_frozen.py --bundle "dist/NanoBO.app"
 """
 import argparse
 import json
@@ -18,9 +18,9 @@ def smoke(bundle):
     bundle = bundle.resolve()
     windows = sys.platform == "win32"
     if bundle.suffix == ".app":
-        executable = bundle / "Contents" / "MacOS" / "NaNoBO"
+        executable = bundle / "Contents" / "MacOS" / "NanoBO"
     else:
-        executable = bundle / ("NaNoBO.exe" if windows else "NaNoBO")
+        executable = bundle / ("NanoBO.exe" if windows else "NanoBO")
     if not executable.is_file():
         raise RuntimeError(f"Main application is missing: {executable}")
     modern_name = "chembo-modern-worker.exe" if windows else "chembo-modern-worker"

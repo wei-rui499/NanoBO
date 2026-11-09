@@ -101,7 +101,7 @@ def write_csv(path, columns, rows):
 def write_excel(path, columns, rows):
     from openpyxl import Workbook
     book = Workbook()
-    book.properties.creator = "NaNoBO tutorial generator"
+    book.properties.creator = "NanoBO tutorial generator"
     book.properties.created = book.properties.modified = datetime(2026, 11, 1)
     sheet = book.active
     sheet.title = "Results"

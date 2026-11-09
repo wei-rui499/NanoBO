@@ -1,16 +1,16 @@
 cff-version: 1.2.0
 type: software
 message: >-
-  If you use NaNoBO, cite this software version and the original research
+  If you use NanoBO, cite this software version and the original research
   methods actually used. See docs/HOW_TO_CITE.md and REFERENCES.bib.
-title: "NaNoBO: local desktop experiment planning for chemists"
+title: "NanoBO: local desktop experiment planning for chemists"
 authors:
-  - name: "NaNoBO contributors"
-version: "0.2.3"
-date-released: "2026-11-01"
+  - name: "NanoBO contributors"
+version: "0.2.4"
+date-released: "2026-11-09"
 license: Apache-2.0
-repository-code: "https://github.com/wei-rui499/NaNoBO"
-url: "https://github.com/wei-rui499/NaNoBO"
+repository-code: "https://github.com/wei-rui499/NanoBO"
+url: "https://github.com/wei-rui499/NanoBO"
 abstract: >-
   An independent desktop interface integrating existing scientific optimization
   methods with local data entry, executable recipe domains, diagnostics,

@@ -40,7 +40,7 @@ def main():
         target.parent.mkdir(parents=True, exist_ok=True)
         if not target.exists() or hashlib.sha256(target.read_bytes()).hexdigest() != item["sha256"]:
             print("Downloading", item["component"], item["version"], flush=True)
-            request = urllib.request.Request(item["url"], headers={"User-Agent": "NaNoBO-build/0.1"})
+            request = urllib.request.Request(item["url"], headers={"User-Agent": "NanoBO-build/0.1"})
             with urllib.request.urlopen(request, timeout=120) as response:
                 data = response.read()
             if hashlib.sha256(data).hexdigest() != item["sha256"]:

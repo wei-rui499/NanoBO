@@ -57,27 +57,27 @@ def packager(monkeypatch):
 
 
 def test_portable_keeps_runtime_and_tutorial_paths(packager, tmp_path):
-    folder = tmp_path / "NaNoBO"
-    expected = {"NaNoBO.exe": b"MZ fixture", "_internal/docs/html/TUTORIAL.en.html": b"Offline tutorial", "_internal/examples/tutorial/01.chembo.json": b'{"synthetic":true}'}
+    folder = tmp_path / "NanoBO"
+    expected = {"NanoBO.exe": b"MZ fixture", "_internal/docs/html/TUTORIAL.en.html": b"Offline tutorial", "_internal/examples/tutorial/01.chembo.json": b'{"synthetic":true}'}
     for name, data in expected.items():
         target = folder / name
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
     target = tmp_path / "portable.zip"
-    packager.zip_tree(folder, target, "NaNoBO")
+    packager.zip_tree(folder, target, "NanoBO")
     with zipfile.ZipFile(target) as archive:
-        assert {name: archive.read("NaNoBO/" + name) for name in expected} == expected
+        assert {name: archive.read("NanoBO/" + name) for name in expected} == expected
         assert archive.testzip() is None
 
 
 def test_incomplete_bundle_cannot_be_packaged(packager, tmp_path):
-    (tmp_path / "NaNoBO.exe").write_bytes(b"MZ fixture")
+    (tmp_path / "NanoBO.exe").write_bytes(b"MZ fixture")
     with pytest.raises(RuntimeError, match="python310.dll"):
         packager.bundle_inventory(tmp_path)
 
 
 def test_unexpected_link_is_not_silently_published(packager, tmp_path):
-    folder = tmp_path / "NaNoBO"
+    folder = tmp_path / "NanoBO"
     folder.mkdir()
     (tmp_path / "outside.txt").write_text("outside the application")
     try:
@@ -85,7 +85,7 @@ def test_unexpected_link_is_not_silently_published(packager, tmp_path):
     except OSError:
         pytest.skip("This test host cannot create symlinks")
     with pytest.raises(RuntimeError, match="symbolic link"):
-        packager.zip_tree(folder, tmp_path / "portable.zip", "NaNoBO")
+        packager.zip_tree(folder, tmp_path / "portable.zip", "NanoBO")
 
 
 def test_cython_can_regenerate_a_file_with_a_modification_notice(monkeypatch, tmp_path):

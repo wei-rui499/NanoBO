@@ -31,7 +31,7 @@ def bundle_inventory(bundle):
     """Check required distributed files, without importing or executing them."""
     bundle = Path(bundle)
     required = [
-        "NaNoBO.exe", "_internal/python310.dll",
+        "NanoBO.exe", "_internal/python310.dll",
         "_internal/engines/modern/chembo-modern-worker.exe",
         "_internal/engines/modern/_internal/python313.dll",
         "_internal/docs/html/index.html",
@@ -85,39 +85,39 @@ def main():
     version = app_version(ROOT)
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
-    bundle = ROOT / "dist/NaNoBO"
+    bundle = ROOT / "dist/NanoBO"
     inventory = bundle_inventory(bundle)
     subprocess.run([
         str(args.compiler), f"/DAppVersion={version}", f"/DDistDir={bundle}",
         f"/O{output}", str(ROOT / "scripts/build_installer.iss"),
     ], check=True, cwd=ROOT)
-    installer = output / f"NaNoBO-{version}-windows-x64-setup-unsigned.exe"
+    installer = output / f"NanoBO-{version}-windows-x64-setup-unsigned.exe"
     if not installer.is_file() or installer.stat().st_size < 1024 * 1024:
         raise RuntimeError("The native installer was not produced")
     with installer.open("rb") as stream:
         if stream.read(2) != b"MZ":
             raise RuntimeError("The installer does not have a Windows PE header")
-    portable = output / f"NaNoBO-{version}-windows-x64-portable-unsigned.zip"
-    zip_tree(bundle, portable, "NaNoBO")
+    portable = output / f"NanoBO-{version}-windows-x64-portable-unsigned.zip"
+    zip_tree(bundle, portable, "NanoBO")
     # Attach the exact build input, rather than promising that a Mac archive
     # contains the generated Windows extension source/metadata.
     subprocess.run([sys.executable, str(ROOT / "scripts/source_archive.py")], check=True, cwd=ROOT)
-    source = ROOT / "release" / f"NaNoBO-{version}-source.zip"
+    source = ROOT / "release" / f"NanoBO-{version}-source.zip"
     if not source.is_file():
         raise RuntimeError(f"Matching source archive is missing: {source.name}")
-    windows_source = output / f"NaNoBO-{version}-windows-source.zip"
+    windows_source = output / f"NanoBO-{version}-windows-source.zip"
     shutil.copy2(source, windows_source)
     corresponding = ROOT / "release/library-sources"
     if not (corresponding / "SOURCE-ARCHIVES.json").is_file():
         raise RuntimeError("Fetch exact corresponding library sources before Windows packaging")
-    library_source = output / f"NaNoBO-{version}-windows-library-sources.zip"
+    library_source = output / f"NanoBO-{version}-windows-library-sources.zip"
     zip_tree(corresponding, library_source, "library-sources", zipfile.ZIP_STORED)
     asset_paths = [installer, portable, windows_source, library_source]
     for name in ("LICENSE", "ACKNOWLEDGMENTS.md", "THIRD_PARTY_NOTICES.md", "CITATION.cff", "REFERENCES.bib"):
         shutil.copy2(ROOT / name, output / name)
         asset_paths.append(output / name)
     report = {
-        "product": "NaNoBO", "version": version, "platform": "Windows", "architecture": "x64",
+        "product": "NanoBO", "version": version, "platform": "Windows", "architecture": "x64",
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "source_commit": os.environ.get("GITHUB_SHA"),
         "status": "BUILD_ONLY_RUNTIME_UNVERIFIED",

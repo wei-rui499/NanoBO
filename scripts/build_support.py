@@ -10,4 +10,4 @@ def app_version(root):
             value = ast.literal_eval(item.value)
             if isinstance(value, str) and value:
                 return value
-    raise RuntimeError("NaNoBO __version__ is missing")
+    raise RuntimeError("NanoBO __version__ is missing")
