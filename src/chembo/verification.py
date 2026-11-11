@@ -6,6 +6,7 @@ from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
 from chembo.app import Window, example_project
 from chembo.examples import workflow_example
+from chembo.i18n import language, set_language, tr
 
 
 XLS_FIXTURE = 'eJztWEFIFFEY/t64u+4uus7aKmggi5CZeYkuXXRSSE+J1aGIoFZ3EHFZY+myXbJsj4HgqegieOlieamkgroFBUYdgiDYrWOnoKCD7vj//8zQagbOQS143/C+98///n/ev/P+9/a9ebeaLC8st1ewBf2oQ9WJIVKjU1Ri/o0JanccFv06SsXR+K8Qi9JARsJ41vi2nseQx7sCA49Cr4iBL1Qu4SpGpvN2eg8xKDFkFMfQR6xwnzQJtElUzcLjwgeEH4rlc+GTorkj3Ee2ZXURq9ZIzwkviy8YndKWAD/3ifh8Es0xtOA1Z/GNOeXahjFQmMzk/s2GjlADFkHjNmzn7UImV0aKBnARP5008MOfqS/TWr+3egXS/9qsr99GP2+EgBk4VyTBS5SQK3XcEkHOnsiMF9fIj9OSC438QBgoTtq5bJzu3Ylrbpq4jZLQDcRZNImcFF+Tlua1B9/fnx4btS6LZkYWa3dJP8RRwMFN9iDnhLRIIGLbI3xU+JY89aDI7cIpSkaqu0ZbPGFoVmxuS2sX9XNc8ME6XCN3k1z6duZpR+mrdYTkpeHK9dTSR2sBnfQXkyV/vmbRq3rVvbuMFcuvlTf9Pwu3/bEURA3Ti91xX7RqwjriIiaF3Tt+O8qzV1vsX1AfSuzPCbsjwJbGNpaG2LwRjohlv9GMx6ymxeg34tDQ0NDQ0NDQ0NDYV7gbX3e7z8cAOmLIFpbPFPxdZ51Kdb8/UmjsGs5imq5rdDA9hTzVBRQD5U8rwsp/ltqhj/+9kHGeei9gCmMSx1Sgvhl0+FK1v2fHjmbgrv6GwP1Xg8S5y/1vAOtjwJ8='
@@ -23,13 +24,27 @@ def verify_files_and_exports(window):
     checks = []
     from chembo.app import resources
     asset_root = resources()
-    for language in ("zh-CN", "en"):
-        if not (asset_root / "docs/html" / f"TUTORIAL.{language}.html").is_file():
-            raise RuntimeError("Missing offline tutorial: " + language)
+    for tutorial_language in ("zh-CN", "en"):
+        if not (asset_root / "docs/html" / f"TUTORIAL.{tutorial_language}.html").is_file():
+            raise RuntimeError("Missing offline tutorial: " + tutorial_language)
     for exercise in ("01_quickstart", "02_recipe", "03_pareto", "04_classification"):
         if not (asset_root / "examples/tutorial" / exercise / "project.chembo.json").is_file():
             raise RuntimeError("Missing tutorial exercise: " + exercise)
     checks.append({"case": "frozen-tutorial-resources", "languages": ["zh-CN", "en"], "exercise_folders": 4})
+    snapshot = window.collect()
+    analysis = window.analysis_view.analysis.copy()
+    selected = window.analysis_view.tabs.currentIndex()
+    original_language = language()
+    for selected_language in ('en', 'zh-CN'):
+        set_language(selected_language, persist=False)
+        if window.collect() != snapshot or window.analysis_view.analysis != analysis:
+            raise RuntimeError('Language switching changed the experiment or analysis')
+        if window.analysis_view.tabs.currentIndex() != selected:
+            raise RuntimeError('Language switching reset the selected chart')
+        if window.analysis_view.table.horizontalHeaderItem(0).text() != tr('候选编号'):
+            raise RuntimeError('Prediction headers did not follow the interface language')
+    checks.append({'case': 'frozen-bilingual-interface', 'languages': ['zh-CN', 'en'], 'experiment_preserved': True, 'analysis_preserved': True})
+    set_language('en', persist=False)
     with tempfile.TemporaryDirectory(prefix="nanobo-frozen-export-") as directory:
         folder = Path(directory)
         expected = [{"A": .2, "yield": 0.0}, {"A": .5, "yield": 1.0}]
@@ -60,6 +75,7 @@ def verify_files_and_exports(window):
         if (folder / "predictions.csv").stat().st_size < 200:
             raise RuntimeError("Frozen predictions export is empty")
         checks.append({"case": "frozen-plot-and-table-exports", "figure_files": 15, "prediction_csv": True})
+    set_language(original_language, persist=False)
     return checks
 
 

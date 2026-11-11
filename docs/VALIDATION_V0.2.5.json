@@ -1,0 +1,37 @@
+{
+  "product": "SynthBO",
+  "version": "0.2.5",
+  "date": "2026-11-11",
+  "data_status": "SYNTHETIC",
+  "change": "Bilingual desktop interface with a persistent one-button language switch, English figures and screenshot-based Chinese/English tutorials.",
+  "source_regressions": {
+    "tests": 163,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "tutorial_import_and_refill_checks": {
+    "tests": 18,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "interface_cases": [
+    "four workflows preserve projects on language changes",
+    "unsaved partial input is preserved",
+    "live calculation remains active",
+    "all fourteen plot modes preserve model data and selector state",
+    "English prediction CSV and chart exports",
+    "standard Qt controls and recipe dialog translate",
+    "English labeled CSV/XLS/XLSX practice files match their projects"
+  ],
+  "windows": {
+    "baseline_release": "v0.2.4",
+    "baseline_sha256": "07905f83af0ff4c8586dba1be83e363fb4a70bc61073cc083bf4a91ce3ee8be5",
+    "baseline_runtime_success_reported_by_user": true,
+    "new_windows_ui_runtime_validation_performed": false,
+    "preservation": "Scientific source, unrelated frozen modules, native libraries and complete modern worker retained; verified during Windows packaging."
+  },
+  "mac_frozen_validation": "Recorded by package_macos.py in MAC_VALIDATION before DMG creation.",
+  "scientific_authorship": "Original model authors, licenses and citations retained."
+}

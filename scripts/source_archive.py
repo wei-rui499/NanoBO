@@ -9,7 +9,7 @@ VERSION = re.search(r'__version__ = "([^"]+)"', (ROOT / "src/chembo/__init__.py"
 
 
 def main():
-    target = ROOT / "release" / f"NanoBO-{VERSION}-source.zip"
+    target = ROOT / "release" / f"SynthBO-{VERSION}-source.zip"
     target.parent.mkdir(exist_ok=True)
     prefixes = ("src", "tests", "scripts", "docs", "research", "assets", "licenses", ".github", "examples")
     excluded = {".git", "__pycache__", "build", "dist", "node_modules", ".pytest_cache"}
@@ -34,7 +34,7 @@ def main():
                 include = package in ("gryffin", "atlas", "olympus-runtime") and (rest.startswith("src/") or "/" not in rest)
                 include |= package == "bo-mcp" and (rest.startswith("packages/bo-engine/") or rest in ("LICENSE", "README.md", "UPSTREAM_REVISION"))
             if include and path.suffix not in (".pyc", ".pyxbldc", ".so", ".pyd", ".dylib") and path.stat().st_size < 5000000:
-                archive.write(path, "NanoBO/" + str(relative))
+                archive.write(path, "SynthBO/" + str(relative))
     print(target)
     return target
 

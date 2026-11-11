@@ -1,8 +1,12 @@
-# NanoBO 使用教程：跟着模拟实验学会规划下一批
+# SynthBO 使用教程：跟着模拟实验学会规划下一批
+
+希望每一步都有截图时，直接按[64 步逐步截图指南](STEP_BY_STEP.zh-CN.md)操作。本教程全部截图和导出图采用英文界面，配套数据位于 en/ 文件夹。
 
 **简体中文** | [English](TUTORIAL.en.md) | [返回项目首页](../README.md)
 
-本教程对应 **NanoBO 0.2.3 及更新版本**。旧版用户请先更新，才能看到新增的离线教程和练习导出入口。
+本教程对应 **SynthBO 0.2.5**。窗口右上角的 **English / 中文** 按钮可即时切换界面语言，无需重启。菜单、配方设置、图表、预测表表头及导出提示一并切换，重新打开后仍保留上次选择。项目名称、变量名、单位、类别标签、备注和实验数值保持原文；切换时不会清空未保存的输入、图表或正在运行的计算。
+
+“使用教程”按钮会打开当前界面语言的离线指南；“帮助”菜单也可分别打开中文、英文教程。第三方引擎的原始运行日志保留其原文，便于排错。
 
 这份教程面向会设计实验、会用 Excel，但没有编程经验的化学研究者。你不必先学习贝叶斯优化公式：把已有实验放进软件，让软件建议下一批条件；做完实验，再把结果填回来。
 
@@ -25,11 +29,11 @@
 
 ## 1. 安装与第一次打开
 
-从 [GitHub Releases](https://github.com/wei-rui499/NanoBO/releases) 下载与你的电脑匹配的安装包。应用已包括计算引擎，日常使用不需要安装 Python、WSL、Docker 或申请 API 账户。科学计算在本机进行；打开在线 GitHub 链接才需要联网。
+从 [GitHub Releases](https://github.com/wei-rui499/SynthBO/releases) 下载与你的电脑匹配的安装包。应用已包括计算引擎，日常使用不需要安装 Python、WSL、Docker 或申请 API 账户。科学计算在本机进行；打开在线 GitHub 链接才需要联网。
 
 | 电脑 | 安装方法 | 当前状态 |
 | --- | --- | --- |
-| Apple Silicon Mac（M 系列，macOS 14+） | 打开 `.dmg`，把 NanoBO.app 拖入 Applications，再从 Applications 启动 | 科研测试包尚未 Apple 公证。若系统提示无法确认开发者，可在系统“隐私与安全”中检查应用来源并选择允许打开；无需修改系统级安全设置。 |
+| Apple Silicon Mac（M 系列，macOS 14+） | 打开 `.dmg`，把 SynthBO.app 拖入 Applications，再从 Applications 启动 | 科研测试包尚未 Apple 公证。若系统提示无法确认开发者，可在系统“隐私与安全”中检查应用来源并选择允许打开；无需修改系统级安全设置。 |
 | Windows x64 | 使用 Windows Hotfix1 或后续修复版安装器，运行后从开始菜单启动 | Hotfix1 修复了原 0.2.3 测试包的模型启动与日志问题；以该安装包随附的 Windows 验收记录为准。 |
 | Intel Mac | 暂不使用 arm64 的 Mac 包 | 当前没有经过验证的 Intel Mac 完整安装包。 |
 
@@ -37,13 +41,26 @@
 
 新版 **帮助 → 中文使用教程 / English tutorial** 打开随应用附带的离线教程。**帮助 → 导出教程练习数据…** 把练习复制到你指定的文件夹。请使用这份可写副本，不直接修改安装目录。源码用户也可使用 [examples/tutorial](../examples/tutorial)。下文的 `examples/tutorial` 指仓库内位置；安装应用导出后，它对应你保存的练习根目录，各个 `01_quickstart` 等文件夹的用法相同。
 
+本教程的英文截图使用导出数据中 **en/** 文件夹下的样例。原始中文标签目录仍可使用；分类数据不可混用两种语言的标签。英文标签对应关系为 Aggregated＝团聚、Spheres＝球形、Rods＝棒状、Success＝成功、Failure＝失败。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 01: English SynthBO interface](screenshots/steps/01-main-window.png)
+
+![Step 02: English SynthBO interface](screenshots/steps/02-language-button.png)
+
+![Step 03: English SynthBO interface](screenshots/steps/03-help-menu.png)
+
+![Step 04: English SynthBO interface](screenshots/steps/04-export-practice-data.png)
+
 ## 2. 十分钟完成一次实验循环
 
 这一节使用 `examples/tutorial/01_quickstart`，先不改任何参数。
 
 ### 2.1 打开已经填好数据的项目
 
-1. 点顶部 **打开**，选择 `01_quickstart/project.chembo.json`。
+1. 点顶部 **打开**，选择 `en/01_quickstart/project.chembo.json`。
 2. 检查底部：**已完成 6 个实验，待实验 0 个**。
 3. 左侧应为 **数值优化 / 优先级**、**BoTorch · 优化与分类**、本批实验数 **2**、随机种子 **42**。
 
@@ -58,6 +75,15 @@
 
 共有 20 个合法组合，6 个已有结果，初始最佳模拟产率为 **73.5**。打开项目已载入这些设置，不需要重新输入。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 05: English SynthBO interface](screenshots/steps/05-open-project.png)
+
+![Step 06: English SynthBO interface](screenshots/steps/06-six-measured-results.png)
+
+![Step 07: English SynthBO interface](screenshots/steps/07-task-engine-batch-seed.png)
+
 ### 2.2 先看模型如何理解已有数据
 
 1. 点 **分析与交叉验证**，等待完成。
@@ -66,6 +92,15 @@
 4. 切换 **模型验证 → 预测与实测**，应显示 **验证 6 行**，以及 RMSE、MAE、R²。
 
 分析只检查模型，不排队新实验，此时仍为 6 个已完成、0 个待实验。预测的具体小数可能随平台或数值库版本略有差异；首先检查任务状态、候选数量和数据对应关系。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 08: English SynthBO interface](screenshots/steps/08-calculating.png)
+
+![Step 09: English SynthBO interface](screenshots/steps/09-fourteen-candidate-predictions.png)
+
+![Step 10: English SynthBO interface](screenshots/steps/10-six-row-cross-validation.png)
 
 ### 2.3 让软件提出下一批条件
 
@@ -77,6 +112,13 @@
 CSV 含变量列和空的 `yield_pct` 列。空目标表示“还没有测”，不是产率 0。待实验表不可直接编辑，请在导出的表里填结果。
 
 生成时的预测表保留本次选择前的 14 个候选，以“本批推荐 = 是”标记选中的 2 行。这时再点一次 **分析与交叉验证**，已排队的 2 条被排除，应剩 **12 个未测且未排队候选**。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 11: English SynthBO interface](screenshots/steps/11-two-pending-experiments.png)
+
+![Step 12: English SynthBO interface](screenshots/steps/12-export-pending-csv.png)
 
 ### 2.4 用模拟答案完成“做实验并回填”
 
@@ -93,6 +135,15 @@ CSV 含变量列和空的 `yield_pct` 列。空目标表示“还没有测”，
 **不要直接用 `followup-results.csv` 回填刚生成的建议。** 它对应单独的固定待实验练习，见第 3.2 节；新推荐的条件应逐一查完整模拟答案。
 
 一批实验没有提高最佳产率，不一定表示流程有错：模型也会选择不确定的区域以收集信息。保存每轮数据，再判断整个实验过程。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 13: English SynthBO interface](screenshots/steps/13-import-measured-csv.png)
+
+![Step 14: English SynthBO interface](screenshots/steps/14-eight-completed-zero-pending.png)
+
+![Step 15: English SynthBO interface](screenshots/steps/15-save-project.png)
 
 ### 2.5 完成一轮后的图表示例
 
@@ -132,11 +183,21 @@ Excel 中 **ReadMe** 是说明页，不是结果页。`.xls` 是真实旧版 Exc
 
 这验证“回填完整结果后自动移除匹配待实验”，不假定不同平台的优化器一定推荐同样两条条件。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 54: English SynthBO interface](screenshots/steps/54-select-pending-condition.png)
+
 ### 3.3 初始没有结果时会怎样
 
 打开 `empty-project.chembo.json`，不导入起始数据，直接生成下一批。数值结果少于 2 条时做合法候选中的分散初始设计；分类实际只见过一个类别时也先探索，不提供虚构概率。预测图会解释尚无已拟合模型。
 
 完成若干实验并回填后才有后验预测。练习完初始设计，应重新打开原教学项目，不把不同练习状态混在一起。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 41: English SynthBO interface](screenshots/steps/41-initial-design-without-probabilities.png)
 
 ## 4. 从零建立自己的项目
 
@@ -153,6 +214,11 @@ Excel 中 **ReadMe** 是说明页，不是结果页。`.xls` 是真实旧版 Exc
 
 初学、需要约束和详细图表时，选 **BoTorch · 优化与分类**。这不是对不同算法效果的排名。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 16: English SynthBO interface](screenshots/steps/16-new-project.png)
+
 ### 4.2 填写变量表
 
 点 **＋ 变量**，填写变量名、类型、范围、类别、单位、步长：
@@ -168,6 +234,11 @@ Excel 中 **ReadMe** 是说明页，不是结果页。`.xls` 是真实旧版 Exc
 
 类别不填数值上下限和步长。删除时选中变量行，点 **删除选中变量**。已有数据时先另存版本再改结构；软件不会把旧列悄悄重新命名。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 17: English SynthBO interface](screenshots/steps/17-variable-types-and-steps.png)
+
 ### 4.3 目标与标签
 
 数值目标填写名称和 **最大化 / 最小化**，如 `yield_pct` 最大化、`size_error_nm` 最小化。百分数可填 73.5，但同一列别混用 0.735 和 73.5。
@@ -176,11 +247,23 @@ Excel 中 **ReadMe** 是说明页，不是结果页。`.xls` 是真实旧版 Exc
 
 “容忍比例”只在 Gryffin 优先级多目标显示，是 Chimera 相对容忍设置，不是安全阈值、测量误差或“允许失败 20%”。BoTorch／Pareto 不使用它。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 18: English SynthBO interface](screenshots/steps/18-objective-goal-and-notes.png)
+
+![Step 34: English SynthBO interface](screenshots/steps/34-classification-label-settings.png)
+
 ### 4.4 批量与随机种子
 
 **本批实验数**是本次排队数量，范围 1–24。不会为凑够数量而重复已测或已排队条件。
 
 **随机种子**帮助复现。完整项目、数据、待实验和环境相同时更容易重复计算；固定种子不承诺跨所有系统和库版本逐位相同。正式研究应保存软件版本和原始数据。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 07: English SynthBO interface](screenshots/steps/07-task-engine-batch-seed.png)
 
 ### 4.5 录入与导入
 
@@ -200,6 +283,15 @@ temperature_C,cycles,additive,yield_pct
 
 **导入追加记录，也允许重复实验。** 不按文件名去重；同一份六行文件导入两次会成 12 行。请区分真正重复测量与重复导入。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 19: English SynthBO interface](screenshots/steps/19-import-excel.png)
+
+![Step 20: English SynthBO interface](screenshots/steps/20-select-results-worksheet.png)
+
+![Step 21: English SynthBO interface](screenshots/steps/21-manual-experiment-row.png)
+
 ## 5. 总量、步长与合法配方
 
 打开 `02_recipe/project.chembo.json`。假想 A、B 总量为 1 mL、A/B 在 0.25–4、老化时间只能 10/20/30 min。已有 6 条结果，合法候选 21 个。
@@ -207,6 +299,11 @@ temperature_C,cycles,additive,yield_pct
 ### 5.1 规定可执行档位
 
 变量表中 `A_mL`、`B_mL` 步长均为 0.1；`aging_min` 为整数、步长 10。建议从这些档位选择，不是在任意小数建议后随意四舍五入。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 17: English SynthBO interface](screenshots/steps/17-variable-types-and-steps.png)
 
 ### 5.2 添加总量或线性规则
 
@@ -217,9 +314,21 @@ temperature_C,cycles,additive,yield_pct
 
 数值变量的系数默认可能是 1，**不参与求和的变量务必改为 0**。不能直接把分钟和毫升相加。也可用 `≤`、`≥`表达预算上限或用量下限，例如 `2 × A + B ≤ 3`，各项必须量纲一致。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 22: English SynthBO interface](screenshots/steps/22-recipe-rules.png)
+
+![Step 23: English SynthBO interface](screenshots/steps/23-total-volume-rule.png)
+
 ### 5.3 添加配比
 
 点 **＋ 配比**，分子 `A_mL`，分母 `B_mL`，最小 **0.25**、最大 **4**。分母必须大于零。所有规则同时生效。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 24: English SynthBO interface](screenshots/steps/24-ratio-rule.png)
 
 ### 5.4 导入候选配方清单
 
@@ -229,9 +338,16 @@ temperature_C,cycles,additive,yield_pct
 
 生成两条后检查：A+B=1、0.25≤A/B≤4、体积符合 0.1 档位、时间为 10/20/30。若实验实际执行了不同条件，应按真实执行值回填，不篡改真实数据以匹配建议。
 
-![练习 2 回填到 8 条模拟结果后的合法配方预测图](screenshots/tutorial-recipe.png)
+![练习 2 在 6 条模拟结果及 2 个待实验条件下的合法配方预测图](screenshots/tutorial-recipe.png)
 
-本图由应用对**8 条模拟结果**拟合后实际导出。21 个合法配方中已有 8 个完成，图中比较其余 13 个候选；它们的总量、配比和步长仍受同一组规则约束。预测值不是真实测得的产率。
+本图由应用对**6 条模拟结果**拟合后实际导出。21 个合法配方中有 6 个完成、2 个待实验，图中比较其余 13 个候选；它们的总量、配比和步长仍受同一组规则约束。预测值不是真实测得的产率。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 25: English SynthBO interface](screenshots/steps/25-import-candidates.png)
+
+![Step 26: English SynthBO interface](screenshots/steps/26-allowed-candidate-preview.png)
 
 ### 5.5 修改或清除
 
@@ -240,6 +356,11 @@ temperature_C,cycles,additive,yield_pct
 本例即使清掉候选表，仍可由范围／步长和规则生成 21 个合法组合。改规则后若旧结果不合法，先保留旧项目、核对实际实验，再建立适当新项目，不能改写真实记录来通过校验。
 
 有限域最多检查 200,000 组源组合，一次排序最多 4,096 个合法未做候选。大空间可增加步长或用实验室预筛选清单；排名只针对这次实际评分的候选池。连续域可能只采样一个可行子集，不表示已找到全局最优。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 22: English SynthBO interface](screenshots/steps/22-recipe-rules.png)
 
 ## 6. Pareto 多目标
 
@@ -253,9 +374,18 @@ temperature_C,cycles,additive,yield_pct
 
 Pareto 帮助比较折衷，不自动决定最终配方；研究者仍需考虑可放大性、测量可靠性、预算等。
 
-![练习 3 回填到 8 条模拟结果后的 Pareto 投影](screenshots/tutorial-pareto.png)
+![练习 3 的 6 条模拟结果对应的 Pareto 投影](screenshots/tutorial-pareto.png)
 
-这是本练习实际模型分析与应用绘图界面输出的**8 条模拟结果**。横轴产率向右更好，纵轴成本向下更好，绿色点保留不同折衷；灰色点是其他模拟结果。图中的“实测”表示项目已完成结果栏，数据来源仍全部为 SYNTHETIC，不是湿实验。
+这是本练习实际模型分析与应用绘图界面输出的**6 条模拟结果**。横轴产率向右更好，纵轴成本向下更好，绿色点保留不同折衷；若存在其他非前沿结果，则显示为灰色。图中的“实测”表示项目已完成结果栏，数据来源仍全部为 SYNTHETIC，不是湿实验。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 29: English SynthBO interface](screenshots/steps/29-pareto-objective-settings.png)
+
+![Step 30: English SynthBO interface](screenshots/steps/30-pareto-prediction-table.png)
+
+![Step 31: English SynthBO interface](screenshots/steps/31-pareto-trade-offs.png)
 
 ### 6.2 超体积历史
 
@@ -263,11 +393,21 @@ Pareto 帮助比较折衷，不自动决定最终配方；研究者仍需考虑�
 
 一般项目默认参考点会随本次数据变化，跨轮比较绝对超体积应使用相同参考点。当前 GUI 没有单独的参考点输入框；教学项目已预置，无需初学者编辑 JSON。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 32: English SynthBO interface](screenshots/steps/32-hypervolume-history.png)
+
 ### 6.3 三维 Pareto
 
 打开 `three-objective-project.chembo.json`，额外包含要最小化的 `waste_index`，已有 6 条完整三目标结果。分析后选择 **三维 Pareto**，X/Y/Z 分别选 `yield_pct/cost_index/waste_index`，即可查看和导出。
 
 三维需要三个不同目标，二目标项目不能凭空产生第三目标。三目标回填必须填齐三个结果，可查 `three-objective-all-simulated-results.csv`；不能导入只有两个目标的起始表。三个以上目标的二维投影，不一定形成直观的有序曲线。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 33: English SynthBO interface](screenshots/steps/33-three-dimensional-pareto.png)
 
 ## 7. 分类主动学习
 
@@ -286,13 +426,22 @@ Pareto 帮助比较折衷，不自动决定最终配方；研究者仍需考虑�
 
 生成 2 条后，用完整模拟答案查找变量组合，回填一个允许的完整标签。不要把概率或“80% 球形”填进结果列。
 
-![练习 4 回填到 8 条模拟结果后的类别概率](screenshots/tutorial-classification.png)
+![练习 4 的 6 条模拟标签对应的类别概率](screenshots/tutorial-classification.png)
 
-本图来自实际分类器对**8 条模拟标签**的分析，剩余 20 个未测候选。每根柱子表示一个候选在三种已见类别之间的概率分配；你的下一批条件可能不同，应读取自己项目中的完整预测表。
+本图来自实际分类器对**6 条模拟标签**的分析，剩余 22 个未测候选。每根柱子表示一个候选在三种已见类别之间的概率分配；你的下一批条件可能不同，应读取自己项目中的完整预测表。
 
-![同一份 8 条模拟结果的留一混淆矩阵](screenshots/tutorial-confusion.png)
+![同一份 6 条模拟结果的留一混淆矩阵](screenshots/tutorial-confusion.png)
 
-同一次分析的混淆矩阵共有 8 个留出预测，对角线上是 5 个，因此本图准确率为 5/8，即 0.625。它直观展示了哪些形貌容易被分错，不应只看一个总体准确率；这里的“实测类别”仍指教学项目中填入的模拟标签。
+同一次分析的混淆矩阵共有 6 个留出预测，对角线上是 3 个，因此本图准确率为 3/6，即 0.500。它直观展示了哪些形貌容易被分错，不应只看一个总体准确率；这里的“实测类别”仍指教学项目中填入的模拟标签。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 34: English SynthBO interface](screenshots/steps/34-classification-label-settings.png)
+
+![Step 35: English SynthBO interface](screenshots/steps/35-class-probabilities.png)
+
+![Step 36: English SynthBO interface](screenshots/steps/36-classification-entropy.png)
 
 ### 7.2 成功／失败
 
@@ -300,11 +449,23 @@ Pareto 帮助比较折衷，不自动决定最终配方；研究者仍需考虑�
 
 本分类策略按**不确定性**选点，帮助了解类别边界，不是优先选择最可能成功的条件。要最大化连续产率应选择数值任务。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 39: English SynthBO interface](screenshots/steps/39-success-failure-labels.png)
+
+![Step 40: English SynthBO interface](screenshots/steps/40-binary-class-probabilities.png)
+
 ### 7.3 类别不够时
 
 至少预定义两个标签，实际数据见到两个类别后才拟合分类器。只见过一个类别时先初始探索，不给虚假概率。预定义但未观察过的类别保持缺失，不补为 0%；当前概率只在见过的类别间归一化。
 
 分类留一后若训练集只剩一个类别，该折跳过并显示实际验证数量。少量样本的准确率不能替代独立实验确认。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 41: English SynthBO interface](screenshots/steps/41-initial-design-without-probabilities.png)
 
 ## 8. 读懂模型与可视化
 
@@ -316,6 +477,11 @@ Pareto 帮助比较折衷，不自动决定最终配方；研究者仍需考虑�
 
 采集分值表示**本次计算中值得尝试的程度**，不是产率或成功率，也不跨两次计算比较绝对值。批次依次选择时会把刚选中的点加入待实验后重评分，因此“本批推荐”不一定是首轮排名的前两条。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 09: English SynthBO interface](screenshots/steps/09-fourteen-candidate-predictions.png)
+
 ### 8.2 预测与探索
 
 | 选项 | 回答什么问题 | 如何理解 |
@@ -325,6 +491,17 @@ Pareto 帮助比较折衷，不自动决定最终配方；研究者仍需考虑�
 | 采集分值排序 | 这次候选的优先级如何分布？ | 同一次分析内比较。 |
 
 点击候选散点，下方显示对应变量组合。工具栏支持平移、缩放、还原。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 42: English SynthBO interface](screenshots/steps/42-prediction-intervals.png)
+
+![Step 43: English SynthBO interface](screenshots/steps/43-mean-and-uncertainty.png)
+
+![Step 44: English SynthBO interface](screenshots/steps/44-acquisition-ranking.png)
+
+![Step 49: English SynthBO interface](screenshots/steps/49-inspect-a-candidate.png)
 
 ### 8.3 模型验证
 
@@ -342,11 +519,27 @@ Pareto 帮助比较折衷，不自动决定最终配方；研究者仍需考虑�
 
 本图由应用实际留一重拟合并导出，使用**8 条模拟结果**。横轴是被留出记录中的模拟产率，纵轴是没有用到该记录时的预测；例如图中 RMSE 约 4.48，按本例尺度可读作约 4.48 个产率百分点。误差条是模型不确定性，不是仪器重复测量误差；你的数据和留出指标可能不同。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 45: English SynthBO interface](screenshots/steps/45-predicted-versus-measured.png)
+
+![Step 46: English SynthBO interface](screenshots/steps/46-validation-residuals.png)
+
+![Step 38: English SynthBO interface](screenshots/steps/38-held-out-confusion-matrix.png)
+
 ### 8.4 分布与历史
 
 **数据分布**里选择变量，再选 **观测分布 / 实测历史**。数值显示直方图，类别显示计数；查看数值目标历史时还显示对应方向的历史最佳值。主窗口趋势只画首个数值目标，分类不显示该数值曲线。
 
 只统计已完成记录，包含重复实验；记录序号不等于实际时间间隔。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 47: English SynthBO interface](screenshots/steps/47-measured-data-distribution.png)
+
+![Step 48: English SynthBO interface](screenshots/steps/48-best-measured-history.png)
 
 ### 8.5 导图与导表
 
@@ -355,6 +548,13 @@ Pareto 帮助比较折衷，不自动决定最终配方；研究者仍需考虑�
 **导出预测表 CSV…**保留全部候选，不只是屏幕能看到的行。在候选表页点“导出当前图”会导出数值预测图，分类项目则导出分类图，不是表格截图。
 
 应用提供单张图、预测 CSV 和项目导出，没有“一键完整论文报告”按钮。汇报时组合所需图、已测结果、备注与引用信息；预测 CSV 不能作为实测结果导入。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 50: English SynthBO interface](screenshots/steps/50-export-chart-png-pdf-svg.png)
+
+![Step 51: English SynthBO interface](screenshots/steps/51-export-prediction-table.png)
 
 ## 9. Gryffin、Atlas 与引擎选择
 
@@ -370,11 +570,23 @@ Pareto 帮助比较折衷，不自动决定最终配方；研究者仍需考虑�
 
 练习 1 的 `gryffin-project.chembo.json`、`atlas-project.chembo.json`保留 6 条模拟记录，去掉步长和显式候选。打开即可体验原生推荐。它们可能给出完整答案表之外的连续数值，不能四舍五入去冒充已知结果。需要第 8 节诊断时，重新打开 BoTorch 项目。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 60: English SynthBO interface](screenshots/steps/60-gryffin-native-engine.png)
+
+![Step 61: English SynthBO interface](screenshots/steps/61-atlas-native-engine.png)
+
 ### 9.2 Gryffin 的优先级
 
 Gryffin 选择“数值优化 / 优先级”时，目标自上而下为优先顺序。容忍比例是 Chimera 相对设置，不能直接读成绝对化学阈值。想保留“高产率／低成本”的折衷时，可按第 6 节使用 Pareto。
 
 切换引擎不删除原始记录，但应按新设置重新计算模型，不能直接比较不同引擎的分值。方法归属见[引用指南](HOW_TO_CITE.md)与[公开致谢](../ACKNOWLEDGMENTS.md)。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 62: English SynthBO interface](screenshots/steps/62-gryffin-objective-priorities.png)
 
 ## 10. 保存、导出与项目记录
 
@@ -392,6 +604,13 @@ Mac：⌘N 新建、⌘O 打开、⌘S 保存、⌘⇧S 另存。Windows 使用 
 
 标题前圆点表示未保存修改。切换项目、示例或关窗时会询问保存、放弃或取消。点击推荐不会自动把项目数据上传 GitHub。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 52: English SynthBO interface](screenshots/steps/52-file-menu.png)
+
+![Step 53: English SynthBO interface](screenshots/steps/53-export-measured-results.png)
+
 ### 10.2 手动转入、撤回与重复实验
 
 在待实验表选中条件，点 **将选中条件转入结果表**，变量复制到结果表的空目标行。立即填齐结果，再保存或计算；通过完整结果校验后，对应待实验移除。
@@ -400,6 +619,15 @@ Mac：⌘N 新建、⌘O 打开、⌘S 保存、⌘⇧S 另存。Windows 使用 
 
 **删除选中行**移除误录结果；真实重复实验可保留。改删结果会影响模型，并不自动留一份被删行快照，正式数据先另存版本。
 
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 54: English SynthBO interface](screenshots/steps/54-select-pending-condition.png)
+
+![Step 55: English SynthBO interface](screenshots/steps/55-move-condition-to-results.png)
+
+![Step 56: English SynthBO interface](screenshots/steps/56-withdraw-pending-condition.png)
+
 ### 10.3 计算、日志与取消
 
 计算时编辑控件暂时禁用，进度条表示工作中，不是已完成百分比。**运行日志**显示状态；**取消计算**停止当前计算，原始实验记录保留，未完成计算不冒充新结果。
@@ -407,6 +635,13 @@ Mac：⌘N 新建、⌘O 打开、⌘S 保存、⌘⇧S 另存。Windows 使用 
 改数据、目标、空间或规则后，旧分析失效并清空，需要重新分析。空图不等于数据丢失，先检查已完成数量和页面说明。
 
 正式研究每轮保留独立项目、原始仪器数据、已测 CSV、软件版本和随机种子。真实单位、表征方法、标签标准写进备注。
+
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 57: English SynthBO interface](screenshots/steps/57-calculation-log-and-cancel.png)
+
+![Step 58: English SynthBO interface](screenshots/steps/58-cancelled-records-preserved.png)
 
 ## 11. 常见问题
 
@@ -459,3 +694,11 @@ Mac：⌘N 新建、⌘O 打开、⌘S 保存、⌘⇧S 另存。Windows 使用 
 | 版本、许可、引用 | 关于 / 许可 | 11 |
 
 计算边界详见 [V0.2_FEATURES.md](V0.2_FEATURES.md)，开发构建见 [DEVELOPMENT.md](DEVELOPMENT.md)。日常使用只需安装应用、准备清楚的实验表，并保存每轮项目。
+
+[逐步截图说明](STEP_BY_STEP.zh-CN.md)
+
+![Step 59: English SynthBO interface](screenshots/steps/59-about-and-scientific-licenses.png)
+
+![Step 63: English SynthBO interface](screenshots/steps/63-built-in-workflow-examples.png)
+
+![Step 64: English SynthBO interface](screenshots/steps/64-english-interface.png)

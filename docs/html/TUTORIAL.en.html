@@ -1,8 +1,10 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NanoBO: a practical guide for chemists · NanoBO</title><style>*{box-sizing:border-box}body{margin:0;background:#f7faf8;color:#243d33;font:16px/1.8 -apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif}header{padding:20px 5%;background:#e8f2ec;border-bottom:1px solid #ccdcd1}header a{margin-right:24px}a{color:#176b50}a:hover{color:#104331}main{max-width:1280px;margin:28px auto;display:grid;grid-template-columns:250px minmax(0,1fr);gap:32px;padding:0 24px}nav{position:sticky;top:20px;max-height:90vh;overflow:auto;font-size:14px}nav a{display:block;text-decoration:none;padding:5px 10px;border-left:2px solid #d5e4db}nav .sub{padding-left:24px}article{min-width:0;background:white;border:1px solid #dce7df;border-radius:12px;padding:26px 36px}h1,h2,h3{line-height:1.35;scroll-margin-top:20px}h1{font-size:30px}h2{margin-top:2em;border-bottom:1px solid #dce7df;padding-bottom:10px}h3{margin-top:1.7em}table{border-collapse:collapse;display:block;overflow-x:auto;font-size:14px;width:100%;margin:18px 0}th,td{border:1px solid #d5e1d9;padding:9px 12px;text-align:left}th{background:#edf5ef}pre{overflow:auto;background:#f1f5f2;padding:14px;border-radius:6px}code{font-family:ui-monospace,Consolas,monospace;font-size:.91em}img{max-width:100%;height:auto}blockquote{margin-left:0;border-left:4px solid #6c9d83;padding:8px 18px;background:#f3f8f4}footer{margin-top:32px;color:#64786b;font-size:13px;border-top:1px solid #dce7df;padding-top:14px}@media(max-width:850px){main{display:block;padding:0 12px}nav{position:static;max-height:270px;margin-bottom:20px}article{padding:20px}header a{display:inline-block;margin-right:16px}}</style><header><strong>NanoBO</strong> &nbsp; <a href="TUTORIAL.zh-CN.html">简体中文</a><a href="TUTORIAL.en.html">English</a><a href="index.html">教程首页 / Help home</a></header><main><nav aria-label="Table of contents"><a class="" href="#contents">Contents</a><a class="" href="#1-install-and-open-the-application">1. Install and open the application</a><a class="sub" href="#apple-silicon-mac">Apple Silicon Mac</a><a class="sub" href="#windows">Windows</a><a class="sub" href="#open-the-guide-and-obtain-the-exercises">Open the guide and obtain the exercises</a><a class="" href="#2-find-your-way-around">2. Find your way around</a><a class="" href="#3-ten-minute-exercise-temperature-additive-and-yield">3. Ten-minute exercise: temperature, additive and yield</a><a class="sub" href="#a-inspect-the-existing-measurements">A. Inspect the existing measurements</a><a class="sub" href="#b-view-predictions-before-adding-a-batch">B. View predictions before adding a batch</a><a class="sub" href="#c-ask-for-the-next-two-experiments">C. Ask for the next two experiments</a><a class="sub" href="#d-complete-a-simulated-batch">D. Complete a simulated batch</a><a class="sub" href="#e-a-guaranteed-refill-only-exercise">E. A guaranteed refill-only exercise</a><a class="" href="#4-know-which-practice-file-to-open">4. Know which practice file to open</a><a class="" href="#5-create-your-own-project">5. Create your own project</a><a class="sub" href="#set-the-basic-fields">Set the basic fields</a><a class="sub" href="#define-every-variable-you-are-allowed-to-change">Define every variable you are allowed to change</a><a class="sub" href="#define-the-result-you-want">Define the result you want</a><a class="" href="#6-import-export-and-refill-experimental-results">6. Import, export and refill experimental results</a><a class="sub" href="#import-a-complete-results-table">Import a complete results table</a><a class="sub" href="#add-or-correct-rows-by-hand">Add or correct rows by hand</a><a class="sub" href="#keep-pending-conditions-separate-from-results">Keep pending conditions separate from results</a><a class="sub" href="#export-measurements">Export measurements</a><a class="" href="#7-engines-and-priority-objectives">7. Engines and priority objectives</a><a class="sub" href="#try-native-gryffin-and-atlas-with-the-same-starting-measurements">Try native Gryffin and Atlas with the same starting measurements</a><a class="sub" href="#gryffin--chimera-priorities">Gryffin / Chimera priorities</a><a class="" href="#8-executable-recipes-steps-total-volume-ratios-and-candidate-tables">8. Executable recipes: steps, total volume, ratios and candidate tables</a><a class="sub" href="#set-a-dispensing-or-operating-step">Set a dispensing or operating step</a><a class="sub" href="#add-a-total-volume-or-linear-rule">Add a total-volume or linear rule</a><a class="sub" href="#add-a-ratio-limit">Add a ratio limit</a><a class="sub" href="#import-a-permitted-recipe-table">Import a permitted recipe table</a><a class="sub" href="#remove-a-restriction-deliberately">Remove a restriction deliberately</a><a class="" href="#9-pareto-and-classification-exercises">9. Pareto and classification exercises</a><a class="sub" href="#a-yield-versus-cost-pareto">A. Yield versus cost: Pareto</a><a class="sub" href="#b-morphology-labels-classification">B. Morphology labels: classification</a><a class="" href="#10-model-checks-and-every-chart">10. Model checks and every chart</a><a class="sub" href="#predictions-and-recommendations-are-different">Predictions and recommendations are different</a><a class="sub" href="#candidate-prediction-table-候选预测表">Candidate prediction table (`候选预测表`)</a><a class="sub" href="#all-plot-selectors">All plot selectors</a><a class="sub" href="#what-leave-one-out-validation-does">What leave-one-out validation does</a><a class="" href="#11-save-export-and-archive">11. Save, export and archive</a><a class="sub" href="#save-a-resumable-project">Save a resumable project</a><a class="sub" href="#export-a-plot-or-a-prediction-table">Export a plot or a prediction table</a><a class="sub" href="#cancel-and-inspect-a-calculation">Cancel and inspect a calculation</a><a class="sub" href="#find-licenses-and-citation-information">Find licenses and citation information</a><a class="" href="#12-troubleshooting-and-limits">12. Troubleshooting and limits</a><a class="" href="#13-complete-control-index">13. Complete control index</a></nav><article><p><a href="TUTORIAL.zh-CN.html">简体中文</a> | <a href="TUTORIAL.en.html">English</a> · <a href="README.en.html">Back to README</a></p>
-<h1 id="nanobo-a-practical-guide-for-chemists">NanoBO: a practical guide for chemists</h1>
-<p>This guide describes the <strong>0.2.3</strong> desktop workflow. If an older installer does not have the tutorial Help entries or numbered practice files, update from <a href="https://github.com/wei-rui499/NanoBO/releases">Releases</a>.</p>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SynthBO: a practical guide for chemists · SynthBO</title><style>*{box-sizing:border-box}body{margin:0;background:#f7faf8;color:#243d33;font:16px/1.8 -apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif}header{padding:20px 5%;background:#e8f2ec;border-bottom:1px solid #ccdcd1}header a{margin-right:24px}a{color:#176b50}a:hover{color:#104331}main{max-width:1280px;margin:28px auto;display:grid;grid-template-columns:250px minmax(0,1fr);gap:32px;padding:0 24px}nav{position:sticky;top:20px;max-height:90vh;overflow:auto;font-size:14px}nav a{display:block;text-decoration:none;padding:5px 10px;border-left:2px solid #d5e4db}nav .sub{padding-left:24px}article{min-width:0;background:white;border:1px solid #dce7df;border-radius:12px;padding:26px 36px}h1,h2,h3{line-height:1.35;scroll-margin-top:20px}h1{font-size:30px}h2{margin-top:2em;border-bottom:1px solid #dce7df;padding-bottom:10px}h3{margin-top:1.7em}table{border-collapse:collapse;display:block;overflow-x:auto;font-size:14px;width:100%;margin:18px 0}th,td{border:1px solid #d5e1d9;padding:9px 12px;text-align:left}th{background:#edf5ef}pre{overflow:auto;background:#f1f5f2;padding:14px;border-radius:6px}code{font-family:ui-monospace,Consolas,monospace;font-size:.91em}img{max-width:100%;height:auto}blockquote{margin-left:0;border-left:4px solid #6c9d83;padding:8px 18px;background:#f3f8f4}footer{margin-top:32px;color:#64786b;font-size:13px;border-top:1px solid #dce7df;padding-top:14px}@media(max-width:850px){main{display:block;padding:0 12px}nav{position:static;max-height:270px;margin-bottom:20px}article{padding:20px}header a{display:inline-block;margin-right:16px}}</style><header><strong>SynthBO</strong> &nbsp; <a href="TUTORIAL.zh-CN.html">简体中文</a><a href="TUTORIAL.en.html">English</a><a href="index.html">教程首页 / Help home</a></header><main><nav aria-label="Table of contents"><a class="" href="#contents">Contents</a><a class="" href="#1-install-and-open-the-application">1. Install and open the application</a><a class="sub" href="#apple-silicon-mac">Apple Silicon Mac</a><a class="sub" href="#windows">Windows</a><a class="sub" href="#open-the-guide-and-obtain-the-exercises">Open the guide and obtain the exercises</a><a class="" href="#2-find-your-way-around">2. Find your way around</a><a class="" href="#3-ten-minute-exercise-temperature-additive-and-yield">3. Ten-minute exercise: temperature, additive and yield</a><a class="sub" href="#a-inspect-the-existing-measurements">A. Inspect the existing measurements</a><a class="sub" href="#b-view-predictions-before-adding-a-batch">B. View predictions before adding a batch</a><a class="sub" href="#c-ask-for-the-next-two-experiments">C. Ask for the next two experiments</a><a class="sub" href="#d-complete-a-simulated-batch">D. Complete a simulated batch</a><a class="sub" href="#e-a-guaranteed-refill-only-exercise">E. A guaranteed refill-only exercise</a><a class="" href="#4-know-which-practice-file-to-open">4. Know which practice file to open</a><a class="" href="#5-create-your-own-project">5. Create your own project</a><a class="sub" href="#set-the-basic-fields">Set the basic fields</a><a class="sub" href="#define-every-variable-you-are-allowed-to-change">Define every variable you are allowed to change</a><a class="sub" href="#define-the-result-you-want">Define the result you want</a><a class="" href="#6-import-export-and-refill-experimental-results">6. Import, export and refill experimental results</a><a class="sub" href="#import-a-complete-results-table">Import a complete results table</a><a class="sub" href="#add-or-correct-rows-by-hand">Add or correct rows by hand</a><a class="sub" href="#keep-pending-conditions-separate-from-results">Keep pending conditions separate from results</a><a class="sub" href="#export-measurements">Export measurements</a><a class="" href="#7-engines-and-priority-objectives">7. Engines and priority objectives</a><a class="sub" href="#try-native-gryffin-and-atlas-with-the-same-starting-measurements">Try native Gryffin and Atlas with the same starting measurements</a><a class="sub" href="#gryffin--chimera-priorities">Gryffin / Chimera priorities</a><a class="" href="#8-executable-recipes-steps-total-volume-ratios-and-candidate-tables">8. Executable recipes: steps, total volume, ratios and candidate tables</a><a class="sub" href="#set-a-dispensing-or-operating-step">Set a dispensing or operating step</a><a class="sub" href="#add-a-total-volume-or-linear-rule">Add a total-volume or linear rule</a><a class="sub" href="#add-a-ratio-limit">Add a ratio limit</a><a class="sub" href="#import-a-permitted-recipe-table">Import a permitted recipe table</a><a class="sub" href="#remove-a-restriction-deliberately">Remove a restriction deliberately</a><a class="" href="#9-pareto-and-classification-exercises">9. Pareto and classification exercises</a><a class="sub" href="#a-yield-versus-cost-pareto">A. Yield versus cost: Pareto</a><a class="sub" href="#b-morphology-labels-classification">B. Morphology labels: classification</a><a class="" href="#10-model-checks-and-every-chart">10. Model checks and every chart</a><a class="sub" href="#predictions-and-recommendations-are-different">Predictions and recommendations are different</a><a class="sub" href="#candidate-prediction-table-候选预测表">Candidate prediction table (`候选预测表`)</a><a class="sub" href="#all-plot-selectors">All plot selectors</a><a class="sub" href="#what-leave-one-out-validation-does">What leave-one-out validation does</a><a class="" href="#11-save-export-and-archive">11. Save, export and archive</a><a class="sub" href="#save-a-resumable-project">Save a resumable project</a><a class="sub" href="#export-a-plot-or-a-prediction-table">Export a plot or a prediction table</a><a class="sub" href="#cancel-and-inspect-a-calculation">Cancel and inspect a calculation</a><a class="sub" href="#find-licenses-and-citation-information">Find licenses and citation information</a><a class="" href="#12-troubleshooting-and-limits">12. Troubleshooting and limits</a><a class="" href="#13-complete-control-index">13. Complete control index</a></nav><article><p><a href="TUTORIAL.zh-CN.html">简体中文</a> | <a href="TUTORIAL.en.html">English</a> · <a href="README.en.html">Back to README</a></p>
+<h1 id="synthbo-a-practical-guide-for-chemists">SynthBO: a practical guide for chemists</h1>
+<p>For an image at every action, use the <a href="STEP_BY_STEP.en.html">64-step screenshot walkthrough</a>. Screenshots and exported charts in this guide use the English interface and the English practice files under en/.</p>
+<p>This guide describes <strong>SynthBO 0.2.5</strong>. Install this version from <a href="https://github.com/wei-rui499/SynthBO/releases">Releases</a> for the bilingual interface and bundled practice files.</p>
 <p>This guide follows a familiar laboratory loop: <strong>define the experiment → enter measurements → choose the next batch → run the experiment → add the results</strong>. The supplied practice files let you complete that loop without doing a wet experiment.</p>
-<p>The current application interface is Chinese. English explanations below include the exact Chinese labels that appear on screen. The documentation language switch does not change the application's interface language.</p>
+<p>Click <strong>English</strong> at the top right to use the English interface; the button then reads <strong>中文</strong> to switch back. The app remembers your choice. Menus, recipe settings, chart titles, prediction-table headings and export prompts switch immediately, without restarting or clearing unsaved input, chart selections or a running calculation. Project names, variables, units, class labels, notes and measured values keep their original text. Upstream engines retain their original diagnostic logs.</p>
+<p>The <strong>Guide</strong> button opens the offline tutorial in the current interface language. <strong>Help → Chinese tutorial / English tutorial</strong> opens either language directly. Chinese labels in parentheses below help you follow the same steps in either language.</p>
 <p><strong>All practice projects and result tables contain synthetic data.</strong> They demonstrate software behavior; their numerical values are not recommended chemistry recipes. Use your own measured results in a research project.</p>
 <h2 id="contents">Contents</h2>
 <ol>
@@ -21,27 +23,32 @@
 <li><a href="#13-complete-control-index">Complete control index</a></li>
 </ol>
 <h2 id="1-install-and-open-the-application">1. Install and open the application</h2>
-<p>Download the installer and tutorial data from <a href="https://github.com/wei-rui499/NanoBO/releases">GitHub Releases</a>. Choose the installer for your operating system, not the developer source archive.</p>
+<p>Download the installer and tutorial data from <a href="https://github.com/wei-rui499/SynthBO/releases">GitHub Releases</a>. Choose the installer for your operating system, not the developer source archive.</p>
 <h3 id="apple-silicon-mac">Apple Silicon Mac</h3>
 <ol>
 <li>Use an M-series Mac with macOS 14 or later. The arm64 installer is not an Intel Mac installer.</li>
-<li>Open the downloaded <code>macOS-arm64.dmg</code> and drag <strong>NanoBO.app</strong> into <strong>Applications</strong>.</li>
-<li>Open NanoBO from Applications. The research preview is not Apple-notarized. If macOS blocks the first launch, review the app using <a href="https://support.apple.com/en-us/102445">Apple's Privacy &amp; Security instructions</a>.</li>
+<li>Open the downloaded <code>macOS-arm64.dmg</code> and drag <strong>SynthBO.app</strong> into <strong>Applications</strong>.</li>
+<li>Open SynthBO from Applications. The research preview is not Apple-notarized. If macOS blocks the first launch, review the app using <a href="https://support.apple.com/en-us/102445">Apple's Privacy &amp; Security instructions</a>.</li>
 <li>Create a normal document folder for your projects and exported tables; do not store your only copy inside the DMG.</li>
 </ol>
 <h3 id="windows">Windows</h3>
-<p>Use the Windows Hotfix1 installer or a later corrected release. Hotfix1 fixes the native model startup and logging issues reproduced in the original 0.2.3 test packages. Check the Windows acceptance record accompanying the particular installer; Mac validation does not replace Windows validation.</p>
+<p>The Windows package retains the exact scientific runtime from the published 0.2.4 package reported working by the user. Only the interface and associated resources are updated. The updated interface and installer await Windows user validation; see <a href="WINDOWS_BUILD.html">build details</a>.</p>
 <ol>
-<li>On Windows 10/11 x64, use the <code>windows-x64-setup-hotfix1-unsigned.exe</code> installer or a later corrected release.</li>
-<li>Run the installer, choose the installation options, then open NanoBO from the Start menu or its shortcut. You do not need WSL, Python or a terminal to use the installed application.</li>
+<li>On Windows 10/11 x64, use the <code>SynthBO-0.2.5-windows-x64-setup-unsigned.exe</code> installer or the matching portable ZIP.</li>
+<li>Run the installer, choose the installation options, then open SynthBO from the Start menu or its shortcut. You do not need WSL, Python or a terminal to use the installed application.</li>
 <li>The unsigned preview may trigger Windows reputation checks. Review the source and release information; do not disable Defender or other system protection.</li>
 <li>Save experiment projects in your own Documents folder so they remain separate from installation files. Windows ARM64 is not part of the validated target described here.</li>
 </ol>
 <h3 id="open-the-guide-and-obtain-the-exercises">Open the guide and obtain the exercises</h3>
-<p>In the installed app, use <strong>Help</strong> (<code>帮助</code>) → <strong>English tutorial</strong> for this guide, or <code>中文使用教程</code> for Chinese. Choose <strong>Export tutorial practice data</strong> (<code>导出教程练习数据…</code>) and select a writable folder. Open the exported <code>01_quickstart</code>, <code>02_recipe</code>, <code>03_pareto</code> and <code>04_classification</code> folders.</p>
-<p>The same files are in <a href="../../examples/tutorial"><code>examples/tutorial/</code></a> in the source package. The application's older <strong>Teaching examples</strong> (<code>教学示例</code>) button offers four small built-in demonstrations; these are separate from the numbered file-based exercises below. Use the numbered files when following the row-count checkpoints in this guide.</p>
+<p>In the installed app, use <strong>Help</strong> (<code>帮助</code>) → <strong>English tutorial</strong> for this guide, or <code>中文使用教程</code> for Chinese. Choose <strong>Export tutorial practice data</strong> (<code>导出教程练习数据…</code>) and select a writable folder. In the exported <strong>en</strong> folder, open <code>01_quickstart</code>, <code>02_recipe</code>, <code>03_pareto</code> and <code>04_classification</code>. The original Chinese-labeled copies remain alongside it.</p>
+<p>The English-labeled files used in the screenshots are in <a href="../../examples/tutorial/en"><code>examples/tutorial/en/</code></a> in the source package. The application's older <strong>Teaching examples</strong> (<code>教学示例</code>) button offers four small built-in demonstrations; these are separate from the numbered file-based exercises below. Use the numbered files when following the row-count checkpoints in this guide.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/01-main-window.png" alt="Step 01: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/02-language-button.png" alt="Step 02: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/03-help-menu.png" alt="Step 03: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/04-export-practice-data.png" alt="Step 04: English SynthBO interface" loading="lazy"></img></p>
 <h2 id="2-find-your-way-around">2. Find your way around</h2>
-<p><img src="media/docs/screenshots/NaNoBO-preview.png" alt="NanoBO desktop interface"></img></p>
+<p><img src="media/docs/screenshots/SynthBO-preview-en.png" alt="SynthBO desktop interface" loading="lazy"></img></p>
 <table>
 <thead>
 <tr>
@@ -52,7 +59,7 @@
 <tbody>
 <tr>
 <td>Top buttons</td>
-<td>New project (<code>新项目</code>), small built-in teaching examples (<code>教学示例</code>), open (<code>打开</code>), save (<code>保存</code>), about and licenses (<code>关于 / 许可</code>).</td>
+<td>New (<code>新项目</code>), Examples (<code>教学示例</code>), Open (<code>打开</code>), Save (<code>保存</code>), Guide (<code>使用教程</code>), About / licenses (<code>关于 / 许可</code>) and the <strong>English / 中文</strong> language button.</td>
 </tr>
 <tr>
 <td>Upper left</td>
@@ -91,7 +98,7 @@
 <p>The status line reports the number of completed and pending experiments. A dot in the window title means the project has unsaved changes. <strong>Save explicitly</strong> after importing or computing; the app does not automatically save the project to disk.</p>
 <p>“Bayesian optimization” here means updating a model as measurements arrive and using that model to help choose the next experiments. You do not need to write code or set a model formula to follow this workflow.</p>
 <h2 id="3-ten-minute-exercise-temperature-additive-and-yield">3. Ten-minute exercise: temperature, additive and yield</h2>
-<p>Open <a href="../../examples/tutorial/01_quickstart/project.chembo.json"><code>01_quickstart/project.chembo.json</code></a> with the app's <strong>Open</strong> (<code>打开</code>) button. Do not import the seed table into this already populated project.</p>
+<p>Open <a href="../../examples/tutorial/en/01_quickstart/project.chembo.json"><code>01_quickstart/project.chembo.json</code></a> with the app's <strong>Open</strong> (<code>打开</code>) button. Do not import the seed table into this already populated project.</p>
 <p>The project has the following deliberately small, finite space:</p>
 <table>
 <thead>
@@ -133,6 +140,11 @@
 <li>Read the conditions and <code>yield_pct</code> columns. These are the inputs to the optimizer, not values predicted by it.</li>
 <li>Choose <strong>File → Save as</strong> (<code>文件 → 项目另存为…</code>) and save a working copy with a new name.</li>
 </ol>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/05-open-project.png" alt="Step 05: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/06-six-measured-results.png" alt="Step 06: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/07-task-engine-batch-seed.png" alt="Step 07: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/15-save-project.png" alt="Step 15: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="b-view-predictions-before-adding-a-batch">B. View predictions before adding a batch</h3>
 <ol>
 <li>Click <strong>Analysis and cross-validation</strong> (<code>分析与交叉验证</code>) and wait for the completion message. The first calculation can take longer while libraries start.</li>
@@ -140,6 +152,10 @@
 <li>Open <strong>Model validation → Predicted and measured</strong> (<code>模型验证 → 预测与实测</code>). Six completed measurements allow leave-one-out checks; see <a href="#10-model-checks-and-every-chart">Section 10</a> for interpretation.</li>
 <li>The completed and pending counts remain <strong>6 and 0</strong>. Analysis does not schedule experiments.</li>
 </ol>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/08-calculating.png" alt="Step 08: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/09-fourteen-candidate-predictions.png" alt="Step 09: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/10-six-row-cross-validation.png" alt="Step 10: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="c-ask-for-the-next-two-experiments">C. Ask for the next two experiments</h3>
 <ol>
 <li>Click <strong>Generate next batch</strong> (<code>生成下一批实验 →</code>).</li>
@@ -148,20 +164,29 @@
 <li>The prediction table produced by this recommendation describes the pool at the time of that request. If you click <strong>Analysis and cross-validation</strong> again now, the <strong>2 pending conditions are excluded</strong>, leaving <strong>12</strong> candidates to analyze. The status still shows <strong>6 completed / 2 pending</strong>.</li>
 </ol>
 <p>Exact recommendations and floating-point metrics can differ across platforms or numerical library versions. The practical checkpoints are the row counts, allowed conditions, complete results and clear model status.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/11-two-pending-experiments.png" alt="Step 11: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="d-complete-a-simulated-batch">D. Complete a simulated batch</h3>
 <ol>
 <li>In the pending tab, click <strong>Export CSV for results</strong> (<code>导出待回填 CSV</code>). The exported file includes the variables and an empty <code>yield_pct</code> column.</li>
 <li>Open <code>all-simulated-results.csv</code> in the same exercise folder. Find the rows with <strong>all three variables matching</strong> the exported conditions. Copy their synthetic <code>yield_pct</code> values into the exported file. Change only the result column.</li>
-<li>Save as UTF-8 CSV. In NanoBO, use <strong>Completed experiments → Import Excel / CSV</strong> (<code>已完成实验 → 导入 Excel / CSV</code>) to import that completed file.</li>
+<li>Save as UTF-8 CSV. In SynthBO, use <strong>Completed experiments → Import Excel / CSV</strong> (<code>已完成实验 → 导入 Excel / CSV</code>) to import that completed file.</li>
 <li>You should now have <strong>8 completed / 0 pending</strong>. The imported rows are appended, and matching pending conditions are removed automatically.</li>
 <li>Save the project, then analyze or generate the next batch. Adding measurements invalidates the older analysis, so it must be recomputed.</li>
 </ol>
 <p>In your real research, fill the CSV with actual measured values. The lookup table exists only because this is a synthetic exercise.</p>
-<p><img src="media/docs/screenshots/tutorial-quickstart.png" alt="Quickstart model predictions after eight synthetic results"></img></p>
-<p><em>Example output after 8 completed synthetic results: dots show predicted yield and the shaded band shows model uncertainty. The horizontal axis is candidate number, not temperature. The six example charts in this guide were exported from the actual NanoBO analysis view; they are model-output charts, not full-window screenshots or wet-lab results. Numerical values and recommended conditions can vary between runs and platforms.</em></p>
+<p><img src="media/docs/screenshots/tutorial-quickstart.png" alt="Quickstart model predictions after eight synthetic results" loading="lazy"></img></p>
+<p><em>Example output after 8 completed synthetic results: dots show predicted yield and the shaded band shows model uncertainty. The horizontal axis is candidate number, not temperature. The six example charts in this guide were exported from the actual SynthBO analysis view; they are model-output charts, not full-window screenshots or wet-lab results. Numerical values and recommended conditions can vary between runs and platforms.</em></p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/12-export-pending-csv.png" alt="Step 12: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/13-import-measured-csv.png" alt="Step 13: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/14-eight-completed-zero-pending.png" alt="Step 14: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/15-save-project.png" alt="Step 15: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="e-a-guaranteed-refill-only-exercise">E. A guaranteed refill-only exercise</h3>
 <p>If you want to learn import and reconciliation before running any model, open <code>pending-practice.chembo.json</code> in <code>01_quickstart</code>. It begins with <strong>6 completed / 2 pending</strong>. Import <code>followup-results.csv</code>; it contains exactly the results for those two fixed pending rows. The result must be <strong>8 completed / 0 pending</strong>.</p>
 <p>Use this snapshot when importing <code>followup-results.csv</code>. That file is not a promise about the two conditions selected by a new optimization run.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/54-select-pending-condition.png" alt="Step 54: English SynthBO interface" loading="lazy"></img></p>
 <h2 id="4-know-which-practice-file-to-open">4. Know which practice file to open</h2>
 <p>Every numbered exercise has the following files:</p>
 <table>
@@ -282,6 +307,9 @@
 </tr>
 </tbody>
 </table>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/16-new-project.png" alt="Step 16: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/07-task-engine-batch-seed.png" alt="Step 07: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="define-every-variable-you-are-allowed-to-change">Define every variable you are allowed to change</h3>
 <p>Use <strong>Add variable</strong> (<code>＋ 变量</code>) and <strong>Delete selected variables</strong> (<code>删除选中变量</code>). Select a row using its row header before deleting it.</p>
 <table>
@@ -313,6 +341,8 @@
 <p>Names must be nonempty and distinct across both variables and objectives. A unit is a label for your records; the app does not convert mL to μL or °C to another scale. Use the same units in every imported row.</p>
 <p>A step begins at the <strong>lower bound</strong>. For example, lower bound 20 with step 10 permits 20, 30, 40 and so on within the upper bound. A continuous variable with a blank step can vary continuously; an integer variable still requires whole numbers. See Section 8 before mixing steps with joint recipe rules.</p>
 <p>Existing observations retain their original column names when you edit definitions. Renaming a variable does not relabel old experimental records. Prefer a new project for a new schema, or prepare an explicitly converted copy of the data.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/17-variable-types-and-steps.png" alt="Step 17: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="define-the-result-you-want">Define the result you want</h3>
 <p>Use <strong>Add objective</strong> (<code>＋ 目标</code>) and <strong>Delete selected objectives</strong> (<code>删除选中目标</code>).</p>
 <ul>
@@ -322,6 +352,9 @@
 <li><strong>Gryffin priorities:</strong> the objective rows define the priority order. The visible relative-tolerance field belongs to this workflow; see Section 7.</li>
 </ul>
 <p>Save once after completing definitions, then import measurements. A new project starts with default variables and an objective; edit or remove the defaults rather than accidentally retaining them as extra columns.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/18-objective-goal-and-notes.png" alt="Step 18: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/34-classification-label-settings.png" alt="Step 34: English SynthBO interface" loading="lazy"></img></p>
 <h2 id="6-import-export-and-refill-experimental-results">6. Import, export and refill experimental results</h2>
 <h3 id="import-a-complete-results-table">Import a complete results table</h3>
 <ol>
@@ -333,9 +366,14 @@
 <p>A results file must contain <strong>exactly all variable and objective column names</strong>; column order may differ. For the quickstart, these are <code>temperature_C</code>, <code>cycles</code>, <code>additive</code> and <code>yield_pct</code>. Do not add units, comments or a second header row inside the table. Put context in project notes or a separate worksheet.</p>
 <p>The reader supports UTF-8 CSV, legacy XLS and XLSX. It rejects missing values, duplicate headers, invalid numbers, unknown categories, off-step values and rows outside the permitted domain. Entirely blank rows are skipped. It reads saved Excel formula results without evaluating formulas; a formula without a cached value is treated as missing. Saving a copy with values only is often the clearest exchange format.</p>
 <p><strong>Import appends rows; it does not replace existing measurements.</strong> Importing the same seed table again creates repeated measurements, which the app allows. When practicing the six-row checkpoint, open the empty project each time you compare CSV, XLS and XLSX.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/19-import-excel.png" alt="Step 19: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/20-select-results-worksheet.png" alt="Step 20: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="add-or-correct-rows-by-hand">Add or correct rows by hand</h3>
 <p>Use <strong>Add a row</strong> (<code>＋ 录入一行</code>) and fill every variable and target cell. Existing completed cells are editable. To delete a row, select its row header and click <strong>Delete selected rows</strong> (<code>删除选中行</code>). A partially completed row must be completed or removed before the project can be validated and saved.</p>
 <p>Repeated measured experiments may be kept as separate rows. They are not automatically averaged; data-distribution counts include them. Keep enough notes to distinguish a deliberate replicate from an accidental repeated import.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/21-manual-experiment-row.png" alt="Step 21: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="keep-pending-conditions-separate-from-results">Keep pending conditions separate from results</h3>
 <p>The pending table is read-only and contains no measured target values. It prevents the same or a nearly identical condition from being scheduled again while you wait for results.</p>
 <p>You have two refill routes:</p>
@@ -345,8 +383,14 @@
 </ul>
 <p>Do not replace unknown targets with 0 or with model predictions. A scheduled experiment becomes a measurement only after its result is available.</p>
 <p>If a condition will not be run, select it and click <strong>Withdraw selected conditions</strong> (<code>撤回选中条件</code>). It is removed from the queue and can become eligible for recommendation again. Withdrawal does not create a measurement.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/54-select-pending-condition.png" alt="Step 54: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/55-move-condition-to-results.png" alt="Step 55: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/56-withdraw-pending-condition.png" alt="Step 56: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="export-measurements">Export measurements</h3>
 <p>Choose <strong>Export results</strong> (<code>导出结果</code>) in the completed tab to save a CSV of variables and measured objectives. This is different from <strong>Export prediction table CSV</strong> in the model view. Use clear filenames such as <code>measured-results.csv</code>, <code>next-batch-to-measure.csv</code> and <code>model-predictions.csv</code>.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/53-export-measured-results.png" alt="Step 53: English SynthBO interface" loading="lazy"></img></p>
 <h2 id="7-engines-and-priority-objectives">7. Engines and priority objectives</h2>
 <p>The main four practice projects use <strong>BoTorch · 优化与分类</strong>, because it supports the recipe and analysis features demonstrated here.</p>
 <table>
@@ -396,12 +440,17 @@
 <p>In <code>01_quickstart</code>, open <code>gryffin-project.chembo.json</code> or <code>atlas-project.chembo.json</code>. Each keeps the six seed observations but removes the explicit candidate table and numerical steps, allowing its native adapter to operate over the configured ranges. Generate a batch, inspect the pending rows and save the result.</p>
 <p>Do not use the finite lookup table to invent a value for a native recommendation that is not present there. The continuous native domain may recommend other temperatures. This exercise checks the native ask/tell interface; use actual measurements to continue a real study.</p>
 <p>For native Gryffin and Atlas, a blank model-diagnostic panel is not a fitted-model prediction. Their native recommendations have not been replaced by a separate surrogate solely to populate the plots. To practice the current diagnostics, reopen the BoTorch teaching project.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/60-gryffin-native-engine.png" alt="Step 60: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/61-atlas-native-engine.png" alt="Step 61: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="gryffin--chimera-priorities">Gryffin / Chimera priorities</h3>
 <p>Select numerical / priority mode and Gryffin. Put the most important objective first, followed by lower priorities. Set a direction for each target. The <strong>Relative tolerance</strong> (<code>容忍比例 (0–1)</code>) controls how Chimera handles its priority objectives relative to the observed objective ranges. It is not an experimental error bar, a percent yield loss or a recipe acceptance limit.</p>
 <p>Start with the provided/default value unless you have a reason to change it and understand the method. Record the order and tolerances used. If you want to inspect simultaneous trade-offs rather than enforce an order of priorities, use Pareto mode instead.</p>
 <p>The interface does not expose a menu of GP, random forest, SVM, EI or UCB variants. BoTorch numerical workflows and the classifier use fixed methods, described in the <a href="V0.2_FEATURES.html">feature guide</a> and <a href="HOW_TO_CITE.html">citation guide</a>.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/62-gryffin-objective-priorities.png" alt="Step 62: English SynthBO interface" loading="lazy"></img></p>
 <h2 id="8-executable-recipes-steps-total-volume-ratios-and-candidate-tables">8. Executable recipes: steps, total volume, ratios and candidate tables</h2>
-<p>Open <a href="../../examples/tutorial/02_recipe/project.chembo.json"><code>02_recipe/project.chembo.json</code></a>. It defines <code>A_mL</code>, <code>B_mL</code> and <code>aging_min</code>, with <code>yield_pct</code> to maximize. Both volumes have bounds 0.1–0.9 mL and step 0.1; aging is an integer from 10–30 minutes with step 10.</p>
+<p>Open <a href="../../examples/tutorial/en/02_recipe/project.chembo.json"><code>02_recipe/project.chembo.json</code></a>. It defines <code>A_mL</code>, <code>B_mL</code> and <code>aging_min</code>, with <code>yield_pct</code> to maximize. Both volumes have bounds 0.1–0.9 mL and step 0.1; aging is an integer from 10–30 minutes with step 10.</p>
 <p>The joint requirements are:</p>
 <ul>
 <li><code>A_mL + B_mL = 1</code>;</li>
@@ -409,10 +458,12 @@
 <li>only conditions listed in <code>candidates.csv</code> may be recommended.</li>
 </ul>
 <p>The candidate table contains <strong>21 feasible recipes</strong>. With six measured rows, the first analysis has <strong>15</strong> unmeasured candidates. A two-condition recommendation must obey all limits simultaneously.</p>
-<p><img src="media/docs/screenshots/tutorial-recipe.png" alt="Predictions for constrained recipes after eight synthetic results"></img></p>
-<p><em>Example output after 8 completed synthetic results: predicted yield and model uncertainty for the remaining feasible recipe candidates. Check the corresponding table to read the actual volumes and aging times; the horizontal axis is a candidate identifier.</em></p>
+<p><img src="media/docs/screenshots/tutorial-recipe.png" alt="Predictions for constrained recipes with six synthetic results and two pending experiments" loading="lazy"></img></p>
+<p><em>Example output with 6 completed synthetic results and 2 pending experiments: predicted yield and model uncertainty for the remaining 13 feasible recipe candidates. Check the corresponding table to read the actual volumes and aging times; the horizontal axis is a candidate identifier.</em></p>
 <h3 id="set-a-dispensing-or-operating-step">Set a dispensing or operating step</h3>
 <p>Enter the step in the variable table's <strong>Step</strong> (<code>步长</code>) column. A 0.1 mL step beginning at 0.1 mL permits 0.1, 0.2, …, 0.9. Steps are part of candidate construction, not rounding applied after the model recommends a condition.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/17-variable-types-and-steps.png" alt="Step 17: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="add-a-total-volume-or-linear-rule">Add a total-volume or linear rule</h3>
 <ol>
 <li>Click <strong>Recipe constraints / candidate table</strong> (<code>配方约束 / 候选表…</code>).</li>
@@ -422,11 +473,19 @@
 <li>Finish with <strong>Apply using BoTorch</strong> (<code>应用（使用 BoTorch）</code>). The complete project, including observations and pending conditions, must remain valid.</li>
 </ol>
 <p>If you are recreating a rule, delete its existing row first rather than adding a duplicate. All enabled rules apply together. Use consistent units or supply appropriate coefficients yourself; units are not converted automatically.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/22-recipe-rules.png" alt="Step 22: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/23-total-volume-rule.png" alt="Step 23: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="add-a-ratio-limit">Add a ratio limit</h3>
 <p>In the same dialog, choose <strong>Add ratio</strong> (<code>＋ 配比</code>). Set numerator <code>A_mL</code>, denominator <code>B_mL</code>, minimum 0.25 and maximum 4. The denominator must be positive. Equal minimum and maximum values can specify a fixed ratio.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/24-ratio-rule.png" alt="Step 24: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="import-a-permitted-recipe-table">Import a permitted recipe table</h3>
 <p>Click <strong>Import feasible candidate table</strong> (<code>导入合法候选表（Excel / CSV）</code>) and choose <code>candidates.csv</code>. It contains <strong>only the three variable columns</strong> and no <code>yield_pct</code>. Select the intended worksheet if using Excel. The dialog displays the candidate count and previews up to 30 rows.</p>
 <p>The next batch is chosen only from that table while also obeying steps and joint rules. Historical measurements may come from outside the current candidate table, but still have to satisfy variable bounds, steps and joint constraints. Pending conditions must be in the candidate table. Duplicate or nearly identical candidate rows are rejected.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/25-import-candidates.png" alt="Step 25: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/26-allowed-candidate-preview.png" alt="Step 26: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="remove-a-restriction-deliberately">Remove a restriction deliberately</h3>
 <ul>
 <li><strong>Delete selected rule</strong> (<code>删除选中规则</code>) removes only the selected linear/ratio rule.</li>
@@ -434,9 +493,11 @@
 <li>The main-window <strong>Clear joint restrictions</strong> (<code>清除联合限制</code>) removes both joint rules and the candidate table. Variable steps remain until you clear their cells separately.</li>
 </ul>
 <p>For a useful exercise, open the provided project, clear only its candidate table, then analyze again. Its finite step grid and joint rules still generate the same 21 feasible recipe combinations. Avoid changing a variable referenced by a rule until you have deliberately updated or removed that rule.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/22-recipe-rules.png" alt="Step 22: English SynthBO interface" loading="lazy"></img></p>
 <h2 id="9-pareto-and-classification-exercises">9. Pareto and classification exercises</h2>
 <h3 id="a-yield-versus-cost-pareto">A. Yield versus cost: Pareto</h3>
-<p>Open <a href="../../examples/tutorial/03_pareto/project.chembo.json"><code>03_pareto/project.chembo.json</code></a>. It uses <code>temperature_C</code> from 20–80 in steps of 10 and <code>ligand_mM</code> from 0.5–2 in steps of 0.5. There are 28 candidate conditions and six completed results. The objectives are <strong>maximize <code>yield_pct</code></strong> and <strong>minimize <code>cost_index</code></strong>; the index is synthetic, not a currency price.</p>
+<p>Open <a href="../../examples/tutorial/en/03_pareto/project.chembo.json"><code>03_pareto/project.chembo.json</code></a>. It uses <code>temperature_C</code> from 20–80 in steps of 10 and <code>ligand_mM</code> from 0.5–2 in steps of 0.5. There are 28 candidate conditions and six completed results. The objectives are <strong>maximize <code>yield_pct</code></strong> and <strong>minimize <code>cost_index</code></strong>; the index is synthetic, not a currency price.</p>
 <ol>
 <li>Confirm <strong>Pareto multi-objective</strong> (<code>Pareto 多目标</code>) is selected and inspect each objective's direction.</li>
 <li>Click <strong>Analysis and cross-validation</strong>. The first prediction table has <strong>22</strong> candidates.</li>
@@ -444,12 +505,18 @@
 <li>The emphasized points are measured <strong>non-dominated</strong> results: no other measured result is at least as good in every configured objective and better in one. They offer alternatives, not one universal winner.</li>
 <li>Generate two conditions, export and fill results from matching rows in <code>all-simulated-results.csv</code>, then import and repeat. Use <code>pending-practice.chembo.json</code> plus <code>followup-results.csv</code> for the fixed <strong>6/2 → 8/0</strong> import checkpoint.</li>
 </ol>
-<p><img src="media/docs/screenshots/tutorial-pareto.png" alt="Pareto trade-offs after eight synthetic results"></img></p>
-<p><em>Example output after 8 completed synthetic results: green points are non-dominated outcomes in the configured objectives. The plot shows the yield–cost trade-off among completed synthetic experiments, not predictions for unmeasured conditions.</em></p>
+<p><img src="media/docs/screenshots/tutorial-pareto.png" alt="Pareto trade-offs among six synthetic results" loading="lazy"></img></p>
+<p><em>Example output with 6 completed synthetic results: green points are non-dominated outcomes in the configured objectives. The plot shows the yield–cost trade-off among completed synthetic experiments, not predictions for unmeasured conditions.</em></p>
 <p>Open <code>three-objective-project.chembo.json</code> to add synthetic <code>waste_index</code> as a third objective to minimize. Its lookup file is <code>three-objective-all-simulated-results.csv</code>; its seed table is <code>three-objective-seed.csv</code>. Select <strong>3D Pareto</strong> (<code>三维 Pareto</code>) and choose three different X/Y/Z objectives. A project with only two objectives cannot produce a valid three-axis objective plot.</p>
 <p>The <strong>Hypervolume history</strong> (<code>超体积历史</code>) tracks the measured Pareto set relative to one reference point within that analysis. The automatic reference point can change when new measurements arrive. Do not compare absolute hypervolume values from separate analyses with changing reference points. A fixed reference can be supplied in project JSON, but the current GUI does not provide a reference-point editor.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/29-pareto-objective-settings.png" alt="Step 29: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/30-pareto-prediction-table.png" alt="Step 30: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/31-pareto-trade-offs.png" alt="Step 31: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/32-hypervolume-history.png" alt="Step 32: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/33-three-dimensional-pareto.png" alt="Step 33: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="b-morphology-labels-classification">B. Morphology labels: classification</h3>
-<p>Open <a href="../../examples/tutorial/04_classification/project.chembo.json"><code>04_classification/project.chembo.json</code></a>. It uses the same 28-condition temperature/ligand domain, with a single target column <strong><code>morphology</code></strong> and labels <strong><code>团聚 | 球形 | 棒状</code></strong> (aggregated / spherical / rod-like). The six seed results contain two of each class.</p>
+<p>Open <a href="../../examples/tutorial/en/04_classification/project.chembo.json"><code>04_classification/project.chembo.json</code></a>. It uses the same 28-condition temperature/ligand domain, with a single target column <strong><code>morphology</code></strong> and labels <strong><code>Aggregated | Spheres | Rods</code></strong>. The six seed results contain two of each class.</p>
 <ol>
 <li>Confirm <strong>Classification active learning</strong> (<code>分类主动学习</code>) and BoTorch are selected. The objective-direction control is inactive for a label task.</li>
 <li>Analyze the starting project. The table has <strong>22</strong> unmeasured candidates and class-probability columns for the observed classes.</li>
@@ -457,12 +524,21 @@
 <li>Generate two conditions and fill their <code>morphology</code> values by matching conditions in this exercise's synthetic lookup table. Import the completed rows, save and reanalyze.</li>
 <li>Use <code>pending-practice.chembo.json</code> with <code>followup-results.csv</code> to practice the exact <strong>6/2 → 8/0</strong> transition.</li>
 </ol>
-<p><img src="media/docs/screenshots/tutorial-classification.png" alt="Morphology-class probabilities after eight synthetic results"></img></p>
-<p><em>Example output after 8 completed synthetic results: each stacked bar shows model probabilities for an unmeasured candidate. Colors correspond to the declared morphology labels; the bars are predictions, not observed particle images or measured class counts.</em></p>
+<p><img src="media/docs/screenshots/tutorial-classification.png" alt="Morphology-class probabilities after six synthetic results" loading="lazy"></img></p>
+<p><em>Example output with 6 completed synthetic results and 22 unmeasured candidates: each stacked bar shows model probabilities for an unmeasured candidate. Colors correspond to the declared morphology labels; the bars are predictions, not observed particle images or measured class counts.</em></p>
 <p>A high entropy score means the classifier is uncertain about the class. This workflow explores class boundaries; it does not maximize the probability of any chosen “successful” class. At least two classes must have been observed before the classifier supplies probabilities. With fewer, the app performs an initial spread-out design. A declared but unobserved class is not assigned a fabricated zero probability.</p>
-<p><img src="media/docs/screenshots/tutorial-confusion.png" alt="Leave-one-out confusion matrix for eight synthetic morphology results"></img></p>
-<p><em>Example validation output for 8 completed synthetic results: rows are held-out actual labels and columns are predicted labels. Off-diagonal counts show classification errors; this illustrative run predicts 5 of 8 held-out labels correctly. These numbers are not a required score or evidence of real chemistry performance.</em></p>
-<p>For a two-label exercise, open <code>binary-project.chembo.json</code> and use <code>binary-all-simulated-results.csv</code> for lookup. It uses an <code>outcome</code> column with <code>成功</code> / <code>失败</code>. Do not import the morphology table into the binary project: the target names and label sets differ.</p>
+<p><img src="media/docs/screenshots/tutorial-confusion.png" alt="Leave-one-out confusion matrix for six synthetic morphology results" loading="lazy"></img></p>
+<p><em>Example validation output for 6 completed synthetic results: rows are held-out actual labels and columns are predicted labels. Off-diagonal counts show classification errors; this illustrative run predicts 3 of 6 held-out labels correctly (accuracy 0.500). These numbers are not a required score or evidence of real chemistry performance.</em></p>
+<p>For a two-label exercise, open <code>binary-project.chembo.json</code> and use <code>binary-all-simulated-results.csv</code> for lookup. It uses an <code>outcome</code> column with <code>Success</code> / <code>Failure</code>. Do not import the morphology table into the binary project: the target names and label sets differ.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/34-classification-label-settings.png" alt="Step 34: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/35-class-probabilities.png" alt="Step 35: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/36-classification-entropy.png" alt="Step 36: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/37-measured-class-counts.png" alt="Step 37: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/38-held-out-confusion-matrix.png" alt="Step 38: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/39-success-failure-labels.png" alt="Step 39: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/40-binary-class-probabilities.png" alt="Step 40: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/41-initial-design-without-probabilities.png" alt="Step 41: English SynthBO interface" loading="lazy"></img></p>
 <h2 id="10-model-checks-and-every-chart">10. Model checks and every chart</h2>
 <h3 id="predictions-and-recommendations-are-different">Predictions and recommendations are different</h3>
 <p>In BoTorch numerical tasks, at least two completed measurements allow model fitting. With fewer, the app gives an initial spread-out design and does not invent posterior predictions. Classification requires observed data from at least two classes.</p>
@@ -477,6 +553,8 @@
 <li>Acquisition score (<code>采集分值</code>): a criterion for selecting informative/useful experiments in this calculation, not a measured yield.</li>
 </ul>
 <p>Click column headers to sort. The saved numerical scores are the first single-point scores accounting for already pending experiments. Later selections within a batch are rescored with earlier selections treated as pending; batch order can therefore differ from that initial ranking. Scores labelled logEI/logNEHVI may be negative and are comparable within the same analysis, not across unrelated tasks or iterations.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/09-fourteen-candidate-predictions.png" alt="Step 09: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="all-plot-selectors">All plot selectors</h3>
 <table>
 <thead>
@@ -546,6 +624,15 @@
 </table>
 <p>Use <strong>View objective</strong> (<code>查看目标</code>) to switch numerical targets. The distribution page has its own variable selector; the Pareto page has X/Y/Z selectors. A two-axis projection of a higher-dimensional Pareto set need not form an ordered curve. Predicted and pending points are not included in the <strong>measured</strong> Pareto front.</p>
 <p>The Matplotlib toolbar supports home/reset, back/forward, pan and zoom. Click a pickable candidate point to see its conditions in the detail text below the plot. These interactions change the view, not the experimental data.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/42-prediction-intervals.png" alt="Step 42: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/43-mean-and-uncertainty.png" alt="Step 43: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/44-acquisition-ranking.png" alt="Step 44: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/45-predicted-versus-measured.png" alt="Step 45: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/46-validation-residuals.png" alt="Step 46: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/47-measured-data-distribution.png" alt="Step 47: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/48-best-measured-history.png" alt="Step 48: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/49-inspect-a-candidate.png" alt="Step 49: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="what-leave-one-out-validation-does">What leave-one-out validation does</h3>
 <p>For each selected completed row, the app removes that row from model training, refits the <strong>same model used by this workflow</strong>, and predicts the held-out result. The check needs at least <strong>3 completed rows</strong>. With more than 30 rows, it chooses up to 30 reproducible holdouts; each fold still trains on all other records. Read the displayed evaluated count.</p>
 <table>
@@ -574,7 +661,7 @@
 </tr>
 </tbody>
 </table>
-<p><img src="media/docs/screenshots/tutorial-validation.png" alt="Leave-one-out numerical predictions for eight synthetic yield results"></img></p>
+<p><img src="media/docs/screenshots/tutorial-validation.png" alt="Leave-one-out numerical predictions for eight synthetic yield results" loading="lazy"></img></p>
 <p><em>Example validation output after 8 completed synthetic results: each value was predicted with that row held out of training. The dashed line marks perfect agreement; error bars show model uncertainty. Read the displayed evaluated-row count and error metrics for your own data rather than expecting this example's exact values.</em></p>
 <p>A classification fold that would leave only one training class is skipped; the displayed evaluated count may be smaller than the total. A small or unbalanced dataset can make accuracy unstable. These checks describe the current dataset, not an independent external validation of a chemical mechanism.</p>
 <p>If a plot is unavailable, read its explanation: the task may not apply, the model may still be in initial design, a native engine may not expose that diagnostic, or too few valid observations may be available. An empty panel does not supply an inferred performance result.</p>
@@ -618,6 +705,8 @@
 </tbody>
 </table>
 <p>The app prompts about unsaved changes before replacing or closing a project. Data processing is local; exporting or saving a file does not upload it to GitHub.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/52-file-menu.png" alt="Step 52: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="export-a-plot-or-a-prediction-table">Export a plot or a prediction table</h3>
 <ol>
 <li>Select <strong>Models and visualization</strong>, the relevant subtab and the exact plot selector you want.</li>
@@ -626,10 +715,18 @@
 <li>If the candidate-table subtab is active, plot export uses the appropriate prediction chart instead of taking a screenshot of the table.</li>
 </ol>
 <p>For a group meeting, archive the saved project, measured-results CSV, prediction CSV and selected figures together. Keep exported figures associated with their data snapshot; a later project update does not update previously exported files.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/50-export-chart-png-pdf-svg.png" alt="Step 50: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/51-export-prediction-table.png" alt="Step 51: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="cancel-and-inspect-a-calculation">Cancel and inspect a calculation</h3>
 <p>During computation, <strong>Cancel calculation</strong> (<code>取消计算</code>) stops the current worker. Existing experimental records are preserved. Inspect <strong>Run log</strong> (<code>运行日志</code>) when a computation fails or takes longer than expected; a failed model is reported rather than silently substituted with a successful-looking result. Save the project before sending a bug report, and remove confidential experimental details from any material you choose to share.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/57-calculation-log-and-cancel.png" alt="Step 57: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/58-cancelled-records-preserved.png" alt="Step 58: English SynthBO interface" loading="lazy"></img></p>
 <h3 id="find-licenses-and-citation-information">Find licenses and citation information</h3>
-<p>Use <strong>About / licenses</strong> (<code>关于 / 许可</code>) or <strong>Help → About NanoBO</strong> (<code>帮助 → 关于 NanoBO</code>). The dialog includes an <strong>Open bundled licenses folder</strong> (<code>打开随附许可证文件夹</code>) button. Cite the scientific methods you actually used, together with NanoBO: <a href="HOW_TO_CITE.html">citation guide</a>, <a href="ACKNOWLEDGMENTS.html">acknowledgments</a>, <a href="https://github.com/wei-rui499/NanoBO/blob/main/REFERENCES.bib">BibTeX references</a>.</p>
+<p>Use <strong>About / licenses</strong> (<code>关于 / 许可</code>) or <strong>Help → About SynthBO</strong> (<code>帮助 → 关于 SynthBO</code>). The dialog includes an <strong>Open bundled licenses folder</strong> (<code>打开随附许可证文件夹</code>) button. Cite the scientific methods you actually used, together with SynthBO: <a href="HOW_TO_CITE.html">citation guide</a>, <a href="ACKNOWLEDGMENTS.html">acknowledgments</a>, <a href="https://github.com/wei-rui499/SynthBO/blob/main/REFERENCES.bib">BibTeX references</a>.</p>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/59-about-and-scientific-licenses.png" alt="Step 59: English SynthBO interface" loading="lazy"></img></p>
 <h2 id="12-troubleshooting-and-limits">12. Troubleshooting and limits</h2>
 <table>
 <thead>
@@ -653,7 +750,7 @@
 </tr>
 <tr>
 <td>A formula cell is missing on import</td>
-<td>Save a values-only copy or ensure Excel has calculated and saved cached values. NanoBO does not evaluate spreadsheet formulas.</td>
+<td>Save a values-only copy or ensure Excel has calculated and saved cached values. SynthBO does not evaluate spreadsheet formulas.</td>
 </tr>
 <tr>
 <td>A category or class is rejected</td>
@@ -781,4 +878,7 @@
 </tbody>
 </table>
 <p>For the exact scientific implementations and data fields, see <a href="V0.2_FEATURES.html">features</a>, <a href="VALIDATION.html">validation records</a>, <a href="UPSTREAM_MODIFICATIONS.html">upstream modification records</a> and <a href="HOW_TO_CITE.html">how to cite</a>.</p>
-<footer>NanoBO · 离线教程 / Offline guide · 教学实验数据均为模拟 / Teaching data are synthetic.</footer></article></main></html>
+<p><a href="STEP_BY_STEP.en.html">Step-by-step screenshot instructions</a></p>
+<p><img src="media/docs/screenshots/steps/63-built-in-workflow-examples.png" alt="Step 63: English SynthBO interface" loading="lazy"></img></p>
+<p><img src="media/docs/screenshots/steps/64-english-interface.png" alt="Step 64: English SynthBO interface" loading="lazy"></img></p>
+<footer>SynthBO · 离线教程 / Offline guide · 教学实验数据均为模拟 / Teaching data are synthetic.</footer></article></main></html>

@@ -1,0 +1,549 @@
+{
+  "product": "SynthBO",
+  "version": "0.2.5",
+  "data_status": "SYNTHETIC",
+  "capture": "Actual Qt widgets, actual worker output, English practice data",
+  "platform": "macOS; shared app controls also apply to Windows; native file pickers differ",
+  "screenshots": [
+    {
+      "file": "docs/screenshots/steps/01-main-window.png",
+      "language": "en",
+      "sha256": "3055add5d3832876437e5c71c5978d3b7b1f5a482645121570a16af132222912",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/02-language-button.png",
+      "language": "en",
+      "sha256": "00eeee2864fae159f3ba5edf00cdc7b2e8bbafe4aa45a8d75f1be3118cd592f0",
+      "width": 52,
+      "height": 37
+    },
+    {
+      "file": "docs/screenshots/steps/03-help-menu.png",
+      "language": "en",
+      "sha256": "cc017eb9a0861dc3382be060d651258c22ee447b9b015f886868fd8f2c63d267",
+      "width": 225,
+      "height": 118
+    },
+    {
+      "file": "docs/screenshots/steps/04-export-practice-data.png",
+      "language": "en",
+      "sha256": "aab6a0ea91345097d52c962364e2a1c4e1fcad3284219b9806c8ba6331a97fa3",
+      "width": 900,
+      "height": 560
+    },
+    {
+      "file": "docs/screenshots/steps/05-open-project.png",
+      "language": "en",
+      "sha256": "70258e33e432df3cc91ad9e8d7f8b6515630dae3aa359da93d6348cad1b33006",
+      "width": 900,
+      "height": 560
+    },
+    {
+      "file": "docs/screenshots/steps/06-six-measured-results.png",
+      "language": "en",
+      "sha256": "820d0d0f9132841d8b895942fde02b8ddf6740a22219d8b83f1155f4f0f1e61f",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/07-task-engine-batch-seed.png",
+      "language": "en",
+      "sha256": "820d0d0f9132841d8b895942fde02b8ddf6740a22219d8b83f1155f4f0f1e61f",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/08-calculating.png",
+      "language": "en",
+      "sha256": "dc1c29840782fe95a218f629f85c7d4a759b696b4a9ee4cba749a4ca6b90da81",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/09-fourteen-candidate-predictions.png",
+      "language": "en",
+      "sha256": "f5a211da821c0d5d5edffaa0930f7f1e839f99bd4ff85c2c1c9d83317387bea3",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/10-six-row-cross-validation.png",
+      "language": "en",
+      "sha256": "bf6d4c45367c0d9863e04be944face03d7cb2a48c32be401d0510e90ee0aa283",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/11-two-pending-experiments.png",
+      "language": "en",
+      "sha256": "cad150d26917dfffb64f837265e3224b84b4a8e40cb03aa5b957189fdedd6c65",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/12-export-pending-csv.png",
+      "language": "en",
+      "sha256": "501ebb370fc48a6c8e0f11ae78805519c2a267b27ecdcf3e4ab0b43f996e016b",
+      "width": 900,
+      "height": 560
+    },
+    {
+      "file": "docs/screenshots/steps/13-import-measured-csv.png",
+      "language": "en",
+      "sha256": "9f2922895b93d0437caceaad4263d6443a6d4811d391c87d731c04be48ec561e",
+      "width": 900,
+      "height": 560
+    },
+    {
+      "file": "docs/screenshots/steps/14-eight-completed-zero-pending.png",
+      "language": "en",
+      "sha256": "a73b038a5f843440f7da65ba1b5d1ec8ae0471a8da9cf1a6f27f234d10cf4c45",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/15-save-project.png",
+      "language": "en",
+      "sha256": "b29dd57affd3feac00d387205c90220ce4ddd736f4745ec804255896795cd606",
+      "width": 900,
+      "height": 560
+    },
+    {
+      "file": "docs/screenshots/steps/16-new-project.png",
+      "language": "en",
+      "sha256": "aea4ff63677099e28648fb62d33d77ade489a10c92d35f3e90e41eb0d38a338e",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/17-variable-types-and-steps.png",
+      "language": "en",
+      "sha256": "1a6c4b4b9de6c7d1a60de1de91abf923e1e7b92806258ccec1b6965534c3a7a4",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/18-objective-goal-and-notes.png",
+      "language": "en",
+      "sha256": "2856567e9e02507271b96302765a33616a70b6e0b4b2a8dc51913e4c8f6ba14f",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/19-import-excel.png",
+      "language": "en",
+      "sha256": "b2bb46b8a299ea7287096f8d02b9899b60b31828b6e4ce8cf85ac34cb04f48e6",
+      "width": 900,
+      "height": 560
+    },
+    {
+      "file": "docs/screenshots/steps/20-select-results-worksheet.png",
+      "language": "en",
+      "sha256": "939c229c98d2992c960c0959e0bf01c2624c98b2cccb0c3e38ee44ecd9a9815d",
+      "width": 200,
+      "height": 127
+    },
+    {
+      "file": "docs/screenshots/steps/21-manual-experiment-row.png",
+      "language": "en",
+      "sha256": "3538b7b6fe70df5228d8389aaf1b3b22d9b67b11412e4bd48cbd0970b94a3aeb",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/22-recipe-rules.png",
+      "language": "en",
+      "sha256": "48623ecf24e00e25b2f85cc18ed21afafcf93e329be0df166a0feb2c02c1dc40",
+      "width": 760,
+      "height": 570
+    },
+    {
+      "file": "docs/screenshots/steps/23-total-volume-rule.png",
+      "language": "en",
+      "sha256": "6a1fd45976830fd3f0cb2c4d285c9745081fe00d20e519d09b2d0397c9fadceb",
+      "width": 628,
+      "height": 279
+    },
+    {
+      "file": "docs/screenshots/steps/24-ratio-rule.png",
+      "language": "en",
+      "sha256": "6baeb2e2f19cc382cbf9a6d5961cae448ebd78653f3d5bdbc055f82abdff6c19",
+      "width": 321,
+      "height": 217
+    },
+    {
+      "file": "docs/screenshots/steps/25-import-candidates.png",
+      "language": "en",
+      "sha256": "97f0533223cb7c82cd101724e70f1c9ef7e551b08be4b56e628cf4f5d31418bc",
+      "width": 900,
+      "height": 560
+    },
+    {
+      "file": "docs/screenshots/steps/26-allowed-candidate-preview.png",
+      "language": "en",
+      "sha256": "aa8659193d12415a806f0c8996da0feecf555baa0a0b30f455898cafee112a97",
+      "width": 760,
+      "height": 570
+    },
+    {
+      "file": "docs/screenshots/steps/27-feasible-recipe-batch.png",
+      "language": "en",
+      "sha256": "133aa3a0a39418611f2547ff6503648ca4b430980d8e983cc71b6a5cbd102c37",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/28-recipe-predictions.png",
+      "language": "en",
+      "sha256": "5e31851f586fdcc29e2f6713065a8659eb83acac47eec51d54998b74de7d1a95",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/29-pareto-objective-settings.png",
+      "language": "en",
+      "sha256": "a9c5f54230b1e188d58a942a0acdb60c52b8941709173f7f21dd9ff3a0edaddb",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/30-pareto-prediction-table.png",
+      "language": "en",
+      "sha256": "3e89f86fbbb1ddf90ec2d8c3712dfa00952682d30b77a7ce9fca744a2d22e6dc",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/31-pareto-trade-offs.png",
+      "language": "en",
+      "sha256": "0f750ed9631738e5eca621a10c5dd2481f16cc93ba38e909415878dad5fef2f5",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/32-hypervolume-history.png",
+      "language": "en",
+      "sha256": "89b1a1d9d493c78a50d0db76c823717fc5b3d9fc9fb15ce82b5f5c9e5ed16e6d",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/33-three-dimensional-pareto.png",
+      "language": "en",
+      "sha256": "dfb8b9ccbd944b7ed3382dcac4ee2481a424c79d8208185fb9af236faeaec8f3",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/34-classification-label-settings.png",
+      "language": "en",
+      "sha256": "0bf77b1bcb3f3fafcd2d10f0256f33d254f965f6774a3a08b74944e8b3a71560",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/35-class-probabilities.png",
+      "language": "en",
+      "sha256": "f0d98f6222198187b3712115cf328fdf25a2a56245ae311a36c9f1ed21464c6a",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/36-classification-entropy.png",
+      "language": "en",
+      "sha256": "c9bf688b0f979ac8bfbf83e1662359138a50fc6eddb966b865be002496bac2f5",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/37-measured-class-counts.png",
+      "language": "en",
+      "sha256": "bb6c553c68a488fa49411c7608cebd97bac1d177cbda270b545f510307562ae5",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/38-held-out-confusion-matrix.png",
+      "language": "en",
+      "sha256": "4073b63e23398a9513d4dd670ea855fe9fdb7f685d00b601146c113c74d6ee80",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/39-success-failure-labels.png",
+      "language": "en",
+      "sha256": "e25a6ba406bddc2cf1145d21fc32a015e263322c3c64185b56ba2c4b1d2f3f79",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/40-binary-class-probabilities.png",
+      "language": "en",
+      "sha256": "f20bd9e0b4d1805a2cdce77c7ba084b196b0ca23fb0703aa830b7cd8ec541b27",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/41-initial-design-without-probabilities.png",
+      "language": "en",
+      "sha256": "6716a6df1dc2e95816a674ce71be6ef1452966bec11a336d4cd91f5a9c646ac5",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/42-prediction-intervals.png",
+      "language": "en",
+      "sha256": "46bf93010d838a4e59add43042143944411b84bbca8a41b6908d13da3404990e",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/43-mean-and-uncertainty.png",
+      "language": "en",
+      "sha256": "3bf440c882050355f0dbd47ffca7890334e7fa636c019d637fa0b9a9c464ad10",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/44-acquisition-ranking.png",
+      "language": "en",
+      "sha256": "3e332cdbb5ff263850c3b2419320edf95dc8dea7fa13fcb8a5a1f59c9fb8b61c",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/45-predicted-versus-measured.png",
+      "language": "en",
+      "sha256": "01ae41a3a2554552d8340fad2faae46f1c8e1f64c5c9827f94f74cfa61a2a26e",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/46-validation-residuals.png",
+      "language": "en",
+      "sha256": "d33f245315f443a59d2dd9e15785b512ded94e4524c829cdcde6c3fef5bb2357",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/47-measured-data-distribution.png",
+      "language": "en",
+      "sha256": "2bd0a75dca626967ce2111728204b764d180e58bd06051eeb1205e0b117d60c3",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/48-best-measured-history.png",
+      "language": "en",
+      "sha256": "b694c5c5b734d163ca59a22329032d70fa75b6da2b74936c8e7ea3739059c935",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/49-inspect-a-candidate.png",
+      "language": "en",
+      "sha256": "a7cb3badca33761fc0e558717bafdbe272dcddf4d4b3a11448af754cf8596ed7",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/50-export-chart-png-pdf-svg.png",
+      "language": "en",
+      "sha256": "9841f5d55e853647c27332dbdb15c9422ccbc6847287e65d988acc00794c7cab",
+      "width": 900,
+      "height": 560
+    },
+    {
+      "file": "docs/screenshots/steps/51-export-prediction-table.png",
+      "language": "en",
+      "sha256": "2eed5b9f6f1804be1084289aa594c7e71268db22206e66c7841cd1b123429ba7",
+      "width": 900,
+      "height": 560
+    },
+    {
+      "file": "docs/screenshots/steps/52-file-menu.png",
+      "language": "en",
+      "sha256": "b45e9b23ca3a84633cc5cd069c4450ddfc2a1e6ea463ebad4e1e6f1359fbedce",
+      "width": 257,
+      "height": 116
+    },
+    {
+      "file": "docs/screenshots/steps/53-export-measured-results.png",
+      "language": "en",
+      "sha256": "a14bc10f5aee364a75c31f360e65b663437d2bbef3c8cd40328ea1520e0daabe",
+      "width": 900,
+      "height": 560
+    },
+    {
+      "file": "docs/screenshots/steps/54-select-pending-condition.png",
+      "language": "en",
+      "sha256": "490182ab0b3be698da29947ccd0c3a9c9d73ef3a82ba2fa960c2a0c258ae5be8",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/55-move-condition-to-results.png",
+      "language": "en",
+      "sha256": "aa532ce3fe0763adc4848bb897385e28589ccef52ace1110e131afea5d538ac3",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/56-withdraw-pending-condition.png",
+      "language": "en",
+      "sha256": "0d8196c5b598ce0c11b62939859a839d6d1ffe7c92169e6cd23cc291c62e2c93",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/57-calculation-log-and-cancel.png",
+      "language": "en",
+      "sha256": "fc0c7b67594ce13cec15d6b441fc4f4c94bd1fc26190cd31fa47fe88c269ada6",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/58-cancelled-records-preserved.png",
+      "language": "en",
+      "sha256": "47fec2d2f7a4840fcedcecfd7a94b404353754d38a3721824a0ab352132a71b5",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/59-about-and-scientific-licenses.png",
+      "language": "en",
+      "sha256": "474307eb640a46f6fe076adb2b80825f034c3b6abd9c2ce59aabfa03a5e13c5a",
+      "width": 640,
+      "height": 440
+    },
+    {
+      "file": "docs/screenshots/steps/60-gryffin-native-engine.png",
+      "language": "en",
+      "sha256": "0f84843ef95b67f1c80333308532b7e534593a80c8aba2003a86cdb19d478ec8",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/61-atlas-native-engine.png",
+      "language": "en",
+      "sha256": "b0fc7adb12b0d90e0c3b3892d0ac268fd2ec2d0f4edf204c11e5041ee5538e89",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/62-gryffin-objective-priorities.png",
+      "language": "en",
+      "sha256": "94812cf98e9df8486f3e4a15d3fb480ffc8abc2807285183a5de24597cbc3f26",
+      "width": 1680,
+      "height": 1060
+    },
+    {
+      "file": "docs/screenshots/steps/63-built-in-workflow-examples.png",
+      "language": "en",
+      "sha256": "5ffe08bc6768c11223a51a99b2c9e3ccc96971eb677b4a8d0a03018925b55c37",
+      "width": 251,
+      "height": 127
+    },
+    {
+      "file": "docs/screenshots/steps/64-english-interface.png",
+      "language": "en",
+      "sha256": "5b35c56c32e7834e717ccd478aaf8ca343fe07eec6e62c2854c9e331930cf49e",
+      "width": 1680,
+      "height": 1060
+    }
+  ],
+  "real_worker_checks": [
+    {
+      "case": "quickstart-initial-analysis",
+      "operation": "analyze",
+      "engine": "bo-mcp",
+      "completed": 6,
+      "pending": 0,
+      "predictions": 14,
+      "validation_rows": 6
+    },
+    {
+      "case": "quickstart-first-batch",
+      "operation": "recommend",
+      "engine": "bo-mcp",
+      "completed": 6,
+      "pending": 2,
+      "predictions": 14,
+      "validation_rows": 0
+    },
+    {
+      "case": "quickstart-after-refill",
+      "operation": "analyze",
+      "engine": "bo-mcp",
+      "completed": 8,
+      "pending": 0,
+      "predictions": 12,
+      "validation_rows": 8
+    },
+    {
+      "case": "recipe-batch",
+      "operation": "recommend",
+      "engine": "bo-mcp",
+      "completed": 6,
+      "pending": 2,
+      "predictions": 15,
+      "validation_rows": 0
+    },
+    {
+      "case": "recipe-analysis",
+      "operation": "analyze",
+      "engine": "bo-mcp",
+      "completed": 6,
+      "pending": 2,
+      "predictions": 13,
+      "validation_rows": 6
+    },
+    {
+      "case": "pareto-analysis",
+      "operation": "analyze",
+      "engine": "bo-mcp",
+      "completed": 6,
+      "pending": 0,
+      "predictions": 22,
+      "validation_rows": 6
+    },
+    {
+      "case": "three-objective-analysis",
+      "operation": "analyze",
+      "engine": "bo-mcp",
+      "completed": 6,
+      "pending": 0,
+      "predictions": 22,
+      "validation_rows": 6
+    },
+    {
+      "case": "classification-analysis",
+      "operation": "analyze",
+      "engine": "bo-mcp",
+      "completed": 6,
+      "pending": 0,
+      "predictions": 22,
+      "validation_rows": 6
+    },
+    {
+      "case": "binary-analysis",
+      "operation": "analyze",
+      "engine": "bo-mcp",
+      "completed": 6,
+      "pending": 0,
+      "predictions": 22,
+      "validation_rows": 6
+    },
+    {
+      "case": "initial-classification-design",
+      "operation": "recommend",
+      "engine": "bo-mcp",
+      "completed": 0,
+      "pending": 2,
+      "predictions": 0,
+      "validation_rows": 0
+    }
+  ]
+}

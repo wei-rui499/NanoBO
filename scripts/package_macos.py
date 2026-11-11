@@ -21,7 +21,7 @@ def run(*args):
 def main():
     if sys.platform != "darwin":
         raise SystemExit("This installer is built on macOS only.")
-    app = ROOT / "dist" / "NanoBO.app"
+    app = ROOT / "dist" / "SynthBO.app"
     if not app.is_dir():
         raise SystemExit("Build the app first.")
     run(sys.executable, ROOT / "scripts" / "source_archive.py")
@@ -34,7 +34,7 @@ def main():
     plist_path = packaged_app / "Contents" / "Info.plist"
     with plist_path.open("rb") as stream:
         info = plistlib.load(stream)
-    info.update(CFBundleName="NanoBO", CFBundleDisplayName="NanoBO", CFBundleShortVersionString=VERSION, CFBundleVersion=VERSION, LSMinimumSystemVersion="14.0", NSHighResolutionCapable=True)
+    info.update(CFBundleName="SynthBO", CFBundleDisplayName="SynthBO", CFBundleShortVersionString=VERSION, CFBundleVersion=VERSION, LSMinimumSystemVersion="14.0", NSHighResolutionCapable=True)
     with plist_path.open("wb") as stream:
         plistlib.dump(info, stream)
     license_destination = packaged_app / "Contents" / "Resources" / "licenses"
@@ -47,7 +47,7 @@ def main():
     # A cached PYZ can otherwise survive an incremental source edit.
     source_checks = {}
     for python, executable, modules in [
-        (sys.executable, packaged_app / "Contents/MacOS/NanoBO", ["app", "engine", "space", "table_io", "recipe_dialog", "analysis_view", "verification", "examples"]),
+        (sys.executable, packaged_app / "Contents/MacOS/SynthBO", ["app", "engine", "space", "table_io", "recipe_dialog", "analysis_view", "i18n", "verification", "examples"]),
         (ROOT / ".venv-modern/bin/python", packaged_app / "Contents/Resources/engines/modern/chembo-modern-worker", ["engine", "space", "modeling"]),
     ]:
         checked = subprocess.check_output([str(python), str(ROOT / "scripts/verify_frozen_sources.py"), str(executable), *modules], cwd=ROOT, text=True)
@@ -58,7 +58,7 @@ def main():
     environment = dict(os.environ, QT_QPA_PLATFORM="offscreen")
     for key in ("PYTHONPATH", "PYTHONHOME", "VIRTUAL_ENV", "CONDA_PREFIX"):
         environment.pop(key, None)
-    subprocess.run([str(packaged_app / "Contents" / "MacOS" / "NanoBO"), "--verify-ui", str(result)], check=True, env=environment, timeout=420)
+    subprocess.run([str(packaged_app / "Contents" / "MacOS" / "SynthBO"), "--verify-ui", str(result)], check=True, env=environment, timeout=420)
     ui_report = json.loads(result.read_text(encoding="utf-8"))
     if not ui_report["ok"]:
         raise RuntimeError("Frozen GUI verification failed")
@@ -71,23 +71,23 @@ def main():
     regression_report = {key: int(suite.attrib.get(key, 0)) for key in ("tests", "failures", "errors", "skipped")}
     if regression_report["failures"] or regression_report["errors"]:
         raise RuntimeError("Current regression report contains failures")
-    report = {"product": "NanoBO", "version": VERSION, "time_utc": datetime.now(timezone.utc).isoformat(), "platform": platform.platform(), "architecture": platform.machine(), "signature": "ad-hoc verified, not Developer ID notarized", "frozen_model_cases_passed": 6, "gui_checks": ui_report["checks"], "frozen_code_matches_source": source_checks, "classic_tests": regression_report, "current_release_validation": json.loads((ROOT / "docs" / f"VALIDATION_V{VERSION}.json").read_text(encoding="utf-8"))}
+    report = {"product": "SynthBO", "version": VERSION, "time_utc": datetime.now(timezone.utc).isoformat(), "platform": platform.platform(), "architecture": platform.machine(), "signature": "ad-hoc verified, not Developer ID notarized", "frozen_model_cases_passed": 6, "gui_checks": ui_report["checks"], "frozen_code_matches_source": source_checks, "classic_tests": regression_report, "current_release_validation": json.loads((ROOT / "docs" / f"VALIDATION_V{VERSION}.json").read_text(encoding="utf-8"))}
     (source / "MAC_VALIDATION.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     (ROOT / "release" / f"MAC_VALIDATION-{VERSION}.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    shutil.copy2(ROOT / "release" / f"NanoBO-{VERSION}-source.zip", source)
+    shutil.copy2(ROOT / "release" / f"SynthBO-{VERSION}-source.zip", source)
     shutil.copytree(ROOT / "licenses", source / "licenses")
     for name in ("ACKNOWLEDGMENTS.md", "THIRD_PARTY_NOTICES.md", "CITATION.cff", "REFERENCES.bib"):
         shutil.copy2(ROOT / name, source)
-    tutorial = ROOT / "release" / f"NanoBO-{VERSION}-tutorial-examples.zip"
+    tutorial = ROOT / "release" / f"SynthBO-{VERSION}-tutorial-examples.zip"
     if tutorial.is_file():
         shutil.copy2(tutorial, source)
     library_sources = ROOT / "release" / "library-sources"
     if library_sources.is_dir():
         shutil.copytree(library_sources, source / "library-sources")
     shutil.copy2(ROOT / "docs" / "THIRD_PARTY.md", source)
-    (staging / "安装说明-ReadMe.txt").write_text("将 NanoBO.app 拖入 Applications。\n打开后点击“使用教程”，或从“帮助”选择 English tutorial。\n从“帮助 → 导出教程练习数据…”复制配套项目、CSV 和 Excel 到自己的文件夹。\n本地预览版采用 ad-hoc 签名，尚未经过 Apple Developer ID 公证。\n首次引擎冷启动可能需要约一分钟；无需安装 Python 或 WSL。\nSource-and-Licenses 包含应用源码、科研引用、第三方许可证和对应库源。\n\nDrag NanoBO.app into Applications. Open Help → English tutorial.\nUse 帮助 → 导出教程练习数据… to copy the synthetic practice files to a writable folder.\nNo Python or WSL is needed. This preview has an ad-hoc signature and is not Apple-notarized.\n", encoding="utf-8")
-    dmg = ROOT / "release" / f"NanoBO-{VERSION}-macOS-{platform.machine()}.dmg"
-    run("hdiutil", "create", "-volname", "NanoBO", "-srcfolder", staging, "-ov", "-format", "UDZO", dmg)
+    (staging / "安装说明-ReadMe.txt").write_text("将 SynthBO.app 拖入 Applications。\n打开后点击“使用教程”，或从“帮助”选择 English tutorial。\n从“帮助 → 导出教程练习数据…”复制配套项目、CSV 和 Excel 到自己的文件夹。\n本地预览版采用 ad-hoc 签名，尚未经过 Apple Developer ID 公证。\n首次引擎冷启动可能需要约一分钟；无需安装 Python 或 WSL。\nSource-and-Licenses 包含应用源码、科研引用、第三方许可证和对应库源。\n\nDrag SynthBO.app into Applications. Open Help → English tutorial.\nUse 帮助 → 导出教程练习数据… to copy the synthetic practice files to a writable folder.\nNo Python or WSL is needed. This preview has an ad-hoc signature and is not Apple-notarized.\n", encoding="utf-8")
+    dmg = ROOT / "release" / f"SynthBO-{VERSION}-macOS-{platform.machine()}.dmg"
+    run("hdiutil", "create", "-volname", "SynthBO", "-srcfolder", staging, "-ov", "-format", "UDZO", dmg)
     print(dmg)
     temporary.cleanup()
 

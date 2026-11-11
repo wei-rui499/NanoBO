@@ -1,14 +1,14 @@
-# 如何引用 NanoBO 和实际使用的科研方法
+# 如何引用 SynthBO 和实际使用的科研方法
 
-请同时区分 **NanoBO 软件／界面贡献** 与 **优化、概率建模和标量化方法的原始科研贡献**。先记录项目中的实际引擎、软件版本、任务类型和运行历史，再选择对应论文；不要把本页所有论文无差别列为同一研究的方法。
+请同时区分 **SynthBO 软件／界面贡献** 与 **优化、概率建模和标量化方法的原始科研贡献**。先记录项目中的实际引擎、软件版本、任务类型和运行历史，再选择对应论文；不要把本页所有论文无差别列为同一研究的方法。
 
-## 引用 NanoBO 软件
+## 引用 SynthBO 软件
 
-在 NanoBO 的 GitHub 页面使用“Cite this repository”，或引用根目录的 [CITATION.cff](../CITATION.cff)。本版本可写为：
+在 SynthBO 的 GitHub 页面使用“Cite this repository”，或引用根目录的 [CITATION.cff](../CITATION.cff)。本版本可写为：
 
-> NanoBO contributors. *NanoBO: local desktop experiment planning for chemists*, version 0.2.4 (2026). https://github.com/wei-rui499/NanoBO
+> SynthBO contributors. *SynthBO: local desktop experiment planning for chemists*, version 0.2.5 (2026). https://github.com/wei-rui499/SynthBO
 
-目前没有为 NanoBO 声明论文或 DOI。`NanoBO contributors` 是软件贡献者的团体署名，不代替各上游论文作者。若未来正式指定维护者个人署名或取得 Zenodo 等归档 DOI，应使用该版本经过确认的引用记录。
+目前没有为 SynthBO 声明论文或 DOI。`SynthBO contributors` 是软件贡献者的团体署名，不代替各上游论文作者。若未来正式指定维护者个人署名或取得 Zenodo 等归档 DOI，应使用该版本经过确认的引用记录。
 
 ## 按实际方法选择引用
 
@@ -17,11 +17,11 @@
 | Gryffin 类别／混合变量优化 | `Hase2021Gryffin` |
 | Gryffin 中的连续变量方法 | 上述 Gryffin 条目，并按上游指引加 `Hase2018Phoenics` |
 | Gryffin / Chimera 的优先级多目标 | 相应 Gryffin／连续方法条目，加 `Hase2018Chimera` |
-| Gryffin 的已知约束接口／已测点排除 | 按上游指引加 `Hickman2022KnownConstraints`（正式发表版）；不要据此把 NanoBO 的 BoTorch 联合配方域写成 Gryffin 功能 |
+| Gryffin 的已知约束接口／已测点排除 | 按上游指引加 `Hickman2022KnownConstraints`（正式发表版）；不要据此把 SynthBO 的 BoTorch 联合配方域写成 Gryffin 功能 |
 | Atlas GPPlanner | `Hickman2025Atlas`；其运行基础为 Olympus，可加 `Hase2021Olympus` 与上游请求的 `Hickman2023OlympusEnhanced`（明确为预印本） |
 | 新版 BoTorch 单目标（SingleTaskGP + qLogEI） | `Balandat2020BoTorch`、`Ament2023LogEI`；GP 实现可加 `Gardner2018GPyTorch` |
 | 新版 BoTorch Pareto（ModelListGP + qLogNEHVI） | `Balandat2020BoTorch`、`Daulton2021NEHVI`、`Ament2023LogEI`；GP 实现可加 `Gardner2018GPyTorch` |
-| 分类主动学习（GaussianProcessClassifier + 分类熵） | `Pedregosa2011ScikitLearn`；高斯过程分类理论可引 `Rasmussen2006GPML`；NanoBO 的候选域与回填界面另按软件引用 |
+| 分类主动学习（GaussianProcessClassifier + 分类熵） | `Pedregosa2011ScikitLearn`；高斯过程分类理论可引 `Rasmussen2006GPML`；SynthBO 的候选域与回填界面另按软件引用 |
 | 实际调用保留的 BO-MCP / bo-engine 兼容接口 | 另注明 `Gottstein2026BOMCP` 的软件来源与固定提交，并引用实际底层 BoTorch 方法 |
 
 完整、可导入参考文献管理器的作者、题名、卷页及 DOI 见 [REFERENCES.bib](../REFERENCES.bib)。核对来源和差异处理见 [CITATION_VERIFICATION.json](CITATION_VERIFICATION.json)。
@@ -32,26 +32,26 @@
 
 **Gryffin + Chimera：**
 
-> 实验条件通过 NanoBO v0.2.4 桌面界面管理，并由 Gryffin 推荐。连续变量方法按 Phoenics 的原始方法引用；优先级多目标使用 Chimera 标量化。[引用 NanoBO、Gryffin、Phoenics（如适用）、Chimera]
+> 实验条件通过 SynthBO v0.2.5 桌面界面管理，并由 Gryffin 推荐。连续变量方法按 Phoenics 的原始方法引用；优先级多目标使用 Chimera 标量化。[引用 SynthBO、Gryffin、Phoenics（如适用）、Chimera]
 
 **BoTorch 单目标：**
 
-> 使用 NanoBO v0.2.4 在预定义的合法候选域中管理实验。数值响应采用 BoTorch 的 SingleTaskGP 建模，下一批候选以 qLogEI 评分，并排除已测及待实验条件。[引用 NanoBO、BoTorch、LogEI；GPyTorch（如适用）]
+> 使用 SynthBO v0.2.5 在预定义的合法候选域中管理实验。数值响应采用 BoTorch 的 SingleTaskGP 建模，下一批候选以 qLogEI 评分，并排除已测及待实验条件。[引用 SynthBO、BoTorch、LogEI；GPyTorch（如适用）]
 
 **BoTorch Pareto：**
 
-> 各数值目标由 BoTorch 的高斯过程模型拟合，候选使用 qLogNEHVI 选择；实测 Pareto 集合与超体积以报告中注明的目标方向和参考点计算。[引用 NanoBO、BoTorch、NEHVI、LogEI]
+> 各数值目标由 BoTorch 的高斯过程模型拟合，候选使用 qLogNEHVI 选择；实测 Pareto 集合与超体积以报告中注明的目标方向和参考点计算。[引用 SynthBO、BoTorch、NEHVI、LogEI]
 
 **分类：**
 
-> 在 NanoBO v0.2.4 中使用 scikit-learn 的 GaussianProcessClassifier 估计已观察类别的概率，按分类熵选择需要探索的实验条件。[引用 NanoBO、scikit-learn；GPML 理论参考]
+> 在 SynthBO v0.2.5 中使用 scikit-learn 的 GaussianProcessClassifier 估计已观察类别的概率，按分类熵选择需要探索的实验条件。[引用 SynthBO、scikit-learn；GPML 理论参考]
 
 ## 不应混淆的范围
 
-- `nanobo-botorch-v2` 是 NanoBO 直接组合原生 BoTorch／scikit-learn 的工作流标识，不是一个声称新发明的代理模型，也不是 BO-MCP 全部服务功能。
+- `nanobo-botorch-v2` 是 SynthBO 直接组合原生 BoTorch／scikit-learn 的工作流标识，不是一个声称新发明的代理模型，也不是 BO-MCP 全部服务功能。
 - 选择 BoTorch／分类任务，不应将其方法统一归功于 Gryffin、Atlas 或 Alán Aspuru-Guzik 课题组。
 - 本版本没有把 BayBE、BgoLearn／BgoFace 作为运行引擎。产品功能对照不等于代码使用或算法实验对比。
-- Golem 等库作为依赖出现，不表示 NanoBO 已开放其全部科学能力；只有实际采用的方法才能写入研究的方法部分。
+- Golem 等库作为依赖出现，不表示 SynthBO 已开放其全部科学能力；只有实际采用的方法才能写入研究的方法部分。
 - 留一验证使用相应工作流的实际模型；候选预测与不确定性不是已完成的化学测量。公开教学／验收数据标为 SYNTHETIC，不能写成湿实验结果。
 
 科研引用与软件许可分别处理：引用论文不能取代完整许可证和版权声明；附带许可证也不能代替学术署名。完整声明见 [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md) 和 [ACKNOWLEDGMENTS.md](../ACKNOWLEDGMENTS.md)。

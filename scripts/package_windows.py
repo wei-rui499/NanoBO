@@ -31,7 +31,7 @@ def bundle_inventory(bundle):
     """Check required distributed files, without importing or executing them."""
     bundle = Path(bundle)
     required = [
-        "NanoBO.exe", "_internal/python310.dll",
+        "SynthBO.exe", "_internal/python310.dll",
         "_internal/engines/modern/chembo-modern-worker.exe",
         "_internal/engines/modern/_internal/python313.dll",
         "_internal/docs/html/index.html",
@@ -85,39 +85,39 @@ def main():
     version = app_version(ROOT)
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
-    bundle = ROOT / "dist/NanoBO"
+    bundle = ROOT / "dist/SynthBO"
     inventory = bundle_inventory(bundle)
     subprocess.run([
         str(args.compiler), f"/DAppVersion={version}", f"/DDistDir={bundle}",
         f"/O{output}", str(ROOT / "scripts/build_installer.iss"),
     ], check=True, cwd=ROOT)
-    installer = output / f"NanoBO-{version}-windows-x64-setup-unsigned.exe"
+    installer = output / f"SynthBO-{version}-windows-x64-setup-unsigned.exe"
     if not installer.is_file() or installer.stat().st_size < 1024 * 1024:
         raise RuntimeError("The native installer was not produced")
     with installer.open("rb") as stream:
         if stream.read(2) != b"MZ":
             raise RuntimeError("The installer does not have a Windows PE header")
-    portable = output / f"NanoBO-{version}-windows-x64-portable-unsigned.zip"
-    zip_tree(bundle, portable, "NanoBO")
+    portable = output / f"SynthBO-{version}-windows-x64-portable-unsigned.zip"
+    zip_tree(bundle, portable, "SynthBO")
     # Attach the exact build input, rather than promising that a Mac archive
     # contains the generated Windows extension source/metadata.
     subprocess.run([sys.executable, str(ROOT / "scripts/source_archive.py")], check=True, cwd=ROOT)
-    source = ROOT / "release" / f"NanoBO-{version}-source.zip"
+    source = ROOT / "release" / f"SynthBO-{version}-source.zip"
     if not source.is_file():
         raise RuntimeError(f"Matching source archive is missing: {source.name}")
-    windows_source = output / f"NanoBO-{version}-windows-source.zip"
+    windows_source = output / f"SynthBO-{version}-windows-source.zip"
     shutil.copy2(source, windows_source)
     corresponding = ROOT / "release/library-sources"
     if not (corresponding / "SOURCE-ARCHIVES.json").is_file():
         raise RuntimeError("Fetch exact corresponding library sources before Windows packaging")
-    library_source = output / f"NanoBO-{version}-windows-library-sources.zip"
+    library_source = output / f"SynthBO-{version}-windows-library-sources.zip"
     zip_tree(corresponding, library_source, "library-sources", zipfile.ZIP_STORED)
     asset_paths = [installer, portable, windows_source, library_source]
     for name in ("LICENSE", "ACKNOWLEDGMENTS.md", "THIRD_PARTY_NOTICES.md", "CITATION.cff", "REFERENCES.bib"):
         shutil.copy2(ROOT / name, output / name)
         asset_paths.append(output / name)
     report = {
-        "product": "NanoBO", "version": version, "platform": "Windows", "architecture": "x64",
+        "product": "SynthBO", "version": version, "platform": "Windows", "architecture": "x64",
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "source_commit": os.environ.get("GITHUB_SHA"),
         "status": "BUILD_ONLY_RUNTIME_UNVERIFIED",
@@ -130,6 +130,10 @@ def main():
         "assets": {p.name: {"bytes": p.stat().st_size, "sha256": sha256(p)} for p in asset_paths},
         "dependencies": {kind: [{"name": item["name"], "version": item["version"]} for item in json.loads((bundle / "_internal/licenses" / kind / "dependency-inventory.json").read_text(encoding="utf-8"))] for kind in ("classic", "modern")},
     }
+    ui_update = bundle / 'WINDOWS_UI_UPDATE.json'
+    if ui_update.is_file():
+        report['interface_update'] = json.loads(ui_update.read_text(encoding='utf-8'))
+        report['runtime_validation'] = 'Baseline 0.2.4 passed according to the user. Native libraries, scientific modules and the modern worker are retained. The new bilingual interface has not been run on Windows.'
     evidence = output / f"WINDOWS_BUILD-{version}.json"
     evidence.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     checksums = [sha256(p) + "  " + p.name for p in sorted(asset_paths + [evidence])]

@@ -23,6 +23,7 @@ def render_guides(root=ROOT):
     if any(p not in destinations for p in required):
         raise RuntimeError("Both Chinese and English tutorials are required before packaging.")
     markdown = MarkdownIt("commonmark", {"html": False}).enable("table")
+    used_media = set()
 
     class LocalLinks(HTMLParser):
         def __init__(self, source, destination):
@@ -43,10 +44,11 @@ def render_guides(root=ROOT):
                 final = output / "media" / relative
                 final.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(target, final)
+                used_media.add(final)
             elif relative.parts[0] in ("examples", "licenses") and target.exists():
                 final = target
             else:
-                return "https://github.com/wei-rui499/NanoBO/blob/main/" + quote(relative.as_posix()) + ("#" + parsed.fragment if parsed.fragment else "")
+                return "https://github.com/wei-rui499/SynthBO/blob/main/" + quote(relative.as_posix()) + ("#" + parsed.fragment if parsed.fragment else "")
             path = Path(os.path.relpath(final, self.destination.parent)).as_posix()
             return urlunsplit(("", "", quote(path, safe="/"), parsed.query, parsed.fragment))
 
@@ -56,6 +58,8 @@ def render_guides(root=ROOT):
                 if value is not None and ((tag == "a" and key == "href") or (tag == "img" and key == "src")):
                     value = self.url(value, image=tag == "img")
                 rewritten.append(key if value is None else f'{key}="{escape(value, quote=True)}"')
+            if tag == 'img':
+                rewritten.append('loading="lazy"')
             self.parts.append("<" + tag + (" " + " ".join(rewritten) if rewritten else "") + ">")
 
         def handle_endtag(self, tag):
@@ -89,9 +93,13 @@ def render_guides(root=ROOT):
         title = headings[0][1] if headings else source.stem
         toc = "".join(f'<a class="{"sub" if level == "h3" else ""}" href="#{escape(anchor)}">{escape(text)}</a>' for level, text, anchor in headings if level in ("h2", "h3"))
         language = "en" if source.name.endswith(".en.md") else "zh-CN"
-        page = f'''<!doctype html><html lang="{language}"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{escape(title)} · NanoBO</title><style>{css}</style><header><strong>NanoBO</strong> &nbsp; <a href="TUTORIAL.zh-CN.html">简体中文</a><a href="TUTORIAL.en.html">English</a><a href="index.html">教程首页 / Help home</a></header><main><nav aria-label="Table of contents">{toc}</nav><article>{"".join(links.parts)}<footer>NanoBO · 离线教程 / Offline guide · 教学实验数据均为模拟 / Teaching data are synthetic.</footer></article></main></html>'''
+        page = f'''<!doctype html><html lang="{language}"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{escape(title)} · SynthBO</title><style>{css}</style><header><strong>SynthBO</strong> &nbsp; <a href="TUTORIAL.zh-CN.html">简体中文</a><a href="TUTORIAL.en.html">English</a><a href="index.html">教程首页 / Help home</a></header><main><nav aria-label="Table of contents">{toc}</nav><article>{"".join(links.parts)}<footer>SynthBO · 离线教程 / Offline guide · 教学实验数据均为模拟 / Teaching data are synthetic.</footer></article></main></html>'''
         destination.write_text(page, encoding="utf-8")
-    (output / "index.html").write_text('''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NanoBO · 使用教程 / User guide</title><style>body{font:18px/1.8 system-ui;max-width:800px;margin:10vh auto;padding:24px;background:#f6faf7;color:#244335}a{display:block;background:white;border:1px solid #d4e3d8;border-radius:12px;padding:24px;margin:20px 0;color:#176b50;text-decoration:none}</style><h1>NanoBO</h1><p>选择教程语言 / Choose your guide language</p><a href="TUTORIAL.zh-CN.html">简体中文 · 从练习数据开始</a><a href="TUTORIAL.en.html">English · Start with the practice data</a><p>App: 帮助 → 导出教程练习数据…<br>Export a writable copy of the practice files from the Help menu.</p></html>''', encoding="utf-8")
+    (output / "index.html").write_text('''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SynthBO · 使用教程 / User guide</title><style>body{font:18px/1.8 system-ui;max-width:800px;margin:10vh auto;padding:24px;background:#f6faf7;color:#244335}a{display:block;background:white;border:1px solid #d4e3d8;border-radius:12px;padding:24px;margin:20px 0;color:#176b50;text-decoration:none}</style><h1>SynthBO</h1><p>选择教程语言 / Choose your guide language</p><a href="TUTORIAL.zh-CN.html">简体中文 · 从练习数据开始</a><a href="TUTORIAL.en.html">English · Start with the practice data</a><p>App: 帮助 → 导出教程练习数据…<br>Export a writable copy of the practice files from the Help menu.</p></html>''', encoding="utf-8")
+    # Only generated media are pruned; source screenshots and user data stay put.
+    for path in (output / 'media').rglob('*'):
+        if path.is_file() and path not in used_media:
+            path.unlink()
     print(f"Offline help: {len(destinations)} guides + language home")
     return output
 

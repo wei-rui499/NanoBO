@@ -13,6 +13,6 @@ draw.line([(430, 230), (430, 435), (265, 725), (265, 760), (298, 790), (726, 790
 draw.line([(355, 618), (675, 618)], fill="#b4d990", width=32)
 for x, y, r in [(477, 560, 23), (559, 502, 17), (521, 675, 28), (710, 310, 22), (788, 420, 31)]:
     draw.ellipse((x-r, y-r, x+r, y+r), fill="#d8edb7")
-image.save(root / "NanoBO.png")
-image.save(root / "NanoBO.icns")
-image.save(root / "NanoBO.ico", sizes=[(16, 16), (32, 32), (48, 48), (128, 128), (256, 256)])
+image.save(root / "SynthBO.png")
+image.save(root / "SynthBO.icns")
+image.save(root / "SynthBO.ico", sizes=[(16, 16), (32, 32), (48, 48), (128, 128), (256, 256)])

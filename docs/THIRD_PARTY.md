@@ -46,7 +46,7 @@ Qt 在线文档会随版本更新；本次原文从官方 6.12.0 精确版本源
 
 ## 其他运行库与构建工具
 
-Windows 安装器使用 Inno Setup。简体中文消息文件由 Zhenghan Yang (Kira) 维护，取自 [Inno Setup 官方翻译目录](https://jrsoftware.org/files/istrans/) 所链接的官方源码。固定文件、原始署名、Inno Setup 许可和来源散列保存在 `scripts/localizations/`。安装器保留 Inno Setup 自带的版权和网站声明；该工具不属于 NanoBO 的科研算法。
+Windows 安装器使用 Inno Setup。简体中文消息文件由 Zhenghan Yang (Kira) 维护，取自 [Inno Setup 官方翻译目录](https://jrsoftware.org/files/istrans/) 所链接的官方源码。固定文件、原始署名、Inno Setup 许可和来源散列保存在 `scripts/localizations/`。安装器保留 Inno Setup 自带的版权和网站声明；该工具不属于 SynthBO 的科研算法。
 
 DEAP 1.4.4 的源码 `LICENSE.txt` 为 LGPLv3；moocore 0.3.2 的官方发行元数据标明 `LGPL-2.1-or-later`，其 `COPYRIGHTS` 说明 C 库大部分文件采用 MPLv2，因包含 AVL 树组件，组合库按 LGPLv2.1 或更高版本分发。它们的精确 PyPI 源码发行包随 `library-sources/deap/`、`library-sources/moocore/` 提供，并对照 [DEAP 1.4.4 官方发行元数据](https://pypi.org/pypi/deap/1.4.4/json)、[moocore 0.3.2 官方发行元数据](https://pypi.org/pypi/moocore/0.3.2/json) 中的 SHA-256。moocore 的完整 LGPLv2.1、MPLv2 规范文本另存于 `licenses/manual/moocore-0.3.2-*.txt`；其各文件作者和其他所含组件的归属继续由未修改源码及 `COPYRIGHTS` 保留。
 

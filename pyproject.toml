@@ -3,14 +3,14 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "nanobo"
-version = "0.2.4"
+name = "synthbo"
+version = "0.2.5"
 description = "Local, native desktop experiment planning for chemists"
 requires-python = ">=3.10"
 license = {text = "Apache-2.0"}
 
 [project.scripts]
-nanobo = "chembo.__main__:main"
+synthbo = "chembo.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

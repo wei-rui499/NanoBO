@@ -33,7 +33,7 @@ args = parser.parse_args()
 HERE = args.output.resolve()
 HERE.mkdir(parents=True, exist_ok=True)
 bundle = args.bundle.resolve()
-exe = bundle / "NanoBO.exe"
+exe = bundle / "SynthBO.exe"
 modern = bundle / "_internal/engines/modern/chembo-modern-worker.exe"
 environment = os.environ.copy()
 for key in ("PYTHONHOME", "PYTHONPATH", "PYTHONUTF8", "PYTHONIOENCODING", "VIRTUAL_ENV", "CONDA_PREFIX"):

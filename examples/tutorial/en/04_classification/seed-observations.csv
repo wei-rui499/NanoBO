@@ -1,0 +1,7 @@
+﻿temperature_C,ligand_mM,morphology
+20,0.5,Aggregated
+30,0.5,Aggregated
+30,1.5,Spheres
+50,1,Spheres
+50,2,Rods
+80,2,Rods

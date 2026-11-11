@@ -17,7 +17,7 @@ def load(folder, name="project.chembo.json"):
     return validate_project(json.loads((ROOT / folder / name).read_text(encoding="utf-8")))
 
 
-@pytest.mark.parametrize("folder,total", list(zip(FOLDERS, [20, 21, 28, 28])))
+@pytest.mark.parametrize("folder,total", [(prefix + folder, total) for prefix in ('', 'en/') for folder, total in zip(FOLDERS, [20, 21, 28, 28])])
 def test_teaching_files_use_the_app_import_rules_and_complete_oracle(folder, total):
     p = load(folder)
     assert "SYNTHETIC" in p["notes"] and p["teaching"]["data_status"] == "SYNTHETIC"
@@ -35,7 +35,7 @@ def test_teaching_files_use_the_app_import_rules_and_complete_oracle(folder, tot
     assert all(feasible(row, p) for row in all_rows)
 
 
-@pytest.mark.parametrize("folder", FOLDERS)
+@pytest.mark.parametrize("folder", FOLDERS + ['en/' + folder for folder in FOLDERS])
 def test_fixed_pending_refill_practice_is_six_two_to_eight_zero(folder):
     p = load(folder, "pending-practice.chembo.json")
     assert (len(p["observations"]), len(p["pending"])) == (6, 2)
@@ -65,3 +65,12 @@ def test_variants_and_guide_counts_match_the_shipped_data():
     classes = load("04_classification")
     assert {label: sum(row["morphology"] == label for row in classes["observations"])
             for label in classes["classification"]["labels"]} == {"团聚": 2, "球形": 2, "棒状": 2}
+
+
+def test_english_class_labels_match_the_corresponding_result_tables():
+    classes = load('en/04_classification')
+    assert classes['classification']['labels'] == ['Aggregated', 'Spheres', 'Rods']
+    binary = load('en/04_classification', 'binary-project.chembo.json')
+    rows = read_observations(binary, ROOT / 'en/04_classification/binary-all-simulated-results.csv')
+    assert set(row['outcome'] for row in rows) == {'Success', 'Failure'}
+    assert len(rows) == 28

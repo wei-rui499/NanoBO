@@ -29,3 +29,6 @@ All data are **SYNTHETIC**, generated for learning software workflows. Open **He
 - For freshly generated recommendations, look up the EXACT variable combination in `all-simulated-results.csv` and fill the exported pending CSV. Do not import the whole answer table.
 - `candidates.csv` contains allowed conditions only. Import it through the recipe/candidate dialog, not the observation import button.
 - The Pareto folder also provides a ready three-objective project; the classification folder also provides a binary success/failure project, with separate answer tables.
+
+
+英文界面截图与中英文逐步教程使用 `en/` 下的同内容英文样例。原始目录的中文标签样例保留。English screenshot walkthroughs use the matching English-labeled copies under `en/`; all numbers and feasible spaces are the same.

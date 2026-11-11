@@ -27,7 +27,7 @@ PINS = {
 def retrieve(url):
     for attempt in range(4):
         try:
-            request = urllib.request.Request(url, headers={"User-Agent": "NaNoBO-build/0.1"})
+            request = urllib.request.Request(url, headers={"User-Agent": "SynthBO-build/0.1"})
             with urllib.request.urlopen(request, timeout=30) as response:
                 return response.read()
         except Exception:
@@ -89,7 +89,7 @@ def regenerate_extension(source):
     with tempfile.TemporaryDirectory(prefix=".nanobo-cython-", dir=source.parent) as folder:
         generated = Path(folder) / source.with_suffix(".c").name
         run(sys.executable, "-m", "cython", "-3", "--output-file", generated, source)
-        notice = b"/* NaNoBO modification: regenerated from unchanged upstream .pyx with Cython 3.3.0 for native Python 3.10 compatibility. */\n"
+        notice = b"/* SynthBO modification: regenerated from unchanged upstream .pyx with Cython 3.3.0 for native Python 3.10 compatibility. */\n"
         generated.write_bytes(notice + generated.read_bytes())
         generated.replace(source.with_suffix(".c"))
 
@@ -101,15 +101,15 @@ def patch_atlas_constraints(text):
         return text  # Older distributed snapshots use the ChemBO Studio notice.
     if old not in text:
         raise RuntimeError("Unexpected Atlas constraint wrapper source")
-    notice = "            # NaNoBO fix: evaluate constraints in original parameter units, not Pymoo indices.\n"
+    notice = "            # SynthBO fix: evaluate constraints in original parameter units, not Pymoo indices.\n"
     return text.replace(old, notice + fixed)
 
 
 def patch_gryffin_memory_info(text):
-    if "# NaNoBO modification: resource is Unix-only; memory reporting is optional." in text:
+    if 'resource is Unix-only; memory reporting is optional.' in text:
         return text
     replacements = {
-        "import resource\n": "# NaNoBO modification: resource is Unix-only; memory reporting is optional.\ntry:\n    import resource\nexcept ImportError:\n    resource = None\n",
+        "import resource\n": "# SynthBO modification: resource is Unix-only; memory reporting is optional.\ntry:\n    import resource\nexcept ImportError:\n    resource = None\n",
         "def memory_usage():\n": "def memory_usage():\n    if resource is None:\n        return None, None, None\n",
         "    GB, MB, kB = memory_usage()\n": "    GB, MB, kB = memory_usage()\n    if GB is None:\n        print('==> MEMORY USAGE: unavailable on this platform')\n        return\n",
     }
@@ -127,14 +127,14 @@ def patch_olympus_metadata(text):
         return text
     if original not in text:
         raise RuntimeError("Unexpected Olympus metadata loader source")
-    notice = "        # NaNoBO fix: missing Python metadata is not an optimizer/plugin name.\n"
+    notice = "        # SynthBO fix: missing Python metadata is not an optimizer/plugin name.\n"
     return text.replace(original, original + notice + fixed)
 
 
 def patch_gryffin_memory_logging(text):
-    marker = "# NaNoBO fix: Windows has no Unix resource statistics; logging must not fail a calculation."
-    if marker in text:
-        if text.count(marker) != 2:
+    marker = "# SynthBO fix: Windows has no Unix resource statistics; logging must not fail a calculation."
+    if marker.split(': ', 1)[1] in text:
+        if text.count(marker.split(': ', 1)[1]) != 2:
             raise RuntimeError("Incomplete Gryffin memory logging patch")
         return text
     original = "        self.log(f'Memory usage: {GB:.0f} GB, {MB:.0f} MB, {kB:.0f} kB', 'STATS')"
@@ -148,8 +148,8 @@ def patch_gryffin_memory_logging(text):
 
 
 def patch_gryffin_discrete_perturbation(text):
-    marker = "# NaNoBO fix: discrete samples are zero-based option indices, not user values."
-    if marker in text:
+    marker = "# SynthBO fix: discrete samples are zero-based option indices, not user values."
+    if marker.split(': ', 1)[1] in text:
         return text
     replacements = {
         "        if param_type in ['continuous', 'discrete']:\n": (
@@ -169,8 +169,8 @@ def patch_gryffin_discrete_perturbation(text):
 
 
 def patch_olympus_campaign_package(text):
-    marker = "# NaNoBO fix: importing ParameterSpace for Dataset must not eagerly import Campaign and re-enter Dataset."
-    if marker in text:
+    marker = "# SynthBO fix: importing ParameterSpace for Dataset must not eagerly import Campaign and re-enter Dataset."
+    if marker.split(': ', 1)[1] in text:
         return text
     original = "from olympus.campaigns.campaign import Campaign\n"
     if text.count(original) != 1:
@@ -191,14 +191,14 @@ def patch_snapshot_version(text, package):
     text = text.replace("version=versioneer.get_version()", f"version='{snapshot}'")
     if not re.search(r"\bversion\s*=\s*['\"]" + re.escape(snapshot) + r"['\"]", text):
         raise RuntimeError(f"Unexpected {package} snapshot version source")
-    if not text.startswith(("# ChemBO", "# NaNoBO")):
-        text = "# NaNoBO modification: fixed source-snapshot version; no VCS metadata is bundled.\n" + text
+    if not text.startswith(("# ChemBO", "# NaNoBO", "# NanoBO", "# SynthBO")):
+        text = "# SynthBO modification: fixed source-snapshot version; no VCS metadata is bundled.\n" + text
     return text
 
 
 def patch_olympus_optional_plotter(text):
-    marker = "# NaNoBO fix: the desktop uses its own plots; an unused optional Plotter must not request seaborn during model startup."
-    if marker in text:
+    marker = "# SynthBO fix: the desktop uses its own plots; an unused optional Plotter must not request seaborn during model startup."
+    if marker.split(': ', 1)[1] in text:
         return text
     original = "from .plotter import Plotter\n"
     benchmark = "from .olympus import Olympus\n"

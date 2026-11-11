@@ -42,7 +42,8 @@ def sha256(path):
     return digest.hexdigest()
 
 
-def rebuild_pyz(reader):
+def rebuild_pyz(reader, patches=PATCHES, additions=None):
+    additions = additions or {}
     with open(reader._filename, "rb") as stream:
         stream.seek(reader._start_offset)
         header = stream.read(17)
@@ -54,11 +55,18 @@ def rebuild_pyz(reader):
         for name, (kind, offset, length) in reader.toc.items():
             stream.seek(reader._start_offset + offset)
             compressed = stream.read(length)
-            if name in PATCHES:
+            if name in patches:
                 old_code = marshal.loads(zlib.decompress(compressed))
-                code = compile(PATCHES[name].read_text(encoding="utf-8"), old_code.co_filename, "exec", dont_inherit=True)
+                code = compile(patches[name].read_text(encoding="utf-8"), old_code.co_filename, "exec", dont_inherit=True)
                 compressed = zlib.compress(marshal.dumps(code), 6)
             toc.append((name, (kind, output.tell(), len(compressed))))
+            output.write(compressed)
+        for name, source in additions.items():
+            if name in reader.toc:
+                raise RuntimeError('A new module already exists in the baseline: ' + name)
+            code = compile(source.read_text(encoding='utf-8'), name.replace('.', '/') + '.py', 'exec', dont_inherit=True)
+            compressed = zlib.compress(marshal.dumps(code), 6)
+            toc.append((name, (0, output.tell(), len(compressed))))
             output.write(compressed)
         toc_offset = output.tell()
         output.write(marshal.dumps(toc))
@@ -67,12 +75,13 @@ def rebuild_pyz(reader):
         return output.getvalue()
 
 
-def rebuild_executable(path):
+def rebuild_executable(path, patches=PATCHES, additions=None):
+    additions = additions or {}
     original = CArchiveReader(str(path))
     pyz = original.open_embedded_archive("PYZ.pyz")
-    if not set(PATCHES) <= set(pyz.toc):
+    if not set(patches) <= set(pyz.toc):
         raise RuntimeError("Expected modules are missing from the original bundle")
-    replacement = rebuild_pyz(pyz)
+    replacement = rebuild_pyz(pyz, patches, additions)
     data = path.read_bytes()
     cookie_offset = data.rfind(b"MEI\014\013\012\013\016")
     if cookie_offset + COOKIE.size != len(data):
@@ -106,12 +115,12 @@ def rebuild_executable(path):
     rebuilt = CArchiveReader(str(temporary))
     rebuilt_pyz = rebuilt.open_embedded_archive("PYZ.pyz")
     rebuilt_data = temporary.read_bytes()
-    if set(rebuilt_pyz.toc) != set(pyz.toc):
+    if set(rebuilt_pyz.toc) != set(pyz.toc) | set(additions):
         raise RuntimeError("Rebuilt module inventory changed")
     for name in pyz.toc:
-        if name in PATCHES:
+        if name in patches:
             code = rebuilt_pyz.extract(name)
-            expected = compile(PATCHES[name].read_text(encoding="utf-8"), code.co_filename, "exec", dont_inherit=True)
+            expected = compile(patches[name].read_text(encoding="utf-8"), code.co_filename, "exec", dont_inherit=True)
             if code != expected:
                 raise RuntimeError("Rebuilt source verification failed: " + name)
         else:
@@ -121,6 +130,11 @@ def rebuild_executable(path):
             new_blob = rebuilt_data[rebuilt_pyz._start_offset + new_offset:rebuilt_pyz._start_offset + new_offset + new_length]
             if kind != new_kind or old_blob != new_blob:
                 raise RuntimeError("Unrelated module changed: " + name)
+    for name, source in additions.items():
+        code = rebuilt_pyz.extract(name)
+        expected = compile(source.read_text(encoding='utf-8'), code.co_filename, 'exec', dont_inherit=True)
+        if code != expected:
+            raise RuntimeError('New module source verification failed: ' + name)
     for name in original.toc:
         if name != "PYZ.pyz" and rebuilt.extract(name) != original.extract(name):
             raise RuntimeError("Unrelated executable entry changed: " + name)

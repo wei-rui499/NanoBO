@@ -17,6 +17,7 @@ from PySide6.QtWidgets import (
 )
 
 from chembo import __version__
+from chembo.i18n import events, initialize, language, localize, message, set_language, tr
 from chembo.engine import read_candidates, read_observations, reconcile_project, validate_project
 from chembo.analysis_view import AnalysisView
 from chembo.recipe_dialog import RecipeDialog
@@ -54,16 +55,16 @@ class Trend(QWidget):
         super().__init__()
         self.values, self.goal = [], "max"
         self.setMinimumHeight(130)
-        self.setAccessibleName("首个优化目标的历史最佳值")
+        self.setAccessibleName(tr('首个优化目标的历史最佳值'))
 
     def paintEvent(self, event):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
         painter.fillRect(self.rect(), QColor("#f5f8f7"))
         painter.setPen(QColor("#63766f"))
-        painter.drawText(16, 22, "首个目标 · 历史最佳实测值")
+        painter.drawText(16, 22, tr('首个目标 · 历史最佳实测值'))
         if not self.values:
-            painter.drawText(16, 60, "录入实验结果后显示趋势")
+            painter.drawText(16, 60, tr('录入实验结果后显示趋势'))
             return
         best, running = [], self.values[0]
         for value in self.values:
@@ -88,6 +89,7 @@ class Trend(QWidget):
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
+        initialize()
         self.project, self.path = {}, None
         self.action_buttons = []
         self.dirty, self.loading, self.process, self.cancelled = False, True, None, False
@@ -97,20 +99,25 @@ class Window(QMainWindow):
         outer = QVBoxLayout(root)
         outer.setContentsMargins(24, 20, 24, 18)
         heading = QHBoxLayout()
-        title = QLabel("NanoBO")
+        title = QLabel("SynthBO")
         title.setObjectName("title")
-        subtitle = QLabel("化学实验规划  /  本地计算")
+        subtitle = QLabel(tr('化学实验规划  /  本地计算'))
         subtitle.setObjectName("muted")
         heading.addWidget(title)
         heading.addWidget(subtitle)
         heading.addStretch()
-        for label, callback in [("新项目", self.new_project), ("教学示例", self.load_example), ("打开", self.open_project), ("保存", self.save), ("使用教程", lambda: self.open_tutorial("zh-CN")), ("关于 / 许可", self.about)]:
+        for label, callback in [(tr('新项目'), self.new_project), (tr('教学示例'), self.load_example), (tr('打开'), self.open_project), (tr('保存'), self.save), (tr('使用教程'), lambda: self.open_tutorial(language())), (tr('关于 / 许可'), self.about)]:
             button = QPushButton(label)
             button.clicked.connect(callback)
             self.action_buttons.append(button)
             heading.addWidget(button)
+        self.language_button = QPushButton()
+        self.language_button.setObjectName('languageButton')
+        self.language_button.setProperty('i18nData', True)
+        self.language_button.clicked.connect(lambda: set_language('en' if language() == 'zh-CN' else 'zh-CN'))
+        heading.addWidget(self.language_button)
         outer.addLayout(heading)
-        self.message = QLabel("定义变量 → 录入已有结果 → 生成下一批 → 实验后回填")
+        self.message = QLabel(tr('定义变量 → 录入已有结果 → 生成下一批 → 实验后回填'))
         self.message.setObjectName("banner")
         self.message.setWordWrap(True)
         outer.addWidget(self.message)
@@ -122,45 +129,51 @@ class Window(QMainWindow):
         form = QFormLayout()
         self.name = QLineEdit()
         self.engine = QComboBox()
-        self.engine.addItems(ENGINE_NAMES)
+        for label, identifier in ENGINE_NAMES.items():
+            self.engine.addItem(tr(label), identifier)
+        self.engine.setProperty('i18nChoices', True)
         self.task = QComboBox()
-        self.task.addItems(TASKS)
+        for label, identifier in TASKS.items():
+            self.task.addItem(tr(label), identifier)
+        self.task.setProperty('i18nChoices', True)
         self.labels = QLineEdit("成功 | 失败")
-        self.labels.setToolTip("分类标签用 | 分隔；结果表目标列填写其中一个标签。")
+        self.labels.setToolTip(tr('分类标签用 | 分隔；结果表目标列填写其中一个标签。'))
         self.batch = QSpinBox()
         self.batch.setRange(1, 24)
         self.seed = QSpinBox()
         self.seed.setRange(0, 2147483647)
-        form.addRow("项目名称", self.name)
-        form.addRow("任务类型", self.task)
-        form.addRow("推荐引擎", self.engine)
-        form.addRow("分类标签", self.labels)
-        form.addRow("本批实验数", self.batch)
-        form.addRow("随机种子", self.seed)
+        form.addRow(tr('项目名称'), self.name)
+        form.addRow(tr('任务类型'), self.task)
+        form.addRow(tr('推荐引擎'), self.engine)
+        form.addRow(tr('分类标签'), self.labels)
+        form.addRow(tr('本批实验数'), self.batch)
+        form.addRow(tr('随机种子'), self.seed)
         left_layout.addLayout(form)
-        label = QLabel("1  定义实验空间")
+        label = QLabel(tr('1  定义实验空间'))
         label.setObjectName("section")
         left_layout.addWidget(label)
-        self.params = self.table(["变量名", "类型", "下限", "上限", "类别（| 分隔）", "单位", "步长"])
+        self.params = self.table([tr('变量名'), tr('类型'), tr('下限'), tr('上限'), tr('类别（| 分隔）'), tr('单位'), tr('步长')])
+        self.params.setProperty('i18nHeaders', True)
         for column, width in enumerate((100, 75, 65, 65, 125, 50, 65)):
             self.params.setColumnWidth(column, width)
         left_layout.addWidget(self.params, 3)
-        self.button_row(left_layout, [("＋ 变量", self.add_parameter), ("删除选中变量", lambda: self.remove_rows(self.params))])
+        self.button_row(left_layout, [(tr('＋ 变量'), self.add_parameter), (tr('删除选中变量'), lambda: self.remove_rows(self.params))])
         self.domain_summary = QLabel()
         self.domain_summary.setWordWrap(True)
         left_layout.addWidget(self.domain_summary)
-        self.button_row(left_layout, [("配方约束 / 候选表…", self.edit_recipe), ("清除联合限制", self.clear_recipe)])
-        self.objective_tip = QLabel("数值目标可最大化或最小化；分类只保留一个标签列。")
+        self.button_row(left_layout, [(tr('配方约束 / 候选表…'), self.edit_recipe), (tr('清除联合限制'), self.clear_recipe)])
+        self.objective_tip = QLabel(tr('数值目标可最大化或最小化；分类只保留一个标签列。'))
         self.objective_tip.setWordWrap(True)
         left_layout.addWidget(self.objective_tip)
-        self.objectives = self.table(["目标名称", "方向", "容忍比例 (0–1)"])
+        self.objectives = self.table([tr('目标名称'), tr('方向'), tr('容忍比例 (0–1)')])
+        self.objectives.setProperty('i18nHeaders', True)
         left_layout.addWidget(self.objectives, 1)
-        self.button_row(left_layout, [("＋ 目标", self.add_objective), ("删除选中目标", lambda: self.remove_rows(self.objectives))])
+        self.button_row(left_layout, [(tr('＋ 目标'), self.add_objective), (tr('删除选中目标'), lambda: self.remove_rows(self.objectives))])
         self.notes = QPlainTextEdit()
-        self.notes.setPlaceholderText("项目备注、实验单位、数据来源……")
+        self.notes.setPlaceholderText(tr('项目备注、实验单位、数据来源……'))
         self.notes.setMaximumHeight(78)
         left_layout.addWidget(self.notes)
-        tip = QLabel("BoTorch 支持步长、合法候选表、总量／配比约束、Pareto、分类与模型验证。步长从下限起算，留空表示连续。")
+        tip = QLabel(tr('BoTorch 支持步长、合法候选表、总量／配比约束、Pareto、分类与模型验证。步长从下限起算，留空表示连续。'))
         tip.setObjectName("muted")
         tip.setWordWrap(True)
         left_layout.addWidget(tip)
@@ -176,40 +189,40 @@ class Window(QMainWindow):
         right_layout.addWidget(self.tabs, 1)
         observed_page = QWidget()
         observed_layout = QVBoxLayout(observed_page)
-        observed_layout.addWidget(QLabel("2  已完成实验 · 每行填写全部变量和目标值"))
+        observed_layout.addWidget(QLabel(tr('2  已完成实验 · 每行填写全部变量和目标值')))
         self.observed = self.table([])
         observed_layout.addWidget(self.observed, 1)
-        self.button_row(observed_layout, [("＋ 录入一行", self.add_observation), ("导入 Excel / CSV", self.import_csv), ("导出结果", self.export_observed), ("删除选中行", lambda: self.remove_rows(self.observed))])
+        self.button_row(observed_layout, [(tr('＋ 录入一行'), self.add_observation), (tr('导入 Excel / CSV'), self.import_csv), (tr('导出结果'), self.export_observed), (tr('删除选中行'), lambda: self.remove_rows(self.observed))])
         self.trend = Trend()
         observed_layout.addWidget(self.trend)
-        self.tabs.addTab(observed_page, "已完成实验")
+        self.tabs.addTab(observed_page, tr('已完成实验'))
         pending_page = QWidget()
         pending_layout = QVBoxLayout(pending_page)
-        pending_layout.addWidget(QLabel("3  待实验条件 · 回填结果前保持在此列表，避免重复推荐"))
+        pending_layout.addWidget(QLabel(tr('3  待实验条件 · 回填结果前保持在此列表，避免重复推荐')))
         self.pending = self.table([])
         self.pending.setEditTriggers(QTableWidget.NoEditTriggers)
         pending_layout.addWidget(self.pending, 1)
-        self.button_row(pending_layout, [("导出待回填 CSV", self.export_pending), ("将选中条件转入结果表", self.pending_to_observed), ("撤回选中条件", self.withdraw_pending)])
-        pending_layout.addWidget(QLabel("导出 CSV 后填写目标列，再从“已完成实验”导入；匹配的待实验条件会自动移除。"))
-        self.tabs.addTab(pending_page, "下一批 / 待实验")
+        self.button_row(pending_layout, [(tr('导出待回填 CSV'), self.export_pending), (tr('将选中条件转入结果表'), self.pending_to_observed), (tr('撤回选中条件'), self.withdraw_pending)])
+        pending_layout.addWidget(QLabel(tr('导出 CSV 后填写目标列，再从“已完成实验”导入；匹配的待实验条件会自动移除。')))
+        self.tabs.addTab(pending_page, tr('下一批 / 待实验'))
         self.logs = QPlainTextEdit()
         self.logs.setReadOnly(True)
-        self.log_tab = self.tabs.addTab(self.logs, "运行日志")
+        self.log_tab = self.tabs.addTab(self.logs, tr('运行日志'))
         self.analysis_view = AnalysisView()
-        self.analysis_tab = self.tabs.addTab(self.analysis_view, "模型与可视化")
+        self.analysis_tab = self.tabs.addTab(self.analysis_view, tr('模型与可视化'))
         controls = QHBoxLayout()
         self.progress = QProgressBar()
         self.progress.setRange(0, 0)
         self.progress.hide()
         controls.addWidget(self.progress, 1)
-        self.cancel = QPushButton("取消计算")
+        self.cancel = QPushButton(tr('取消计算'))
         self.cancel.clicked.connect(self.cancel_run)
         self.cancel.hide()
         controls.addWidget(self.cancel)
-        self.generate = QPushButton("生成下一批实验  →")
+        self.generate = QPushButton(tr('生成下一批实验  →'))
         self.generate.setObjectName("primary")
         self.generate.clicked.connect(lambda: self.run())
-        self.analyze = QPushButton("分析与交叉验证")
+        self.analyze = QPushButton(tr('分析与交叉验证'))
         self.analyze.clicked.connect(lambda: self.run(operation="analyze"))
         controls.addWidget(self.analyze)
         controls.addWidget(self.generate)
@@ -220,24 +233,24 @@ class Window(QMainWindow):
         self.status.setObjectName("muted")
         outer.addWidget(self.status)
         self.setCentralWidget(root)
-        file_menu = self.menuBar().addMenu("文件")
-        for label, shortcut, callback in [("新项目", QKeySequence.New, self.new_project),
-                                          ("打开项目…", QKeySequence.Open, self.open_project),
-                                          ("保存项目", QKeySequence.Save, self.save),
-                                          ("项目另存为…", QKeySequence.SaveAs, lambda: self.save(as_new=True))]:
+        file_menu = self.menuBar().addMenu(tr('文件'))
+        for label, shortcut, callback in [(tr('新项目'), QKeySequence.New, self.new_project),
+                                          (tr('打开项目…'), QKeySequence.Open, self.open_project),
+                                          (tr('保存项目'), QKeySequence.Save, self.save),
+                                          (tr('项目另存为…'), QKeySequence.SaveAs, lambda: self.save(as_new=True))]:
             action = QAction(label, self)
             action.setShortcut(shortcut)
             action.triggered.connect(callback)
             file_menu.addAction(action)
-        help_menu = self.menuBar().addMenu("帮助")
-        for label, callback in [("中文使用教程", lambda: self.open_tutorial("zh-CN")),
+        help_menu = self.menuBar().addMenu(tr('帮助'))
+        for label, callback in [(tr('中文使用教程'), lambda: self.open_tutorial("zh-CN")),
                                 ("English tutorial", lambda: self.open_tutorial("en")),
-                                ("导出教程练习数据…", self.export_tutorial_data)]:
+                                (tr('导出教程练习数据…'), self.export_tutorial_data)]:
             action = QAction(label, self)
             action.triggered.connect(callback)
             help_menu.addAction(action)
         help_menu.addSeparator()
-        about_action = QAction("关于 NanoBO", self)
+        about_action = QAction(tr('关于 SynthBO'), self)
         about_action.setMenuRole(QAction.AboutRole)
         about_action.triggered.connect(self.about)
         help_menu.addAction(about_action)
@@ -253,6 +266,21 @@ class Window(QMainWindow):
         project = example_project()
         project["engine"] = "bo-mcp"
         self.set_project(project)
+        events.languageChanged.connect(self.retranslate)
+        self.retranslate()
+
+    def retranslate(self):
+        localize(self)
+        self.language_button.setText('English' if language() == 'zh-CN' else '中文')
+        self.language_button.setAccessibleName('Switch to English' if language() == 'zh-CN' else '切换到中文')
+        self.refresh_task()
+        self.refresh_domain()
+        self.refresh_status()
+        self.update_title()
+        self.trend.update()
+
+    def refresh_status(self):
+        self.status.setText(tr('已完成 {v0} 个实验   ·   待实验 {v1} 个   ·   {v2}', v0=self.observed.rowCount(), v1=self.pending.rowCount(), v2=self.path or tr('尚未保存项目')))
 
     def table(self, labels):
         table = QTableWidget(0, len(labels))
@@ -289,19 +317,19 @@ class Window(QMainWindow):
 
     def task_changed(self, *args):
         if not self.loading and self.task.currentIndex() > 0:
-            self.engine.setCurrentText(next(k for k, v in ENGINE_NAMES.items() if v == "bo-mcp"))
+            self.engine.setCurrentIndex(list(ENGINE_NAMES.values()).index('bo-mcp'))
         self.refresh_task()
         self.changed()
         if not self.loading:
-            self.message.setText("任务已切换。已有数据保留；请检查目标列和分类标签，或载入相应教学示例。")
+            self.message.setText(tr('任务已切换。已有数据保留；请检查目标列和分类标签，或载入相应教学示例。'))
 
     def refresh_task(self):
-        classification = TASKS[self.task.currentText()][0] == "classification"
+        classification = self.task.currentData()[0] == "classification"
         self.labels.setEnabled(classification)
-        modern = ENGINE_NAMES[self.engine.currentText()] == "bo-mcp"
+        modern = self.engine.currentData() == "bo-mcp"
         if hasattr(self, "analyze"):
             self.analyze.setEnabled(modern and not self.process)
-            self.analyze.setToolTip("使用与推荐相同的 BoTorch / 分类模型重新拟合并进行留一验证。" if modern else "当前引擎保留原生推荐；模型诊断请使用 BoTorch 工作流。")
+            self.analyze.setToolTip(tr('使用与推荐相同的 BoTorch / 分类模型重新拟合并进行留一验证。') if modern else tr('当前引擎保留原生推荐；模型诊断请使用 BoTorch 工作流。'))
         if hasattr(self, "objectives"):
             self.objectives.setColumnHidden(2, classification or self.task.currentIndex() == 1 or modern)
             for row in range(self.objectives.rowCount()):
@@ -310,7 +338,7 @@ class Window(QMainWindow):
                     box.setEnabled(not classification)
 
     def refresh_domain(self):
-        self.domain_summary.setText(f"联合约束 {len(self.project.get('constraints', []))} 条  ·  合法候选表 {len(self.project.get('candidates', []))} 行")
+        self.domain_summary.setText(tr('联合约束 {v0} 条  ·  合法候选表 {v1} 行', v0=len(self.project.get('constraints', [])), v1=len(self.project.get('candidates', []))))
 
     @staticmethod
     def analysis_signature(project):
@@ -339,10 +367,10 @@ class Window(QMainWindow):
             self.project.pop(key, None)
         self.refresh_domain()
         self.changed()
-        self.message.setText("已清除联合约束和候选表；变量步长仍在变量表中，可单独修改。")
+        self.message.setText(tr('已清除联合约束和候选表；变量步长仍在变量表中，可单独修改。'))
 
     def update_title(self):
-        self.setWindowTitle(f"{'● ' if self.dirty else ''}{self.name.text()} — NanoBO {__version__}")
+        self.setWindowTitle(f"{'● ' if self.dirty else ''}{self.name.text()} — SynthBO {__version__}")
 
     def text(self, table, row, col):
         item = table.item(row, col)
@@ -356,8 +384,11 @@ class Window(QMainWindow):
 
     def combo(self, table, row, col, values, selected):
         box = QComboBox()
-        box.addItems(values)
-        box.setCurrentText(selected)
+        for label in values:
+            identifier = values[label] if isinstance(values, dict) else {'最大化': 'max', '最小化': 'min'}[label]
+            box.addItem(tr(label), identifier)
+        box.setCurrentIndex(list(values).index(selected))
+        box.setProperty('i18nChoices', True)
         box.currentIndexChanged.connect(self.changed)
         table.setCellWidget(row, col, box)
 
@@ -382,9 +413,9 @@ class Window(QMainWindow):
         self.project, self.path = copy.deepcopy(project), path
         self.name.setText(project["name"])
         task_pair = (project.get("task", "optimization"), project.get("objective_mode", "hierarchical"))
-        self.task.setCurrentText(next(k for k, v in TASKS.items() if v == task_pair))
+        self.task.setCurrentIndex(list(TASKS.values()).index(task_pair))
         self.labels.setText(" | ".join(project.get("classification", {}).get("labels", ["成功", "失败"])))
-        self.engine.setCurrentText(next(k for k, v in ENGINE_NAMES.items() if v == project["engine"]))
+        self.engine.setCurrentIndex(list(ENGINE_NAMES.values()).index(project['engine']))
         self.batch.setValue(project.get("batch_size", 1))
         self.seed.setValue(project.get("seed", 42))
         self.notes.setPlainText(project.get("notes", ""))
@@ -423,7 +454,7 @@ class Window(QMainWindow):
         self.trend.values = [] if classification else [float(row[objective["name"]]) for row in self.project.get("observations", [])]
         self.trend.goal = objective["goal"]
         self.trend.update()
-        self.status.setText(f"已完成 {self.observed.rowCount()} 个实验   ·   待实验 {self.pending.rowCount()} 个   ·   {self.path or '尚未保存项目'}")
+        self.refresh_status()
         self.analysis_view.set_analysis(self.project.get("analysis", {}), self.project)
         self.loading = old_loading
 
@@ -435,8 +466,8 @@ class Window(QMainWindow):
 
     def collect(self):
         project = copy.deepcopy(self.project)
-        project.update(name=self.name.text().strip(), engine=ENGINE_NAMES[self.engine.currentText()], seed=self.seed.value(), batch_size=self.batch.value(), notes=self.notes.toPlainText())
-        task, mode = TASKS[self.task.currentText()]
+        project.update(name=self.name.text().strip(), engine=self.engine.currentData(), seed=self.seed.value(), batch_size=self.batch.value(), notes=self.notes.toPlainText())
+        task, mode = self.task.currentData()
         project.update(task=task, objective_mode=mode)
         if task == "classification":
             project["classification"] = {"labels": [x.strip() for x in self.labels.text().split("|")]}
@@ -444,7 +475,7 @@ class Window(QMainWindow):
             project.pop("classification", None)
         params = []
         for row in range(self.params.rowCount()):
-            kind = TYPES[self.params.cellWidget(row, 1).currentText()]
+            kind = self.params.cellWidget(row, 1).currentData()
             p = {"name": self.text(self.params, row, 0), "type": kind, "unit": self.text(self.params, row, 5)}
             if kind == "categorical":
                 p["options"] = [x.strip() for x in self.text(self.params, row, 4).split("|")]
@@ -454,7 +485,7 @@ class Window(QMainWindow):
                     p["step"] = float(self.text(self.params, row, 6))
             params.append(p)
         project["parameters"] = params
-        project["objectives"] = [{"name": self.text(self.objectives, row, 0), "goal": "max" if self.objectives.cellWidget(row, 1).currentText() == "最大化" else "min", "tolerance": float(self.text(self.objectives, row, 2))} for row in range(self.objectives.rowCount())]
+        project["objectives"] = [{"name": self.text(self.objectives, row, 0), "goal": self.objectives.cellWidget(row, 1).currentData(), "tolerance": float(self.text(self.objectives, row, 2))} for row in range(self.objectives.rowCount())]
         # Keep existing column names: renaming a variable cannot silently relabel old data.
         headers = [self.observed.horizontalHeaderItem(col).text() for col in range(self.observed.columnCount())]
         project["observations"] = [{key: self.text(self.observed, row, col) for col, key in enumerate(headers)} for row in range(self.observed.rowCount())]
@@ -466,28 +497,28 @@ class Window(QMainWindow):
         return validated
 
     def error(self, exc):
-        QMessageBox.warning(self, "请检查输入", str(exc))
+        QMessageBox.warning(self, tr('请检查输入'), message(exc))
 
     def preserve(self):
         if self.process:
-            self.error("请先等待计算完成，或取消计算。")
+            self.error(tr('请先等待计算完成，或取消计算。'))
             return False
         if not self.dirty:
             return True
-        answer = QMessageBox.question(self, "保存项目", "当前项目有未保存的修改。", QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel, QMessageBox.Save)
+        answer = QMessageBox.question(self, tr('保存项目'), tr('当前项目有未保存的修改。'), QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel, QMessageBox.Save)
         return self.save() if answer == QMessageBox.Save else answer == QMessageBox.Discard
 
     def new_project(self):
         if self.preserve():
             project = example_project()
-            project.update(name="我的实验项目", engine="bo-mcp", observations=[], pending=[], notes="")
+            project.update(name=tr('我的实验项目'), engine="bo-mcp", observations=[], pending=[], notes="")
             self.set_project(project)
 
     def load_example(self):
         if not self.preserve():
             return
-        choices = ["数值优化", "总量与步长", "Pareto 多目标", "分类主动学习"]
-        choice, ok = QInputDialog.getItem(self, "教学示例（全部为模拟数据）", "选择工作流", choices, 0, False)
+        choices = [tr('数值优化'), tr('总量与步长'), tr('Pareto 多目标'), tr('分类主动学习')]
+        choice, ok = QInputDialog.getItem(self, tr('教学示例（全部为模拟数据）'), tr('选择工作流'), choices, 0, False)
         if ok:
             from chembo.examples import workflow_example
             self.set_project(workflow_example(["optimization", "recipe", "pareto", "classification"][choices.index(choice)]))
@@ -495,7 +526,7 @@ class Window(QMainWindow):
     def open_project(self):
         if not self.preserve():
             return
-        path, _ = QFileDialog.getOpenFileName(self, "打开项目", "", "ChemBO 项目 (*.json)")
+        path, _ = QFileDialog.getOpenFileName(self, tr('打开项目'), "", tr('ChemBO 项目 (*.json)'))
         if path:
             try:
                 project = validate_project(json.loads(Path(path).read_text(encoding="utf-8")))
@@ -508,7 +539,7 @@ class Window(QMainWindow):
             project = self.collect()
             path = None if as_new else self.path
             if not path:
-                path, _ = QFileDialog.getSaveFileName(self, "保存项目", "experiment.chembo.json", "ChemBO 项目 (*.json)")
+                path, _ = QFileDialog.getSaveFileName(self, tr('保存项目'), "experiment.chembo.json", tr('ChemBO 项目 (*.json)'))
             if not path:
                 return False
             save_project(path, project)
@@ -530,7 +561,7 @@ class Window(QMainWindow):
             self.error(exc)
 
     def import_csv(self):
-        path, _ = QFileDialog.getOpenFileName(self, "导入完成的实验结果", "", "实验数据 (*.xlsx *.xls *.csv)")
+        path, _ = QFileDialog.getOpenFileName(self, tr('导入完成的实验结果'), "", tr('实验数据 (*.xlsx *.xls *.csv)'))
         if path:
             try:
                 project = self.collect()
@@ -547,10 +578,10 @@ class Window(QMainWindow):
                 self.error(exc)
 
     def export_rows(self, rows, default):
-        path, _ = QFileDialog.getSaveFileName(self, "导出 CSV", default, "CSV (*.csv)")
+        path, _ = QFileDialog.getSaveFileName(self, tr('导出 CSV'), default, "CSV (*.csv)")
         if path:
             write_csv(path, self.columns(), rows)
-            self.message.setText(f"已导出：{path}")
+            self.message.setText(tr('已导出：{v0}', v0=path))
 
     def export_observed(self):
         try:
@@ -595,7 +626,7 @@ class Window(QMainWindow):
             self.render_data()
             self.temporary = QTemporaryDir(str(Path(tempfile.gettempdir()) / "nanobo-XXXXXX"))
             if not self.temporary.isValid():
-                raise RuntimeError("无法创建计算临时目录。")
+                raise RuntimeError(tr('无法创建计算临时目录。'))
             folder = Path(self.temporary.path()).resolve()
             self.result_path = folder / "result.json"
             request_path = folder / "request.json"
@@ -605,7 +636,7 @@ class Window(QMainWindow):
             save_project(request_path, request)
             command, args = self.worker_command(request_path, self.result_path)
             self.logs.clear()
-            self.logs.appendPlainText(f"正在运行 {self.project['engine']}；首次启动可能需要较长时间。")
+            self.logs.appendPlainText(tr('正在运行 {v0}；首次启动可能需要较长时间。', v0=self.project['engine']))
             self.cancelled = False
             self.process = QProcess(self)
             if not getattr(sys, "frozen", False):
@@ -628,7 +659,7 @@ class Window(QMainWindow):
                 return str(binary), [str(request_path), str(result_path)]
             python = resources() / ".venv-modern" / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
             if not python.exists():
-                raise RuntimeError("当前安装包未包含 BoTorch 引擎。请安装完整版。")
+                raise RuntimeError(tr('当前安装包未包含 BoTorch 引擎。请安装完整版。'))
             return str(python), [str(resources() / "src/chembo/modern_worker.py"), str(request_path), str(result_path)]
         if getattr(sys, "frozen", False):
             return sys.executable, ["--worker", str(request_path), str(result_path)]
@@ -638,7 +669,7 @@ class Window(QMainWindow):
         for button in self.action_buttons:
             button.setEnabled(not value)
         self.generate.setEnabled(not value)
-        self.analyze.setEnabled(not value and ENGINE_NAMES[self.engine.currentText()] == "bo-mcp")
+        self.analyze.setEnabled(not value and self.engine.currentData() == "bo-mcp")
         self.menuBar().setEnabled(not value)
         self.params.setEnabled(not value)
         self.objectives.setEnabled(not value)
@@ -648,7 +679,7 @@ class Window(QMainWindow):
             widget.setEnabled(not value)
         self.progress.setVisible(value)
         self.cancel.setVisible(value)
-        self.message.setText("模型计算中；可切换到运行日志查看进度。" if value else "计算结束。项目保存在本机。")
+        self.message.setText(tr('模型计算中；可切换到运行日志查看进度。') if value else tr('计算结束。项目保存在本机。'))
         if not value:
             self.refresh_task()
 
@@ -668,16 +699,16 @@ class Window(QMainWindow):
         self.process = None
         self.busy(False)
         if self.cancelled:
-            self.message.setText("已取消计算，实验记录已保留。")
+            self.message.setText(tr('已取消计算，实验记录已保留。'))
             return
         try:
             if not self.result_path.exists():
-                raise RuntimeError("引擎未返回结果。请查看运行日志。")
+                raise RuntimeError(tr('引擎未返回结果。请查看运行日志。'))
             payload = json.loads(self.result_path.read_text(encoding="utf-8"))
             if not payload.get("ok"):
                 if payload.get("diagnostic"):
                     self.logs.appendPlainText(payload["diagnostic"])
-                raise RuntimeError(payload.get("error", "模型计算失败"))
+                raise RuntimeError(payload.get("error", tr('模型计算失败')))
             rows = payload.get("recommendations", [])
             updated = copy.deepcopy(self.project)
             updated.setdefault("pending", []).extend(rows)
@@ -693,7 +724,7 @@ class Window(QMainWindow):
             self.analysis_view.set_analysis(payload.get("analysis", {}), self.project)
             analyzing = getattr(self, "operation", "recommend") == "analyze"
             self.tabs.setCurrentIndex(self.analysis_tab if analyzing else 1)
-            self.message.setText("模型分析与验证已完成；结果见“模型与可视化”，请保存项目。" if analyzing else f"已生成 {len(rows)} 个待实验条件。可查看预测与排序、导出配方后回填结果。")
+            self.message.setText(tr('模型分析与验证已完成；结果见“模型与可视化”，请保存项目。') if analyzing else tr('已生成 {v0} 个待实验条件。可查看预测与排序、导出配方后回填结果。', v0=len(rows)))
             for warning in payload.get("warnings", []):
                 self.logs.appendPlainText(str(warning))
         except Exception as exc:
@@ -708,41 +739,42 @@ class Window(QMainWindow):
     def open_tutorial(self, language="zh-CN"):
         path = resources() / "docs" / "html" / f"TUTORIAL.{language}.html"
         if not path.is_file():
-            self.error("未找到随附教程，请重新安装包含教程的完整 NanoBO 安装包。")
+            self.error(tr('未找到随附教程，请重新安装包含教程的完整 SynthBO 安装包。'))
             return
         if not QDesktopServices.openUrl(QUrl.fromLocalFile(str(path))):
-            self.error("系统未能打开教程。可从 GitHub 项目的中英文 README 进入使用指南。")
+            self.error(tr('系统未能打开教程。可从 GitHub 项目的中英文 README 进入使用指南。'))
 
     def export_tutorial_data(self):
         source = resources() / "examples" / "tutorial"
         if not source.is_dir():
-            self.error("未找到教程练习数据，请重新安装完整 NanoBO 安装包。")
+            self.error(tr('未找到教程练习数据，请重新安装完整 SynthBO 安装包。'))
             return
-        parent = QFileDialog.getExistingDirectory(self, "选择练习数据的保存位置")
+        parent = QFileDialog.getExistingDirectory(self, tr('选择练习数据的保存位置'))
         if not parent:
             return
         try:
-            destination = Path(parent) / f"NanoBO-tutorial-{__version__}"
+            destination = Path(parent) / f"SynthBO-tutorial-{__version__}"
             number = 2
             while destination.exists():
-                destination = Path(parent) / f"NanoBO-tutorial-{__version__} ({number})"
+                destination = Path(parent) / f"SynthBO-tutorial-{__version__} ({number})"
                 number += 1
             shutil.copytree(source, destination)
-            self.message.setText(f"练习数据已导出到 {destination}。点击“打开”选择练习文件夹中的 project.chembo.json；数据均为模拟数据。")
+            self.message.setText(tr('练习数据已导出到 {v0}。点击“打开”选择练习文件夹中的 project.chembo.json；数据均为模拟数据。', v0=destination))
             QDesktopServices.openUrl(QUrl.fromLocalFile(str(destination)))
         except Exception as exc:
             self.error(exc)
 
     def about(self):
         dialog = QDialog(self)
-        dialog.setWindowTitle("关于 NanoBO")
+        dialog.setWindowTitle(tr('关于 SynthBO'))
         dialog.resize(640, 440)
         layout = QVBoxLayout(dialog)
         text = QPlainTextEdit()
         text.setReadOnly(True)
-        text.setPlainText(f"NanoBO {__version__}\n\n独立开发的本地实验规划界面，并非上游团队官方桌面产品。\n\nGryffin — Apache-2.0，Copyright (C) 2020 Harvard University\nAtlas — MIT，Copyright (c) 2022 rileyhickman\nBO-MCP — MIT，Copyright (c) 2026 Willi Gottstein\nChimera / Olympus / Golem — 见随附上游许可证\nQt / PySide6 — LGPLv3，动态链接；可重建、替换相容库。\n\n初始点属于实验设计；有足够实测数据后才由模型指导推荐。\n推荐值不是已验证的实验结果，也不保证最优。\n\n源代码、依赖锁定、重建说明及完整第三方声明随项目提供。\n发表科研结果时请引用实际使用的算法论文。")
+        text.setProperty('i18nText', True)
+        text.setPlainText(tr('SynthBO {v0}\n\n独立开发的本地实验规划界面，并非上游团队官方桌面产品。\n\nGryffin — Apache-2.0，Copyright (C) 2020 Harvard University\nAtlas — MIT，Copyright (c) 2022 rileyhickman\nBO-MCP — MIT，Copyright (c) 2026 Willi Gottstein\nChimera / Olympus / Golem — 见随附上游许可证\nQt / PySide6 — LGPLv3，动态链接；可重建、替换相容库。\n\n初始点属于实验设计；有足够实测数据后才由模型指导推荐。\n推荐值不是已验证的实验结果，也不保证最优。\n\n源代码、依赖锁定、重建说明及完整第三方声明随项目提供。\n发表科研结果时请引用实际使用的算法论文。', v0=__version__))
         layout.addWidget(text)
-        licenses = QPushButton("打开随附许可证文件夹")
+        licenses = QPushButton(tr('打开随附许可证文件夹'))
         licenses.clicked.connect(lambda: QDesktopServices.openUrl(QUrl.fromLocalFile(str(resources() / "licenses"))))
         layout.addWidget(licenses)
         buttons = QDialogButtonBox(QDialogButtonBox.Close)
@@ -759,7 +791,7 @@ class Window(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-    app.setApplicationName("NanoBO")
+    app.setApplicationName("SynthBO")
     app.setOrganizationName("NaNoBO")  # Preserve the existing settings namespace.
     app.setFont(QFont("PingFang SC" if sys.platform == "darwin" else "Segoe UI", 11))
     app.setStyleSheet("""

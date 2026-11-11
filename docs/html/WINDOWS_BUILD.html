@@ -1,37 +1,27 @@
-<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Windows 安装与验收 · NanoBO</title><style>*{box-sizing:border-box}body{margin:0;background:#f7faf8;color:#243d33;font:16px/1.8 -apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif}header{padding:20px 5%;background:#e8f2ec;border-bottom:1px solid #ccdcd1}header a{margin-right:24px}a{color:#176b50}a:hover{color:#104331}main{max-width:1280px;margin:28px auto;display:grid;grid-template-columns:250px minmax(0,1fr);gap:32px;padding:0 24px}nav{position:sticky;top:20px;max-height:90vh;overflow:auto;font-size:14px}nav a{display:block;text-decoration:none;padding:5px 10px;border-left:2px solid #d5e4db}nav .sub{padding-left:24px}article{min-width:0;background:white;border:1px solid #dce7df;border-radius:12px;padding:26px 36px}h1,h2,h3{line-height:1.35;scroll-margin-top:20px}h1{font-size:30px}h2{margin-top:2em;border-bottom:1px solid #dce7df;padding-bottom:10px}h3{margin-top:1.7em}table{border-collapse:collapse;display:block;overflow-x:auto;font-size:14px;width:100%;margin:18px 0}th,td{border:1px solid #d5e1d9;padding:9px 12px;text-align:left}th{background:#edf5ef}pre{overflow:auto;background:#f1f5f2;padding:14px;border-radius:6px}code{font-family:ui-monospace,Consolas,monospace;font-size:.91em}img{max-width:100%;height:auto}blockquote{margin-left:0;border-left:4px solid #6c9d83;padding:8px 18px;background:#f3f8f4}footer{margin-top:32px;color:#64786b;font-size:13px;border-top:1px solid #dce7df;padding-top:14px}@media(max-width:850px){main{display:block;padding:0 12px}nav{position:static;max-height:270px;margin-bottom:20px}article{padding:20px}header a{display:inline-block;margin-right:16px}}</style><header><strong>NanoBO</strong> &nbsp; <a href="TUTORIAL.zh-CN.html">简体中文</a><a href="TUTORIAL.en.html">English</a><a href="index.html">教程首页 / Help home</a></header><main><nav aria-label="Table of contents"><a class="" href="#使用者安装">使用者安装</a><a class="" href="#修复与验证依据">修复与验证依据</a><a class="" href="#维护者重建">维护者重建</a><a class="" href="#来源与许可">来源与许可</a></nav><article><h1 id="windows-安装与验收">Windows 安装与验收</h1>
-<p><a href="TUTORIAL.zh-CN.html">简体中文教程</a> · <a href="TUTORIAL.en.html">English tutorial</a> · <a href="WINDOWS_ACCEPTANCE.html">Windows 验收说明</a></p>
-<p><a href="https://github.com/wei-rui499/NanoBO/releases/tag/v0.2.4">NanoBO 0.2.4 下载页</a>。0.2.4 统一新名称，保留 Hotfix1 的代码修复；本次按使用者要求只编译与封装，不执行 Windows 应用、模型或安装／卸载。历史 Hotfix1 的实测证据见 <a href="WINDOWS_ACCEPTANCE.html">验收说明</a>，不作为新包已实测的结论。</p>
-<h2 id="使用者安装">使用者安装</h2>
-<p>Windows Hotfix1 修复了原 0.2.3 测试包中的 Gryffin 与 Atlas 运行错误。使用对应的 <code>NanoBO-0.2.4-windows-x64-setup-unsigned.exe</code>，按中文安装向导完成安装后，从开始菜单打开 NanoBO。便携版需要完整解压 ZIP 后打开 <code>NanoBO/NanoBO.exe</code>，保留旁边的 <code>_internal</code> 文件夹。</p>
-<p>应用自带 Python、CPU 计算库、三个预设引擎、双语教程和练习数据。普通使用者无需安装 Python、Conda、WSL、编译器，不需要 API 账户，也不需要设置环境变量。首次练习可从帮助菜单导出教程数据，再按照中文教程导入、生成建议、补录结果和查看分析。</p>
-<p>Gryffin、Atlas 和 BoTorch 是本地运行的真实算法，由用户的实验数据拟合；不是预训练的大语言模型。可选功能由界面按引擎支持范围检查，不能执行的组合会提示用户，不会换成其他模型继续计算。</p>
-<p>原 GitHub v0.2.3 附件曾标记为 BUILD ONLY / RUNTIME UNVERIFIED，不能把它当作 Hotfix1。应核对实际文件名及随包验收记录。Hotfix1 的本机验收范围为 Windows 11 Pro x64；Windows 10、ARM64、其他硬件和机构策略未实测。安装器仍未签名，尚不能保证所有电脑首次安装都没有系统信誉提示。</p>
-<h2 id="修复与验证依据">修复与验证依据</h2>
-<p>详见 <a href="WINDOWS_ACCEPTANCE.html">Windows 验收说明</a>。核心修复包括 Gryffin 对不可用内存统计的日志处理、Olympus 导入循环与非必要可视化依赖的延迟加载、Atlas 日志管道的 UTF-8 编码。</p>
-<p>安装验收使用合成数据。除了直接运行便携版实际引擎，还从安装器安装到带中文和空格的目录，运行安装后的模型和 Qt 工作流，检查 CSV/XLS/XLSX、PNG/PDF/SVG 导出以及卸载后项目保留。软件测试不代表实验结果或科研结论得到验证。</p>
-<h2 id="维护者重建">维护者重建</h2>
-<p>发布端需要原生 Windows x64、Python 3.10 与 3.13、Microsoft C++ Build Tools 和 Inno Setup 7+。普通使用者不需要这些工具。经典与现代运行时保持隔离，模型公式和上游来源保留。旧 Inno Setup 6 在深目录下复制依赖许可证时会触及 MAX_PATH；新版安装器使用 Inno Setup 7 的扩展路径支持，无需用户修改注册表或挪动文件。</p>
-<pre><code class="language-powershell">$env:PYTHONUTF8 = '1'
-py -3.10 -m venv .venv
-.venv\Scripts\python.exe -m pip install --upgrade pip
-.venv\Scripts\python.exe -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
-.venv\Scripts\python.exe scripts\bootstrap.py
-
-py -3.13 -m venv .venv-modern
-.venv-modern\Scripts\python.exe -m pip install --upgrade pip
-.venv-modern\Scripts\python.exe -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
-.venv-modern\Scripts\python.exe -m pip install -r requirements-modern.in
-.venv-modern\Scripts\python.exe scripts\collect_licenses.py modern
-.venv-modern\Scripts\python.exe scripts\build_modern.py
-
-.venv\Scripts\python.exe scripts\build.py --bundle-only
-.venv\Scripts\python.exe scripts\fetch_library_sources.py
-.venv\Scripts\python.exe scripts\validate_windows_runtime.py --bundle dist/NanoBO --output validation/windows-portable --fail-fast
-.venv\Scripts\python.exe scripts\package_windows.py --compiler 'C:\Program Files\Inno Setup 7\ISCC.exe'
-.venv\Scripts\python.exe scripts\validate_windows_installation.py --installer installers/NanoBO-0.2.4-windows-x64-setup-unsigned.exe --output validation/windows-installation --build-record installers/WINDOWS_BUILD-0.2.4.json
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Windows 安装与构建 · SynthBO</title><style>*{box-sizing:border-box}body{margin:0;background:#f7faf8;color:#243d33;font:16px/1.8 -apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif}header{padding:20px 5%;background:#e8f2ec;border-bottom:1px solid #ccdcd1}header a{margin-right:24px}a{color:#176b50}a:hover{color:#104331}main{max-width:1280px;margin:28px auto;display:grid;grid-template-columns:250px minmax(0,1fr);gap:32px;padding:0 24px}nav{position:sticky;top:20px;max-height:90vh;overflow:auto;font-size:14px}nav a{display:block;text-decoration:none;padding:5px 10px;border-left:2px solid #d5e4db}nav .sub{padding-left:24px}article{min-width:0;background:white;border:1px solid #dce7df;border-radius:12px;padding:26px 36px}h1,h2,h3{line-height:1.35;scroll-margin-top:20px}h1{font-size:30px}h2{margin-top:2em;border-bottom:1px solid #dce7df;padding-bottom:10px}h3{margin-top:1.7em}table{border-collapse:collapse;display:block;overflow-x:auto;font-size:14px;width:100%;margin:18px 0}th,td{border:1px solid #d5e1d9;padding:9px 12px;text-align:left}th{background:#edf5ef}pre{overflow:auto;background:#f1f5f2;padding:14px;border-radius:6px}code{font-family:ui-monospace,Consolas,monospace;font-size:.91em}img{max-width:100%;height:auto}blockquote{margin-left:0;border-left:4px solid #6c9d83;padding:8px 18px;background:#f3f8f4}footer{margin-top:32px;color:#64786b;font-size:13px;border-top:1px solid #dce7df;padding-top:14px}@media(max-width:850px){main{display:block;padding:0 12px}nav{position:static;max-height:270px;margin-bottom:20px}article{padding:20px}header a{display:inline-block;margin-right:16px}}</style><header><strong>SynthBO</strong> &nbsp; <a href="TUTORIAL.zh-CN.html">简体中文</a><a href="TUTORIAL.en.html">English</a><a href="index.html">教程首页 / Help home</a></header><main><nav aria-label="Table of contents"><a class="" href="#安装使用">安装使用</a><a class="" href="#本次-windows-包的依据">本次 Windows 包的依据</a><a class="" href="#维护者复现当前发布">维护者复现当前发布</a><a class="" href="#来源与许可">来源与许可</a></nav><article><h1 id="windows-安装与构建">Windows 安装与构建</h1>
+<p><a href="TUTORIAL.zh-CN.html">简体中文教程</a> · <a href="TUTORIAL.en.html">English tutorial</a> · <a href="WINDOWS_ACCEPTANCE.html">历史 Windows 验收</a></p>
+<h2 id="安装使用">安装使用</h2>
+<p>从 <a href="https://github.com/wei-rui499/SynthBO/releases">SynthBO Releases</a> 下载 <code>SynthBO-0.2.5-windows-x64-setup-unsigned.exe</code>，按向导完成安装。安装向导可选择中英文；应用内右上角的 <strong>English / 中文</strong> 按钮单独切换界面语言。</p>
+<p>便携版须完整解压 <code>SynthBO-0.2.5-windows-x64-portable-unsigned.zip</code>，运行 <code>SynthBO/SynthBO.exe</code>，保留旁边的 <code>_internal</code> 文件夹。不要单独复制 EXE。应用自带 Python、CPU 科学库、三个预设引擎、离线双语教程及练习数据，无需 WSL、Conda、编译器或 API 账户。实验项目保存在自己选择的文件夹。</p>
+<h2 id="本次-windows-包的依据">本次 Windows 包的依据</h2>
+<p>使用者已确认 GitHub 上的 0.2.4 Windows 包可以运行。本次以该已发布便携包为固定基线，不重新解析或升级科学计算依赖：</p>
+<ul>
+<li>基线：<code>NanoBO-0.2.4-windows-x64-portable-unsigned.zip</code>，SHA-256 <code>07905f83af0ff4c8586dba1be83e363fb4a70bc61073cc083bf4a91ce3ee8be5</code>。</li>
+<li>保留：原生 DLL / PYD、经典科学库、全部非界面冻结模块，以及完整的独立现代 worker。</li>
+<li>更新：应用版本、主界面、配方对话框、分析图表、语言模块、分发自检代码，以及教程和致谢资源。</li>
+<li>核对：未修改的冻结模块压缩数据和运行环境文件逐项与基线比对；科学引擎源码与基线源码按统一换行符比对。</li>
+<li>封装：在原生 Windows x64 上以 CPython 3.10 编译界面，再由固定校验和的 Inno Setup 7.1.1 生成安装器；安装器 AppId 保持稳定。</li>
+</ul>
+<p><code>WINDOWS_BUILD-0.2.5.json</code> 内的 <code>interface_update</code> 记录基线、修改清单、保留文件计数与摘要。<strong>基线由使用者确认运行成功；新增双语界面和新安装器没有在 Windows 启动或安装测试。</strong> 按使用者安排，Windows 运行验证由其在 Windows 电脑进行。macOS 测试不代替这一步。</p>
+<p>安装包未签名，首次安装仍可能出现系统信誉提示。历史 Hotfix1 的 Windows 11 软件验收另见上方链接；这些软件检查使用合成数据，不构成湿实验或算法普遍性能的证据。</p>
+<h2 id="维护者复现当前发布">维护者复现当前发布</h2>
+<p>原生 Windows x64 安装 CPython 3.10、PyInstaller 6.16.0、Inno Setup 7.1.1。按工作流下载并校验固定的 0.2.4 便携包、Windows 源码和对应库源，执行：</p>
+<pre><code class="language-powershell">python scripts/repack_windows_ui.py --base baseline/NanoBO-0.2.4-windows-x64-portable-unsigned.zip --base-source baseline/NanoBO-0.2.4-windows-source.zip --output dist
+# 解压并校验基线 windows-library-sources.zip 到 release/library-sources
+python scripts/package_windows.py --compiler 'C:/Program Files/Inno Setup 7/ISCC.exe'
 </code></pre>
-<p><code>package_windows.py</code> 只封装和校验文件，不能单独作为运行验收。<code>validate_windows_runtime.py</code> 和 <code>validate_windows_installation.py</code> 必须成功，才能把构建记录标为已验证。工作流 <a href="https://github.com/wei-rui499/NanoBO/blob/main/.github/workflows/windows-release.yml">windows-release.yml</a> 已加入这些门禁，任一模型或安装后界面检查失败便不上传发布产物。工作流修改仍须提交后在 GitHub 上实际运行；文件存在不等于远程构建已经通过。</p>
-<p>本次本机 Hotfix1 从已校验 SHA-256 的官方便携版保留原生科学库，使用同版本 CPython 3.10 重新编译六个修复模块，并逐项核对冻结模块。工具是 <code>scripts/repack_windows_hotfix.py</code>，来源及修复源码摘要记录在 <code>WINDOWS_HOTFIX.json</code>。它不需要普通用户运行。长期发布应使用以上完整源码重建流程。</p>
+<p>完整下载、校验和、封装和草稿上传步骤见 <a href="https://github.com/wei-rui499/SynthBO/blob/main/.github/workflows/windows-release.yml">windows-release.yml</a>。该工作流不运行应用、模型或安装器，也不会把构建成功标记为 Windows 运行验收通过。历史兼容性修复工具 <code>repack_windows_hotfix.py</code> 的默认行为保留。</p>
+<p>需要完整源码重建科学运行库时，另按<a href="DEVELOPMENT.html">开发说明</a>建立隔离的 Python 3.10 / 3.13 环境、编译依赖与 worker；那会产生新的运行环境，需要单独验收，不能自动沿用本次基线的运行结论。</p>
 <h2 id="来源与许可">来源与许可</h2>
-<p>原作者、方法和引用见 <a href="ACKNOWLEDGMENTS.html">公开致谢</a>、<a href="HOW_TO_CITE.html">如何引用</a> 和 <a href="THIRD_PARTY_NOTICES.html">第三方说明</a>。上游修改见 <a href="UPSTREAM_MODIFICATIONS.html">修改记录</a>。安装器包含第三方许可证；适用的第三方对应源码与原官方 Windows 发布附件配套保留。</p>
-<footer>NanoBO · 离线教程 / Offline guide · 教学实验数据均为模拟 / Teaching data are synthetic.</footer></article></main></html>
+<p>科研模型与算法原作者保留全部归属，见<a href="ACKNOWLEDGMENTS.html">公开致谢</a>、<a href="HOW_TO_CITE.html">引用指南</a>、<a href="THIRD_PARTY_NOTICES.html">第三方说明</a>和<a href="UPSTREAM_MODIFICATIONS.html">上游修改记录</a>。包内许可证及对应 Windows 库源沿用已发布版本；新增界面代码随本次源码发布。</p>
+<footer>SynthBO · 离线教程 / Offline guide · 教学实验数据均为模拟 / Teaching data are synthetic.</footer></article></main></html>

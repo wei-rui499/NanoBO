@@ -1,16 +1,16 @@
 cff-version: 1.2.0
 type: software
 message: >-
-  If you use NanoBO, cite this software version and the original research
+  If you use SynthBO, cite this software version and the original research
   methods actually used. See docs/HOW_TO_CITE.md and REFERENCES.bib.
-title: "NanoBO: local desktop experiment planning for chemists"
+title: "SynthBO: local desktop experiment planning for chemists"
 authors:
-  - name: "NanoBO contributors"
-version: "0.2.4"
-date-released: "2026-11-09"
+  - name: "SynthBO contributors"
+version: "0.2.5"
+date-released: "2026-11-11"
 license: Apache-2.0
-repository-code: "https://github.com/wei-rui499/NanoBO"
-url: "https://github.com/wei-rui499/NanoBO"
+repository-code: "https://github.com/wei-rui499/SynthBO"
+url: "https://github.com/wei-rui499/SynthBO"
 abstract: >-
   An independent desktop interface integrating existing scientific optimization
   methods with local data entry, executable recipe domains, diagnostics,

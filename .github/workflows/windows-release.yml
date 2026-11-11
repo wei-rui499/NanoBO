@@ -1,36 +1,26 @@
-name: Windows native installer
+name: Windows installer from tested runtime
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      publish_draft:
-        description: Attach the build to a draft GitHub Release
-        type: boolean
-        default: false
-      validate_runtime:
-        description: Run optional native Windows model and installation acceptance
-        type: boolean
-        default: false
 
 permissions:
   contents: read
 
 concurrency:
-  group: nanobo-windows-${{ github.ref }}
+  group: synthbo-windows-${{ github.ref }}
   cancel-in-progress: true
 
 env:
   PYTHONUTF8: '1'
   PIP_DISABLE_PIP_VERSION_CHECK: '1'
-  PIP_NO_CACHE_DIR: '1'
 
 jobs:
   build:
-    name: Native Windows x64 package
+    name: Preserve tested runtime and package bilingual interface
     runs-on: windows-2022
-    timeout-minutes: 120
+    timeout-minutes: 45
     outputs:
       version: ${{ steps.version.outputs.version }}
     defaults:
@@ -44,49 +34,31 @@ jobs:
         with:
           python-version: '3.10'
           architecture: x64
-      - name: Read the shared application version
+      - name: Read shared application version
         id: version
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
           $version = python -c "import sys; sys.path.insert(0, 'src'); from chembo import __version__; print(__version__)"
           "version=$version" >> $env:GITHUB_OUTPUT
-      - name: Compile the classic scientific runtime
+      - name: Obtain exact published Windows baseline
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
-          python -m venv .venv
-          .venv\Scripts\python.exe -m pip install --upgrade pip
-          .venv\Scripts\python.exe -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
-          .venv\Scripts\python.exe scripts/bootstrap.py
-      - uses: actions/setup-python@v7.1.0
-        with:
-          python-version: '3.13'
-          architecture: x64
-      - name: Build the separate modern scientific runtime
+          gh release download v0.2.4 --repo '${{ github.repository }}' --pattern '*windows*' --dir baseline
+          python -m pip install PyInstaller==6.16.0
+      - name: Update UI only and verify scientific runtime preservation
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
-          python -m venv .venv-modern
-          .venv-modern\Scripts\python.exe -m pip install --upgrade pip
-          .venv-modern\Scripts\python.exe -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
-          .venv-modern\Scripts\python.exe -m pip install -r requirements-modern.in
-          .venv-modern\Scripts\python.exe scripts/collect_licenses.py modern
-          .venv-modern\Scripts\python.exe scripts/build_modern.py
-      - name: Bundle the shared application, offline guides and practice data
-        run: |
-          $PSNativeCommandUseErrorActionPreference = $true
-          .venv\Scripts\python.exe scripts/build.py --bundle-only
-          .venv\Scripts\python.exe scripts/fetch_library_sources.py
-      - name: Run Windows source regressions
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.validate_runtime }}
-        run: |
-          $PSNativeCommandUseErrorActionPreference = $true
-          $env:QT_QPA_PLATFORM = 'offscreen'
-          .venv\Scripts\python.exe -m pytest -q tests --ignore=tests/test_modern.py --ignore=tests/test_modeling.py --junitxml=validation/windows-regressions.xml
-      - name: Verify the actual frozen native models and synthetic workflows
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.validate_runtime }}
-        run: |
-          $PSNativeCommandUseErrorActionPreference = $true
-          .venv\Scripts\python.exe scripts/validate_windows_runtime.py --bundle dist/NanoBO --output validation/windows-portable --fail-fast
-      - name: Create EXE installer, portable ZIP and build evidence
+          python scripts/repack_windows_ui.py --base baseline/NanoBO-0.2.4-windows-x64-portable-unsigned.zip --base-source baseline/NanoBO-0.2.4-windows-source.zip --output dist
+          @'
+          import hashlib, pathlib, zipfile
+          path=pathlib.Path('baseline/NanoBO-0.2.4-windows-library-sources.zip')
+          assert hashlib.sha256(path.read_bytes()).hexdigest() == 'c3e6893ec88ed065e5f7938876eb04c5255a7efcd85638c245b615f75d85d2c7'
+          with zipfile.ZipFile(path) as archive:
+              archive.extractall('release')
+          '@ | python -
+      - name: Build installer, portable ZIP and corresponding sources
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
           $compilerRoot = Join-Path $env:RUNNER_TEMP 'inno-7.1.1'
@@ -96,37 +68,29 @@ jobs:
           $compilerInstall = Start-Process $compilerSetup -ArgumentList @('/CURRENTUSER','/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART','/SP-','/NOICONS',('/DIR="'+$compilerRoot+'"')) -WindowStyle Hidden -Wait -PassThru
           if ($compilerInstall.ExitCode -ne 0) { throw 'Inno Setup 7 installation failed' }
           $compiler = Join-Path $compilerRoot 'ISCC.exe'
-          .venv\Scripts\python.exe scripts/package_windows.py --compiler "$compiler"
-      - name: Install and verify the distributed application, then uninstall it
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.validate_runtime }}
-        run: |
-          $PSNativeCommandUseErrorActionPreference = $true
-          $version = '${{ steps.version.outputs.version }}'
-          .venv\Scripts\python.exe scripts/validate_windows_installation.py --installer "installers/NanoBO-$version-windows-x64-setup-unsigned.exe" --output validation/windows-installation --build-record "installers/WINDOWS_BUILD-$version.json"
-      - name: Record Windows runtime acceptance
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.validate_runtime }}
+          python scripts/package_windows.py --compiler "$compiler"
+      - name: Record verification boundary
         run: |
           @'
-          ## Native Windows runtime verified
-          Source regressions and the real frozen Gryffin, Atlas and BoTorch workers passed.
-          The generated installer was installed into a Chinese/spaces path and its installed
-          model workflows, Qt handoff, CSV/XLS/XLSX readers and PNG/PDF/SVG exports passed.
-          Uninstallation passed and the separately saved synthetic user project was preserved.
-          These are synthetic software acceptance checks, not wet-lab or every-PC validation.
-          The installer is unsigned. Artifacts are uploaded only after these checks pass.
+          ## Windows interface update over the user-tested baseline
+          The published 0.2.4 portable ZIP was verified by SHA-256. Only interface,
+          version, verification and documentation resources were replaced. All other
+          frozen modules, native libraries and the complete modern worker were checked
+          byte for byte against that baseline. Full details are in WINDOWS_BUILD JSON.
+          The new application and installer were not executed on Windows, as requested.
+          The user will validate the bilingual interface on Windows. Packages are unsigned.
           '@ >> $env:GITHUB_STEP_SUMMARY
       - uses: actions/upload-artifact@v7.0.2
         with:
-          name: NanoBO-${{ steps.version.outputs.version }}-windows-x64-package
+          name: SynthBO-${{ steps.version.outputs.version }}-windows-x64-package
           path: installers/*
           if-no-files-found: error
           compression-level: 0
           retention-days: 14
 
   release:
-    name: Attach Windows files to a draft release
+    name: Attach Windows files to draft release
     needs: build
-    if: ${{ github.event_name == 'push' || inputs.publish_draft }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -138,33 +102,31 @@ jobs:
     steps:
       - uses: actions/download-artifact@v8.0.2
         with:
-          name: NanoBO-${{ needs.build.outputs.version }}-windows-x64-package
+          name: SynthBO-${{ needs.build.outputs.version }}-windows-x64-package
           path: installers
-      - name: Create or reuse the matching draft without publishing it
+      - name: Create or reuse matching draft without publishing it
         shell: bash
         run: |
           set -euo pipefail
           tag="v${BUILD_VERSION}"
           if gh release view "$tag" --json isDraft,targetCommitish > release.json 2>/dev/null; then
             test "$(jq -r .isDraft release.json)" = true || { echo 'Refusing to overwrite a published release'; exit 1; }
-            target="$(jq -r .targetCommitish release.json)"
             if gh api "repos/${GH_REPO}/git/ref/tags/${tag}" > tag.json 2>/dev/null; then
               type="$(jq -r .object.type tag.json)"
               object="$(jq -r .object.sha tag.json)"
               if [ "$type" = tag ]; then object="$(gh api "repos/${GH_REPO}/git/tags/${object}" --jq .object.sha)"; fi
               test "$object" = "$BUILD_SHA" || { echo 'Release tag is not the built commit'; exit 1; }
-            elif [ "$target" != "$BUILD_SHA" ]; then
-              # Only an unpublished draft without a tag may follow a corrected build.
+            elif [ "$(jq -r .targetCommitish release.json)" != "$BUILD_SHA" ]; then
               gh release edit "$tag" --target "$BUILD_SHA"
             fi
           else
             cat > notes.md <<'NOTES'
-          Native Windows x64 build of the same NanoBO source, Chinese/English tutorials and practice data.
+          SynthBO with a Chinese / English interface switch, offline tutorials and practice data.
 
-          Windows verification status is recorded in WINDOWS_BUILD-*.json. A normal push compiles and packages only; optional runtime acceptance runs only when explicitly requested through workflow_dispatch. The EXE is unsigned.
+          Windows uses the exact scientific runtime from the published 0.2.4 package reported working by the user. Unchanged modules and runtime files are verified against that baseline. The updated interface and installer have not been run on Windows; see WINDOWS_BUILD JSON. Packages are unsigned.
 
-          Original scientific methods, authors, licenses and citation instructions remain in ACKNOWLEDGMENTS.md, THIRD_PARTY_NOTICES.md and REFERENCES.bib.
+          Scientific authors, licenses and citation instructions are retained in ACKNOWLEDGMENTS.md, THIRD_PARTY_NOTICES.md and REFERENCES.bib.
           NOTES
-            gh release create "$tag" --target "$BUILD_SHA" --draft --prerelease --title "NanoBO ${BUILD_VERSION} · tutorials and Windows build" --notes-file notes.md
+            gh release create "$tag" --target "$BUILD_SHA" --draft --prerelease --title "SynthBO ${BUILD_VERSION}" --notes-file notes.md
           fi
           gh release upload "$tag" installers/* --clobber

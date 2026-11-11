@@ -41,7 +41,7 @@ def main():
     if output.exists() and any(output.iterdir()):
         raise SystemExit("Use an empty output directory; existing project files are never overwritten")
     output.mkdir(parents=True, exist_ok=True)
-    installed = output / "安装 验收" / "NanoBO"
+    installed = output / "安装 验收" / "SynthBO"
     preserved = output / "user-project.chembo.json"
     preserved.write_bytes((ROOT / "examples/tutorial/01_quickstart/project.chembo.json").read_bytes())
     preserved_hash = digest(preserved)
@@ -57,10 +57,10 @@ def main():
         install = subprocess.run([str(args.installer.resolve()), "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/SP-", "/NOICONS",
                                   "/LANG=chinesesimp", "/DIR=" + str(installed), "/LOG=" + str(output / "install.log")],
                                  cwd=output, env=environment, timeout=600)
-        report["checks"]["install"] = {"exit_code": install.returncode, "executable_present": (installed / "NanoBO.exe").is_file()}
-        if install.returncode or not (installed / "NanoBO.exe").is_file():
+        report["checks"]["install"] = {"exit_code": install.returncode, "executable_present": (installed / "SynthBO.exe").is_file()}
+        if install.returncode or not (installed / "SynthBO.exe").is_file():
             raise RuntimeError("The user installer failed")
-        report["installed_executable_sha256"] = digest(installed / "NanoBO.exe")
+        report["installed_executable_sha256"] = digest(installed / "SynthBO.exe")
         print("PASS ordinary-user installation into a Chinese/spaces path", flush=True)
         native = subprocess.run([sys.executable, str(ROOT / "scripts/validate_windows_runtime.py"),
                                  "--bundle", str(installed), "--output", str(output / "runtime"), "--fail-fast"],
@@ -75,7 +75,7 @@ def main():
             raise RuntimeError("Installed native-model acceptance failed; see runtime logs")
         print(f"PASS installed native workflows: {runtime['passed']}/{runtime['total']}", flush=True)
         ui_path = output / "frozen-ui-results.json"
-        ui = subprocess.run([str(installed / "NanoBO.exe"), "--verify-ui", str(ui_path)], cwd=output,
+        ui = subprocess.run([str(installed / "SynthBO.exe"), "--verify-ui", str(ui_path)], cwd=output,
                             env=environment, capture_output=True, timeout=480)
         (output / "gui-stdout.txt").write_bytes(ui.stdout)
         (output / "gui-stderr.txt").write_bytes(ui.stderr)
@@ -102,7 +102,7 @@ def main():
                                           "/LOG=" + str(output / "uninstall.log")], cwd=output, env=environment, timeout=300)
                 report["checks"]["uninstall"] = {
                     "exit_code": removal.returncode,
-                    "executable_removed": not (installed / "NanoBO.exe").exists(),
+                    "executable_removed": not (installed / "SynthBO.exe").exists(),
                     "user_project_preserved": preserved.is_file() and digest(preserved) == preserved_hash,
                 }
                 if removal.returncode or not all(report["checks"]["uninstall"][name] for name in ("executable_removed", "user_project_preserved")):
